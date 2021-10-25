@@ -7,7 +7,7 @@ import ExpandedImageModal from "./ExpandedImageModal";
 class AnnouncementMain extends React.Component {
   state = { imageModalIsOpen: false, expandedImage: "" };
 
-  handleModalOpen = image => {
+  handleModalOpen = (image) => {
     const target = document.querySelector(".ReactModalPortal");
     disableBodyScroll(target);
     this.setState({ imageModalIsOpen: true, expandedImage: image });
@@ -51,7 +51,7 @@ class AnnouncementMain extends React.Component {
 
 AnnouncementMain.propTypes = {
   message: PropTypes.string,
-  images: PropTypes.array
+  images: PropTypes.array,
 };
 
 export default AnnouncementMain;

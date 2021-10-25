@@ -35,14 +35,14 @@ const SignUpScreen = ({ signingUp, history, language }) => {
 function mapStateToProps(state) {
   const { signingUp } = state.registration;
   return {
-    signingUp
+    signingUp,
   };
 }
 
 SignUpScreen.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
-  signingUp: PropTypes.bool
+  signingUp: PropTypes.bool,
 };
 
 export default connect(mapStateToProps)(withLanguage(SignUpScreen));

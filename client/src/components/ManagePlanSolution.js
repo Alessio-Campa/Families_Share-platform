@@ -12,21 +12,21 @@ const EmptyCell = () => <div className="emptyCell" />;
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiInputBase: {
       root: {
-        width: "100%"
-      }
-    }
-  }
+        width: "100%",
+      },
+    },
+  },
 });
 
 const Cell = ({ value, handleSelect, profiles }) => {
   return (
     <Select value={value} onChange={handleSelect}>
-      {profiles.map(profile => {
+      {profiles.map((profile) => {
         return (
           <MenuItem
             key={profile.user_id}
@@ -69,16 +69,18 @@ class ManagePlanSolution extends React.Component {
     const data = [];
     for (let i = 0; i < pageSize; i += 1) {
       const row = [];
-      plan.solution.forEach(subscriptions => {
+      plan.solution.forEach((subscriptions) => {
         const required = Math.ceil(subscriptions.children.length / plan.ratio);
         if (
           i <= Math.max(required, plan.min_volunteers) &&
           i < subscriptions.volunteers.length
         ) {
           const profile = parentsProfiles.find(
-            p => p.user_id === subscriptions.volunteers[i]
+            (p) => p.user_id === subscriptions.volunteers[i]
           );
-          row[subscriptions.slot] = `${profile.given_name} ${profile.family_name}`;
+          row[
+            subscriptions.slot
+          ] = `${profile.given_name} ${profile.family_name}`;
         } else {
           row[subscriptions.slot] = "";
         }
@@ -93,12 +95,12 @@ class ManagePlanSolution extends React.Component {
       parentsProfiles,
       childrenProfiles,
       pageSize,
-      showingSlot: 0
+      showingSlot: 0,
     };
   }
 
   getChildName = (profiles, id) => {
-    const profile = profiles.find(p => p.child_id === id);
+    const profile = profiles.find((p) => p.child_id === id);
     if (profile) {
       return `${profile.given_name} ${profile.family_name}`.toUpperCase();
     }
@@ -107,7 +109,7 @@ class ManagePlanSolution extends React.Component {
 
   getPageSize = (solution, min, ratio) => {
     let pageSize = min;
-    solution.forEach(subscriptions => {
+    solution.forEach((subscriptions) => {
       const required = Math.ceil(subscriptions.children.length / ratio);
       if (required > pageSize) {
         pageSize = required;
@@ -124,15 +126,15 @@ class ManagePlanSolution extends React.Component {
     this.setState({ data });
   };
 
-  getProfiles = slot => {
+  getProfiles = (slot) => {
     const {
       data,
       profilesFilter,
       parentsProfiles,
-      plan: { participants, participant, solution }
+      plan: { participants, participant, solution },
     } = this.state;
     const alreadyAssigned = [];
-    data.forEach(row => {
+    data.forEach((row) => {
       alreadyAssigned.push(row[slot]);
     });
     let profiles;
@@ -142,22 +144,22 @@ class ManagePlanSolution extends React.Component {
         break;
       case "participating":
         const participating = [...participants, participant].map(
-          p => p.user_id
+          (p) => p.user_id
         );
-        profiles = parentsProfiles.filter(p =>
+        profiles = parentsProfiles.filter((p) =>
           participating.includes(p.user_id)
         );
         break;
       case "available":
-        const available = solution.find(s => s.slot === slot).volunteers;
-        profiles = parentsProfiles.filter(p => available.includes(p.user_id));
+        const available = solution.find((s) => s.slot === slot).volunteers;
+        profiles = parentsProfiles.filter((p) => available.includes(p.user_id));
         break;
       default:
         profiles = [];
     }
-    return profiles.map(p => ({
+    return profiles.map((p) => ({
       ...p,
-      assigned: alreadyAssigned.includes(`${p.given_name} ${p.family_name}`)
+      assigned: alreadyAssigned.includes(`${p.given_name} ${p.family_name}`),
     }));
   };
 
@@ -170,7 +172,7 @@ class ManagePlanSolution extends React.Component {
       profilesFilter,
       pageSize,
       data,
-      plan: { solution, ratio, min_volunteers: minVolunteers }
+      plan: { solution, ratio, min_volunteers: minVolunteers },
     } = this.state;
     const columns = solution.map((subscriptions, index) => {
       const required = Math.ceil(subscriptions.children.length / ratio);
@@ -186,24 +188,24 @@ class ManagePlanSolution extends React.Component {
             setShowingSlot={() => this.setState({ showingSlot: index })}
           />
         ),
-        Cell: props =>
+        Cell: (props) =>
           props.index > Math.max(required, minVolunteers) - 1 ? (
             <EmptyCell />
           ) : (
-              <Cell
-                {...props}
-                profiles={this.getProfiles(subscriptions.slot)}
-                handleSelect={event =>
-                  this.handleSelect(
-                    event.target.value,
-                    props.index,
-                    subscriptions.slot
-                  )
-                }
-              />
-            ),
+            <Cell
+              {...props}
+              profiles={this.getProfiles(subscriptions.slot)}
+              handleSelect={(event) =>
+                this.handleSelect(
+                  event.target.value,
+                  props.index,
+                  subscriptions.slot
+                )
+              }
+            />
+          ),
         accessor: subscriptions.slot,
-        minWidth: 120
+        minWidth: 120,
       };
     });
     return (
@@ -223,7 +225,7 @@ class ManagePlanSolution extends React.Component {
               <div style={{ width: "100" }}>
                 <Select
                   value={profilesFilter}
-                  onChange={event => {
+                  onChange={(event) => {
                     this.setState({ profilesFilter: event.target.value });
                   }}
                 >
@@ -243,7 +245,7 @@ class ManagePlanSolution extends React.Component {
           <div className="col-2-10">
             <ul className="childrenNeedsList">
               <li className="childrenNeedsListHeader">{texts.needsHeader}</li>
-              {solution[showingSlot].children.map(child => (
+              {solution[showingSlot].children.map((child) => (
                 <li key={child} className="childNeedItem">
                   {this.getChildName(childrenProfiles, child)}
                 </li>
@@ -263,17 +265,17 @@ ManagePlanSolution.propTypes = {
   parentsProfiles: PropTypes.array,
   childrenProfiles: PropTypes.array,
   plan: PropTypes.object,
-  handleEdits: PropTypes.func
+  handleEdits: PropTypes.func,
 };
 
 Cell.propTypes = {
   value: PropTypes.string,
   handleSelect: PropTypes.func,
-  profiles: PropTypes.array
+  profiles: PropTypes.array,
 };
 
 Header.propTypes = {
   header: PropTypes.string,
   setShowingSlot: PropTypes.func,
-  fullfilled: PropTypes.bool
+  fullfilled: PropTypes.bool,
 };

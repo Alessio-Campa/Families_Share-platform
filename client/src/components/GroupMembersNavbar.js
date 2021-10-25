@@ -62,5 +62,5 @@ export default withRouter(withLanguage(GroupMembersNavbar));
 
 GroupMembersNavbar.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

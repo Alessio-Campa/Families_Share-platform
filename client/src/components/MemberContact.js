@@ -21,7 +21,7 @@ class MemberContact extends React.Component {
     }
   };
 
-  handleClick = event => {
+  handleClick = (event) => {
     this.setState({ modalIsOpen: true, right: "5%", top: event.clientY });
   };
 
@@ -39,15 +39,15 @@ class MemberContact extends React.Component {
     axios
       .patch(`/api/groups/${groupId}/members`, {
         patch,
-        id: member.user_id
+        id: member.user_id,
       })
-      .then(response => {
+      .then((response) => {
         handleAddAdmin(member.user_id);
         Log.info(response);
       })
-      .catch(error => Log.error(error));
+      .catch((error) => Log.error(error));
     this.setState({
-      modalIsOpen: false
+      modalIsOpen: false,
     });
   };
 
@@ -57,15 +57,15 @@ class MemberContact extends React.Component {
     axios
       .patch(`/api/groups/${groupId}/members`, {
         patch,
-        id: member.user_id
+        id: member.user_id,
       })
-      .then(response => {
+      .then((response) => {
         handleRemoveAdmin(member.user_id);
         Log.info(response);
       })
-      .catch(error => Log.error(error));
+      .catch((error) => Log.error(error));
     this.setState({
-      modalIsOpen: false
+      modalIsOpen: false,
     });
   };
 
@@ -74,19 +74,19 @@ class MemberContact extends React.Component {
     const userId = member.user_id;
     axios
       .delete(`/api/groups/${groupId}/members/${userId}`)
-      .then(response => {
+      .then((response) => {
         handleRemoveUser(member.user_id);
         Log.info(response);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
     this.setState({
-      modalIsOpen: false
+      modalIsOpen: false,
     });
   };
 
-  handlePhoneCall = number => {
+  handlePhoneCall = (number) => {
     const { enqueueSnackbar } = this.props;
     if (window.isNative) {
       window.ReactNativeWebView.postMessage(
@@ -94,7 +94,7 @@ class MemberContact extends React.Component {
       );
     } else {
       enqueueSnackbar("Copied number to clipboard", {
-        variant: "info"
+        variant: "info",
       });
     }
   };
@@ -102,25 +102,25 @@ class MemberContact extends React.Component {
   handleContact = () => {
     const {
       member: { contact_option: contact },
-      enqueueSnackbar
+      enqueueSnackbar,
     } = this.props;
     if (window.isNative) {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: `send${contact}`,
-          value: this.getContactValue()
+          value: this.getContactValue(),
         })
       );
     } else {
       enqueueSnackbar("Copied e-mail to clipboard", {
-        variant: "info"
+        variant: "info",
       });
     }
   };
 
   getContactValue = () => {
     const {
-      member: { contact_option: contact, phone, email }
+      member: { contact_option: contact, phone, email },
     } = this.props;
     let value;
     switch (contact) {
@@ -135,7 +135,7 @@ class MemberContact extends React.Component {
     return value;
   };
 
-  getContactIcon = contact => {
+  getContactIcon = (contact) => {
     let icon;
     switch (contact) {
       case "viber":
@@ -164,18 +164,18 @@ class MemberContact extends React.Component {
         ? {
             label: texts.removeAdmin,
             style: "optionsModalButton",
-            handle: this.handleRemoveAdmin
+            handle: this.handleRemoveAdmin,
           }
         : {
             label: texts.addAdmin,
             style: "optionsModalButton",
-            handle: this.handleAddAdmin
+            handle: this.handleAddAdmin,
           },
       {
         label: texts.removeUser,
         style: "optionsModalButton",
-        handle: this.handleRemoveUser
-      }
+        handle: this.handleRemoveUser,
+      },
     ];
     return (
       <React.Fragment>
@@ -263,5 +263,5 @@ MemberContact.propTypes = {
   handleRemoveAdmin: PropTypes.func,
   language: PropTypes.string,
   history: PropTypes.object,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };

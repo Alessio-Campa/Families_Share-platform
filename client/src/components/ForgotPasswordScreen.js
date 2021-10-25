@@ -13,14 +13,14 @@ class ForgotPasswordScreen extends React.Component {
   state = {
     email: ``,
     formIsValidated: false,
-    sendingEmail: false
+    sendingEmail: false,
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({ email: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     const { email } = this.state;
     const { language, enqueueSnackbar } = this.props;
     let snackMessage;
@@ -30,14 +30,14 @@ class ForgotPasswordScreen extends React.Component {
       axios
         .post("/api/users/forgotpassword", {
           email,
-          origin: window.isNative ? "native" : "browser"
+          origin: window.isNative ? "native" : "browser",
         })
-        .then(response => {
+        .then((response) => {
           Log.info(response);
           snackMessage = Texts[language].forgotPasswordScreen.success;
           enqueueSnackbar(snackMessage, { variant: "success" });
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status === 404) {
             snackMessage = Texts[language].forgotPasswordScreen.notExistErr;
           } else {
@@ -99,7 +99,7 @@ class ForgotPasswordScreen extends React.Component {
           <div id="forgotPasswordMain">
             <h1>{texts.prompt}</h1>
             <form
-              ref={form => {
+              ref={(form) => {
                 this.formEl = form;
               }}
               className={formClass}
@@ -132,5 +132,5 @@ export default withSnackbar(withLanguage(ForgotPasswordScreen));
 ForgotPasswordScreen.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };

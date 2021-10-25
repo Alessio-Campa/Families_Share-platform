@@ -5,7 +5,7 @@ import { withSnackbar } from "notistack";
 import {
   withStyles,
   MuiThemeProvider,
-  createMuiTheme
+  createMuiTheme,
 } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -24,44 +24,44 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const muiTheme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiStepper: {
       root: {
-        padding: 18
-      }
+        padding: 18,
+      },
     },
     MuiStepLabel: {
       label: {
         fontFamily: "Roboto",
-        fontSize: "1.56rem"
-      }
+        fontSize: "1.56rem",
+      },
     },
     MuiButton: {
       root: {
         fontSize: "1.2rem",
         fontFamily: "Roboto",
-        float: "left"
-      }
-    }
-  }
+        float: "left",
+      },
+    },
+  },
 });
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   continueButton: {
     backgroundColor: "#00838F",
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     "&:hover": {
-      backgroundColor: "#00838F"
+      backgroundColor: "#00838F",
     },
     boxShadow: "0 6px 6px 0 rgba(0,0,0,0.24)",
     height: "4.2rem",
-    width: "12rem"
+    width: "12rem",
   },
   createButton: {
     backgroundColor: "#ff6f00",
@@ -73,29 +73,29 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     "&:hover": {
-      backgroundColor: "#ff6f00"
-    }
+      backgroundColor: "#ff6f00",
+    },
   },
   stepLabel: {
     root: {
       color: "#ffffff",
       "&$active": {
         color: "white",
-        fontWeight: 500
+        fontWeight: 500,
       },
       "&$completed": {
         color: theme.palette.text.primary,
-        fontWeight: 500
+        fontWeight: 500,
       },
       "&$alternativeLabel": {
         textAlign: "center",
         marginTop: 16,
-        fontSize: "5rem"
+        fontSize: "5rem",
       },
       "&$error": {
-        color: theme.palette.error.main
-      }
-    }
+        color: theme.palette.error.main,
+      },
+    },
   },
   cancelButton: {
     backgroundColor: "#ffffff",
@@ -103,15 +103,15 @@ const styles = theme => ({
     color: "grey",
     marginRight: theme.spacing.unit,
     "&:hover": {
-      backgroundColor: "#ffffff"
-    }
+      backgroundColor: "#ffffff",
+    },
   },
   actionsContainer: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
   },
   resetContainer: {
-    padding: theme.spacing.unit * 3
-  }
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class CreateActivityStepper extends React.Component {
@@ -135,7 +135,7 @@ class CreateActivityStepper extends React.Component {
       "#ff9800",
       "#ff5722",
       "#795548",
-      "#607d8b"
+      "#607d8b",
     ];
     this.state = {
       activeStep: 0,
@@ -144,20 +144,20 @@ class CreateActivityStepper extends React.Component {
         color: colors[Math.floor(Math.random() * colors.length)],
         description: "",
         location: "",
-        link: ""
+        link: "",
       },
       dates: {
         selectedDays: [],
         repetition: false,
         repetitionType: "",
-        lastSelect: new Date()
+        lastSelect: new Date(),
       },
       timeslots: {
         activityTimeslots: [],
-        differentTimeslots: false
+        differentTimeslots: false,
       },
       stepWasValidated: false,
-      creating: false
+      creating: false,
     };
   }
 
@@ -169,7 +169,7 @@ class CreateActivityStepper extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const data = JSON.parse(event.data);
     const { history } = this.props;
     const { activeStep } = this.state;
@@ -204,16 +204,16 @@ class CreateActivityStepper extends React.Component {
     this.setState({ creating: true });
     axios
       .post(`/api/groups/${groupId}/activities`, { activity, events })
-      .then(response => {
+      .then((response) => {
         if (response.data.status === "pending") {
           enqueueSnackbar(texts.pendingMessage, {
-            variant: "info"
+            variant: "info",
           });
         }
         Log.info(response);
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         history.goBack();
       });
@@ -229,14 +229,14 @@ class CreateActivityStepper extends React.Component {
       location: information.location,
       repetition: dates.repetition,
       repetition_type: dates.repetitionType,
-      different_timeslots: timeslots.differentTimeslots
+      different_timeslots: timeslots.differentTimeslots,
     };
   };
 
   formatDataToEvents = (information, dates, timeslots, groupId) => {
     const events = [];
     dates.selectedDays.forEach((date, index) => {
-      timeslots.activityTimeslots[index].forEach(timeslot => {
+      timeslots.activityTimeslots[index].forEach((timeslot) => {
         const dstart = new Date(date);
         const dend = new Date(date);
         const { startTime, endTime } = timeslot;
@@ -260,11 +260,11 @@ class CreateActivityStepper extends React.Component {
           summary: timeslot.name,
           start: {
             dateTime: dstart,
-            date: null
+            date: null,
           },
           end: {
             dateTime: dend,
-            date: null
+            date: null,
           },
           extendedProperties: {
             shared: {
@@ -281,9 +281,9 @@ class CreateActivityStepper extends React.Component {
               groupId,
               repetition: dates.repetition ? dates.repetitionType : "none",
               start: startTime.substr(0, startTime.indexOf(":")),
-              end: endTime.substr(0, startTime.indexOf(":"))
-            }
-          }
+              end: endTime.substr(0, startTime.indexOf(":")),
+            },
+          },
         };
         events.push(event);
       });
@@ -297,7 +297,7 @@ class CreateActivityStepper extends React.Component {
       this.createActivity();
     } else {
       this.setState({
-        activeStep: activeStep + 1
+        activeStep: activeStep + 1,
       });
     }
   };
@@ -305,7 +305,7 @@ class CreateActivityStepper extends React.Component {
   handleCancel = () => {
     const { activeStep } = this.state;
     this.setState({
-      activeStep: activeStep - 1
+      activeStep: activeStep - 1,
     });
   };
 
@@ -383,7 +383,7 @@ class CreateActivityStepper extends React.Component {
     );
   };
 
-  getDatesCompletedLabel = label => {
+  getDatesCompletedLabel = (label) => {
     const { dates: days } = this.state;
     const { selectedDays, repetitionType } = days;
     let completedLabel = "";
@@ -392,7 +392,7 @@ class CreateActivityStepper extends React.Component {
       completedLabel = `Every ${selectedDay.format("Do ")}`;
     } else {
       const eachMonthsDates = {};
-      selectedDays.forEach(selectedDay => {
+      selectedDays.forEach((selectedDay) => {
         const key = moment(selectedDay).format("MMMM YYYY");
         if (eachMonthsDates[key] === undefined) {
           eachMonthsDates[key] = [selectedDay];
@@ -404,7 +404,7 @@ class CreateActivityStepper extends React.Component {
       const dates = Object.values(eachMonthsDates);
       for (let i = 0; i < months.length; i += 1) {
         let monthString = "";
-        dates[i].forEach(date => {
+        dates[i].forEach((date) => {
           monthString += ` ${moment(date).format("DD")},`;
         });
         monthString = monthString.substr(0, monthString.length - 1);
@@ -490,7 +490,7 @@ CreateActivityStepper.propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
   language: PropTypes.string,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };
 export default withSnackbar(
   withRouter(withLanguage(withStyles(styles)(CreateActivityStepper)))

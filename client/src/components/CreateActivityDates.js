@@ -13,22 +13,22 @@ import withLanguage from "./LanguageContext";
 const muiTheme = createMuiTheme({
   palette: {
     primary: {
-      main: "#00838F"
-    }
+      main: "#00838F",
+    },
   },
   overrides: {
     MuiSwitch: {
       root: {
-        transform: "scale(1.3)"
-      }
-    }
-  }
+        transform: "scale(1.3)",
+      },
+    },
+  },
 });
 
 const modifiersStyles = {
   selected: {
-    backgroundColor: "#00838F"
-  }
+    backgroundColor: "#00838F",
+  },
 };
 
 const Navbar = ({ onPreviousClick, onNextClick }) => {
@@ -64,13 +64,13 @@ class CreateActivityDates extends React.Component {
       selectedDays,
       repetition,
       repetitionType,
-      lastSelect
+      lastSelect,
     } = this.props;
     this.state = {
       selectedDays,
       repetition,
       repetitionType,
-      lastSelect
+      lastSelect,
     };
     handleSubmit(this.state, selectedDays.length > 0);
   }
@@ -106,7 +106,8 @@ class CreateActivityDates extends React.Component {
           state.lastSelect = day;
         } else {
           state.selectedDays = selectedDays.filter(
-            selectedDay => moment(selectedDay).format() !== moment(day).format()
+            (selectedDay) =>
+              moment(selectedDay).format() !== moment(day).format()
           );
           state.lastSelect = undefined;
         }
@@ -115,7 +116,7 @@ class CreateActivityDates extends React.Component {
     }
   };
 
-  handleMonthlyRepetition = day => {
+  handleMonthlyRepetition = (day) => {
     const dates = [day];
     const weekday = moment(day);
     for (let i = 1; i <= 100; i += 1) {
@@ -131,19 +132,19 @@ class CreateActivityDates extends React.Component {
     if (!repetition) {
       if (selectedDays.length > 1) {
         enqueueSnackbar(snackMessage, {
-          variant: "error"
+          variant: "error",
         });
       } else {
         await this.setState({
           repetition: !repetition,
-          repetitionType: ""
+          repetitionType: "",
         });
       }
     } else {
       await this.setState({
         repetition: !repetition,
         repetitionType: "",
-        selectedDays: []
+        selectedDays: [],
       });
       if (lastSelect) {
         this.handleDayClick(lastSelect, {});
@@ -151,13 +152,11 @@ class CreateActivityDates extends React.Component {
     }
   };
 
-  handleWeeklyRepetition = day => {
-    return new Promise(resolve => {
+  handleWeeklyRepetition = (day) => {
+    return new Promise((resolve) => {
       const dates = [];
       const weekdays = moment.weekdays();
-      let weekday = moment()
-        .startOf("month")
-        .day(weekdays[day.getDay()]);
+      let weekday = moment().startOf("month").day(weekdays[day.getDay()]);
       weekday = weekday.date() > 7 ? weekday.add(7, "d") : weekday;
       const month = weekday.month();
       while (month === weekday.month()) {
@@ -170,7 +169,7 @@ class CreateActivityDates extends React.Component {
     });
   };
 
-  handleRepetitionClick = async event => {
+  handleRepetitionClick = async (event) => {
     const { lastSelect, selectedDays } = this.state;
     const repetitionType = event.target.id === "monthly" ? "monthly" : "weekly";
     await this.setState({ repetitionType });
@@ -267,12 +266,12 @@ CreateActivityDates.propTypes = {
   language: PropTypes.string,
   repetitionType: PropTypes.string,
   selectedDays: PropTypes.array,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };
 
 Navbar.propTypes = {
   onPreviousClick: PropTypes.func,
-  onNextClick: PropTypes.func
+  onNextClick: PropTypes.func,
 };
 
 export default withSnackbar(withLanguage(CreateActivityDates));

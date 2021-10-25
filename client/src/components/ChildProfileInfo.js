@@ -13,11 +13,11 @@ import Log from "./Log";
 class ChildProfileInfo extends React.Component {
   state = { modalIsOpen: false, confirmDialogIsOpen: false, deleteIndex: "" };
 
-  handleConfirmDialogOpen = index => {
+  handleConfirmDialogOpen = (index) => {
     this.setState({ confirmDialogIsOpen: true, deleteIndex: index });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     const { deleteIndex } = this.state;
     if (choice === "agree") {
       this.deleteParent(deleteIndex);
@@ -33,40 +33,40 @@ class ChildProfileInfo extends React.Component {
     this.setState({ modalIsOpen: false });
   };
 
-  deleteParent = index => {
+  deleteParent = (index) => {
     const { match, parents, handleDeleteParent } = this.props;
     const { profileId, childId } = match.params;
     axios
       .delete(
         `/api/users/${profileId}/children/${childId}/parents/${parents[index].user_id}`
       )
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         handleDeleteParent(index);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
 
-  handleAdd = parent => {
+  handleAdd = (parent) => {
     const { match, handleAddParent } = this.props;
     const { profileId, childId } = match.params;
     axios
       .post(`/api/users/${profileId}/children/${childId}/parents`, {
-        parentId: parent.user_id
+        parentId: parent.user_id,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         handleAddParent(parent);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
     this.setState({ modalIsOpen: false });
   };
 
-  handleRedirectToParent = parent => {
+  handleRedirectToParent = (parent) => {
     const { history } = this.props;
     history.push(`/profiles/${parent.user_id}/info`);
   };
@@ -81,7 +81,7 @@ class ChildProfileInfo extends React.Component {
       gender,
       birthdate,
       showAdditional,
-      parents
+      parents,
     } = this.props;
     const { profileId } = match.params;
     const { confirmDialogIsOpen, modalIsOpen } = this.state;
@@ -238,7 +238,7 @@ ChildProfileInfo.propTypes = {
   language: PropTypes.string,
   match: PropTypes.object,
   handleAddParent: PropTypes.func,
-  handleDeleteParent: PropTypes.func
+  handleDeleteParent: PropTypes.func,
 };
 
 export default withRouter(withLanguage(ChildProfileInfo));

@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 import Highlighter from "./Highlighter";
 
 class AutoComplete extends React.Component {
-  handleClick = id => {
+  handleClick = (id) => {
     const { handleSearch } = this.props;
     handleSearch(id);
   };
 
-  getSuggestions = value => {
+  getSuggestions = (value) => {
     const { entities } = this.props;
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     const suggestions =
       inputLength === 0
         ? []
-        : entities.filter(entity =>
+        : entities.filter((entity) =>
             entity.name.toLowerCase().includes(inputValue.toLowerCase().trim())
           );
     return suggestions;
@@ -59,5 +59,5 @@ export default AutoComplete;
 AutoComplete.propTypes = {
   entities: PropTypes.array,
   searchInput: PropTypes.string,
-  handleSearch: PropTypes.func
+  handleSearch: PropTypes.func,
 };

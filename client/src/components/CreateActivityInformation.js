@@ -15,21 +15,21 @@ class CreateActivityInformation extends React.Component {
       description,
       cost,
       color,
-      link
+      link,
     } = this.props;
     this.state = { color, cost, description, link, location, name };
     handleSubmit(this.state, this.validate(this.state));
     autosize(document.querySelectorAll("textarea"));
   }
 
-  validate = state => {
+  validate = (state) => {
     if (state.color && state.name) {
       return true;
     }
     return false;
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const state = Object.assign({}, this.state);
     const { name, value } = event.target;
     const { handleSubmit } = this.props;
@@ -38,7 +38,7 @@ class CreateActivityInformation extends React.Component {
     this.setState(state);
   };
 
-  handleColorChange = color => {
+  handleColorChange = (color) => {
     const { handleSubmit } = this.props;
     const state = Object.assign({}, this.state);
     state.color = color.hex;
@@ -79,7 +79,7 @@ class CreateActivityInformation extends React.Component {
               className="center"
               placeholder={texts.description}
               value={description}
-              onChange={event => {
+              onChange={(event) => {
                 this.handleChange(event);
                 autosize(document.querySelectorAll("textarea"));
               }}
@@ -153,7 +153,7 @@ CreateActivityInformation.propTypes = {
   color: PropTypes.string,
   handleSubmit: PropTypes.func,
   language: PropTypes.string,
-  link: PropTypes.string
+  link: PropTypes.string,
 };
 
 export default withLanguage(CreateActivityInformation);

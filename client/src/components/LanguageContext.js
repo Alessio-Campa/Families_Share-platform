@@ -10,32 +10,31 @@ import "moment/locale/it";
 import "moment/locale/hu";
 import "moment/locale/fr";
 
-
 const LanguageContext = React.createContext();
 
 class LanguageProvider extends React.Component {
   constructor(props) {
     super(props);
     let language = "";
-    
-    localStorage.setItem("language", 'it') // TODO: necessario per far partire l'app, da eliminare in production 
-    
+
+    localStorage.setItem("language", "it"); // TODO: necessario per far partire l'app, da eliminare in production
+
     if (localStorage.getItem("language")) {
       language = localStorage.getItem("language");
     } else {
       localStorage.setItem(
         "language",
-        process.env.REACT_APP_CITYLAB_LANGUAGES.split(' ')[0]
+        process.env.REACT_APP_CITYLAB_LANGUAGES.split(" ")[0]
       );
-      language = process.env.REACT_APP_CITYLAB_LANGUAGES.split(' ')[0]
+      language = process.env.REACT_APP_CITYLAB_LANGUAGES.split(" ")[0];
     }
     this.state = {
-      language
+      language,
     };
     moment.locale(language);
   }
 
-  updateLanguage = language => {
+  updateLanguage = (language) => {
     const { dispatch } = this.props;
     dispatch(languageActions.update(language));
     this.setState({ language });
@@ -43,8 +42,8 @@ class LanguageProvider extends React.Component {
       moment.locale(language, {
         week: {
           dow: 1,
-          doy: 1
-        }
+          doy: 1,
+        },
       });
     } else {
       moment.locale(language);
@@ -58,7 +57,7 @@ class LanguageProvider extends React.Component {
       <LanguageContext.Provider
         value={{
           language,
-          updateLanguage: this.updateLanguage
+          updateLanguage: this.updateLanguage,
         }}
       >
         {children}
@@ -69,7 +68,7 @@ class LanguageProvider extends React.Component {
 function mapStateToProps(state) {
   const { language } = state;
   return {
-    language
+    language,
   };
 }
 
@@ -98,5 +97,5 @@ export default function WithLanguage(Component) {
 
 LanguageProvider.propTypes = {
   children: PropTypes.node,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };

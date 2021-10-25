@@ -10,10 +10,10 @@ import Log from "./Log";
 const getChild = (userId, childId) => {
   return axios
     .get(`/api/users/${userId}/children/${childId}`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
         child_id: childId,
@@ -25,17 +25,17 @@ const getChild = (userId, childId) => {
         gender: "unspecified",
         allergies: "",
         other_info: "",
-        special_needs: ""
+        special_needs: "",
       };
     });
 };
 const getParents = (userId, childId) => {
   return axios
     .get(`/api/users/${userId}/children/${childId}/parents`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
@@ -54,13 +54,13 @@ class ChildProfileScreen extends React.Component {
     this.setState({ child, fetchedChildData: true });
   }
 
-  handleAddParent = parent => {
+  handleAddParent = (parent) => {
     const { child } = this.state;
     child.parents.push(parent);
     this.setState({ child });
   };
 
-  handleDeleteParent = index => {
+  handleDeleteParent = (index) => {
     const { history } = this.props;
     const { child } = this.state;
     child.parents.splice(index, 1);
@@ -97,7 +97,7 @@ class ChildProfileScreen extends React.Component {
 
 ChildProfileScreen.propTypes = {
   match: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default ChildProfileScreen;

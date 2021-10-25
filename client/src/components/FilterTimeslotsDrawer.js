@@ -203,7 +203,7 @@ FilterTimeslotsDrawer.propTypes = {
   activeOption: PropTypes.string,
   isOpen: PropTypes.bool,
   handleFilterDrawerClose: PropTypes.func,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(FilterTimeslotsDrawer);

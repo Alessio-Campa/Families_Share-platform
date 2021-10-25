@@ -9,13 +9,13 @@ const Avatar = ({
   routeState,
   thumbnail,
   className,
-  style
+  style,
 }) => {
   const handleNav = () => {
     if (!disabled) {
       history.push({
         pathname: route,
-        state: routeState
+        state: routeState,
       });
     }
   };
@@ -40,7 +40,7 @@ Avatar.propTypes = {
   route: PropTypes.string,
   routeState: PropTypes.object,
   disabled: PropTypes.bool,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withRouter(Avatar);

@@ -30,7 +30,7 @@ class PrivacyPolicyModal extends React.Component {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.8)"
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
       },
       content: {
         position: "fixed",
@@ -40,8 +40,8 @@ class PrivacyPolicyModal extends React.Component {
         backgroundColor: "#ffffff",
         width: "100%",
         height: "100%",
-        overflow: "hidden"
-      }
+        overflow: "hidden",
+      },
     };
     return (
       <Modal
@@ -75,7 +75,7 @@ PrivacyPolicyModal.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
   handleAccept: PropTypes.func,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(PrivacyPolicyModal);

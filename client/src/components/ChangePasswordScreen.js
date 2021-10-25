@@ -13,7 +13,7 @@ class ChangePasswordScreen extends React.Component {
     passwordConfirm: "",
     formIsValidated: false,
     fetchedProfile: false,
-    error: false
+    error: false,
   };
 
   componentDidMount() {
@@ -22,20 +22,20 @@ class ChangePasswordScreen extends React.Component {
     axios
       .get("/api/users/changepassword", {
         headers: {
-          Authorization: token
-        }
+          Authorization: token,
+        },
       })
-      .then(response => {
+      .then((response) => {
         const profile = response.data;
         this.setState({ profile, fetchedProfile: true });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ fetchedProfile: true, error: true });
       });
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     const { language } = this.props;
     const { password, passwordConfirm } = this.state;
@@ -60,7 +60,7 @@ class ChangePasswordScreen extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     const { match, history } = this.props;
     const { token } = match.params;
     const { password } = this.state;
@@ -70,20 +70,20 @@ class ChangePasswordScreen extends React.Component {
         .post(
           "/api/users/changepassword",
           {
-            password
+            password,
           },
           {
             headers: {
-              Authorization: token
-            }
+              Authorization: token,
+            },
           }
         )
-        .then(response => {
+        .then((response) => {
           const user = response.data;
           localStorage.setItem("user", JSON.stringify(user));
           history.replace("/myfamiliesshare");
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
           history.push("/");
         });
@@ -133,7 +133,7 @@ class ChangePasswordScreen extends React.Component {
       error,
       profile,
       fetchedProfile,
-      errorMessage
+      errorMessage,
     } = this.state;
     const { language } = this.props;
     const formClass = [];
@@ -152,7 +152,7 @@ class ChangePasswordScreen extends React.Component {
             />
             <h1>{texts.prompt}</h1>
             <form
-              ref={form => {
+              ref={(form) => {
                 this.formEl = form;
               }}
               className={formClass}
@@ -205,7 +205,7 @@ class ChangePasswordScreen extends React.Component {
 ChangePasswordScreen.propTypes = {
   language: PropTypes.string,
   match: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(ChangePasswordScreen);

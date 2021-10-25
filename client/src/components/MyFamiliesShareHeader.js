@@ -22,7 +22,7 @@ class MyFamiliesShareHeader extends React.Component {
     notificationModalIsOpen: false,
     readNotifications: false,
     ratingModalIsOpen: false,
-    confirmModalIsOpen: false
+    confirmModalIsOpen: false,
   };
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class MyFamiliesShareHeader extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.action === "notificationsGoBack") {
       this.handleNotificationsClose();
@@ -44,10 +44,10 @@ class MyFamiliesShareHeader extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .post(`/api/users/${userId}/sendmenotification`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -56,7 +56,7 @@ class MyFamiliesShareHeader extends React.Component {
     return document.getElementById("drawerContainer");
   };
 
-  saveContainer = container => {
+  saveContainer = (container) => {
     this.container = container;
   };
 
@@ -80,7 +80,7 @@ class MyFamiliesShareHeader extends React.Component {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: "handleNotificationsModal",
-          value: "cannotGoBack"
+          value: "cannotGoBack",
         })
       );
     }
@@ -92,22 +92,22 @@ class MyFamiliesShareHeader extends React.Component {
     disableBodyScroll(target);
     axios
       .patch(`/api/users/${userId}/notifications`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.setState({
           notificationModalIsOpen: true,
-          readNotifications: true
+          readNotifications: true,
         });
         if (window.isNative) {
           window.ReactNativeWebView.postMessage(
             JSON.stringify({
               action: "handleNotificationsModal",
-              value: "notificationsGoBack"
+              value: "notificationsGoBack",
             })
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -178,13 +178,13 @@ class MyFamiliesShareHeader extends React.Component {
     history.push("/myfamiliesshare/invites");
   };
 
-  handleConfirmModalClose = choice => {
+  handleConfirmModalClose = (choice) => {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     if (choice === "agree") {
       axios
         .post(`/api/users/${userId}/walkthrough`)
-        .then(response => Log.info(response))
-        .catch(error => {
+        .then((response) => Log.info(response))
+        .catch((error) => {
           Log.error(error);
         });
     }
@@ -198,14 +198,14 @@ class MyFamiliesShareHeader extends React.Component {
       notificationModalIsOpen,
       ratingModalIsOpen,
       readNotifications,
-      drawerIsOpen
+      drawerIsOpen,
     } = this.state;
     const texts = Texts[language].myFamiliesShareHeader;
     const menuItem = { height: "5.5rem" };
     const menuStyle = { borderTop: "2.5rem solid rgba(0,0,0,0.5)" };
     const menuItemWithLine = {
       borderBottom: "1px solid rgba(0,0,0,0.1)",
-      height: "5.5rem"
+      height: "5.5rem",
     };
     let isManager = false;
     const user = JSON.parse(localStorage.getItem("user"));
@@ -480,7 +480,7 @@ MyFamiliesShareHeader.propTypes = {
   pendingNotifications: PropTypes.number,
   language: PropTypes.string,
   history: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };
 
 export default connect()(withRouter(withLanguage(MyFamiliesShareHeader)));

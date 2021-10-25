@@ -24,21 +24,21 @@ const dataURLtoFile = (dataurl, filename) => {
 const getGroups = () => {
   return axios
     .get("/api/groups", { params: { searchBy: "all" } })
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
-const getGroup = groupId => {
+const getGroup = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
         name: "",
@@ -48,20 +48,20 @@ const getGroup = groupId => {
         description: "",
         location: "",
         contact_info: "",
-        contact_type: "phone"
+        contact_type: "phone",
       };
     });
 };
-const getGroupSettings = groupId => {
+const getGroupSettings = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/settings`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
-        visible: ""
+        visible: "",
       };
     });
 };
@@ -77,7 +77,7 @@ class EditGroupScreen extends React.Component {
     const groups = await getGroups();
     const group = await getGroup(groupId);
     const settings = await getGroupSettings(groupId);
-    groups.forEach(item => groupNames.push(item.name));
+    groups.forEach((item) => groupNames.push(item.name));
     groupNames.splice(groupNames.indexOf(group.name), 1);
     group.contactType = group.contact_type;
     delete group.contact_type;
@@ -87,7 +87,7 @@ class EditGroupScreen extends React.Component {
       fetchedGroupData: true,
       ...group,
       ...settings,
-      groupNames
+      groupNames,
     });
   }
 
@@ -127,13 +127,13 @@ class EditGroupScreen extends React.Component {
     return true;
   };
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.action === "fileUpload") {
       const image = `data:image/png;base64, ${data.value}`;
       this.setState({
         image: { path: image },
-        file: dataURLtoFile(image, "photo.png")
+        file: dataURLtoFile(image, "photo.png"),
       });
     }
   };
@@ -148,7 +148,7 @@ class EditGroupScreen extends React.Component {
       location,
       group_id,
       contactInfo,
-      contactType
+      contactType,
     } = this.state;
     const { history } = this.props;
     const bodyFormData = new FormData();
@@ -165,14 +165,14 @@ class EditGroupScreen extends React.Component {
     axios
       .patch(`/api/groups/${group_id}`, bodyFormData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         history.goBack();
       });
@@ -185,11 +185,11 @@ class EditGroupScreen extends React.Component {
     this.setState({ formIsValidated: true });
   };
 
-  handleImageChange = event => {
+  handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.setState({ image: { path: e.target.result }, file });
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -202,19 +202,19 @@ class EditGroupScreen extends React.Component {
     );
   };
 
-  handleVisibility = event => {
+  handleVisibility = (event) => {
     const visible = event.target.value === "visible";
     this.setState({ visible });
   };
 
-  handleContactType = event => {
+  handleContactType = (event) => {
     const {
-      target: { name, value }
+      target: { name, value },
     } = event;
     this.setState({ [name]: value, contactInfo: "" });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { language } = this.props;
     const { groupNames } = this.state;
     const { name } = event.target;
@@ -222,7 +222,7 @@ class EditGroupScreen extends React.Component {
     if (name === "name") {
       const nameExists =
         groupNames.filter(
-          groupName => groupName.toUpperCase() === value.toUpperCase().trim()
+          (groupName) => groupName.toUpperCase() === value.toUpperCase().trim()
         ).length > 0;
       if (nameExists) {
         event.target.setCustomValidity(Texts[language].editGroupScreen.nameErr);
@@ -233,7 +233,7 @@ class EditGroupScreen extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleColorChange = color => {
+  handleColorChange = (color) => {
     this.setState({ background: color.hex });
   };
 
@@ -249,7 +249,7 @@ class EditGroupScreen extends React.Component {
       contactType,
       name,
       image,
-      description
+      description,
     } = this.state;
     const texts = Texts[language].editGroupScreen;
     const formClass = [];
@@ -260,10 +260,10 @@ class EditGroupScreen extends React.Component {
       <div>
         {fetchedGroupData ? (
           <form
-            ref={form => {
+            ref={(form) => {
               this.formEl = form;
             }}
-            onSubmit={event => event.preventDefault()}
+            onSubmit={(event) => event.preventDefault()}
             className={formClass}
             noValidate
           >
@@ -326,7 +326,7 @@ class EditGroupScreen extends React.Component {
                     name="description"
                     className="editGroupInputField form-control "
                     placeholder={texts.description}
-                    onChange={event => {
+                    onChange={(event) => {
                       this.handleChange(event);
                       autosize(document.querySelectorAll("textarea"));
                     }}
@@ -460,5 +460,5 @@ export default withLanguage(EditGroupScreen);
 EditGroupScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };

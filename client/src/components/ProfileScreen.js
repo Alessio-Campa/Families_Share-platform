@@ -11,31 +11,31 @@ import Log from "./Log";
 
 const ProfileInfo = Loadable({
   loader: () => import("./ProfileInfo"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 const ProfileChildren = Loadable({
   loader: () => import("./ProfileChildren"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 
-const getMyChildren = userId => {
+const getMyChildren = (userId) => {
   return axios
     .get(`/api/users/${userId}/children`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
-const getMyProfile = userId => {
+const getMyProfile = (userId) => {
   return axios
     .get(`/api/users/${userId}/profile`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
         given_name: "",
@@ -46,7 +46,7 @@ const getMyProfile = userId => {
         phone: "",
         phone_type: "",
         visible: false,
-        user_id: ""
+        user_id: "",
       };
     });
 };
@@ -55,7 +55,7 @@ class ProfileScreen extends React.Component {
   state = {
     profile: {},
     children: [],
-    fetchedProfile: false
+    fetchedProfile: false,
   };
 
   async componentDidMount() {
@@ -67,7 +67,7 @@ class ProfileScreen extends React.Component {
     this.setState({
       fetchedProfile: true,
       children,
-      profile
+      profile,
     });
   }
 
@@ -89,12 +89,12 @@ class ProfileScreen extends React.Component {
             <Route
               exact
               path={`${currentPath}/info`}
-              render={props => <ProfileInfo {...props} profile={profile} />}
+              render={(props) => <ProfileInfo {...props} profile={profile} />}
             />
             <Route
               exact
               path={`${currentPath}/children`}
-              render={props => (
+              render={(props) => (
                 <ProfileChildren
                   {...props}
                   profileId={profileId}
@@ -112,7 +112,7 @@ class ProfileScreen extends React.Component {
 }
 
 ProfileScreen.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default ProfileScreen;

@@ -37,7 +37,7 @@ class GroupCalendar extends React.Component {
 
 GroupCalendar.propTypes = {
   group: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(GroupCalendar);

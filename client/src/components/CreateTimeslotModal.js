@@ -12,7 +12,7 @@ import {
   Mood,
   Cake,
   Event,
-  ChildCare
+  ChildCare,
 } from "@material-ui/icons";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
@@ -27,7 +27,7 @@ class CreateTimeslotModal extends React.Component {
     this.state = {
       ...data,
       formIsValidated: false,
-      expanded
+      expanded,
     };
   }
 
@@ -35,18 +35,18 @@ class CreateTimeslotModal extends React.Component {
     if (nextProps.expanded !== prevState.expanded) {
       return {
         expanded: nextProps.expanded,
-        ...nextProps.data
+        ...nextProps.data,
       };
     }
     return null;
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     if (this.validate()) {
       this.handleSave();
@@ -126,7 +126,7 @@ class CreateTimeslotModal extends React.Component {
       location,
       category,
       cost,
-      link
+      link,
     } = this.state;
     const timeslot = {
       startTime,
@@ -138,7 +138,7 @@ class CreateTimeslotModal extends React.Component {
       cost,
       location,
       category,
-      link
+      link,
     };
     const { handleSave } = this.props;
     handleSave(timeslot);
@@ -158,7 +158,7 @@ class CreateTimeslotModal extends React.Component {
       requiredChildren,
       requiredParents,
       cost,
-      link
+      link,
     } = this.state;
     const { language } = this.props;
     const formClass = [];
@@ -175,7 +175,7 @@ class CreateTimeslotModal extends React.Component {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.8)"
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
       },
       content: {
         position: "fixed",
@@ -186,8 +186,8 @@ class CreateTimeslotModal extends React.Component {
         maxWidth: "40rem",
         maxHeight: "65rem",
         width: "90%",
-        height: "90%"
-      }
+        height: "90%",
+      },
     };
     return (
       <Modal
@@ -224,7 +224,7 @@ class CreateTimeslotModal extends React.Component {
           </div>
           <div id="expandedTimeslotMainContainer">
             <form
-              ref={form => {
+              ref={(form) => {
                 this.formEl = form;
               }}
               onSubmit={this.handleSubmit}
@@ -377,7 +377,7 @@ class CreateTimeslotModal extends React.Component {
                     value={category}
                     onChange={this.handleChange}
                     inputProps={{
-                      name: "category"
+                      name: "category",
                     }}
                   >
                     <MenuItem value="learning">
@@ -430,7 +430,7 @@ class CreateTimeslotModal extends React.Component {
                     className="expandedTimeslotInput center"
                     placeholder={texts.description}
                     value={description}
-                    onChange={event => {
+                    onChange={(event) => {
                       this.handleChange(event);
                       autosize(document.querySelectorAll("textarea"));
                     }}
@@ -485,5 +485,5 @@ CreateTimeslotModal.propTypes = {
   language: PropTypes.string,
   handleClose: PropTypes.func,
   data: PropTypes.object,
-  expanded: PropTypes.bool
+  expanded: PropTypes.bool,
 };

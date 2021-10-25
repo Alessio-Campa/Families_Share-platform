@@ -16,7 +16,7 @@ class PlanListItem extends React.Component {
     this.setState({ participantsModalIsOpen: false });
   };
 
-  handleParticipantsModalOpen = e => {
+  handleParticipantsModalOpen = (e) => {
     e.stopPropagation();
 
     this.setState({ participantsModalIsOpen: true });
@@ -25,7 +25,7 @@ class PlanListItem extends React.Component {
   handlePlanClick = () => {
     const { history, groupId } = this.props;
     const {
-      plan: { plan_id: planId }
+      plan: { plan_id: planId },
     } = this.state;
     history.push(`/groups/${groupId}/plans/${planId}`);
   };
@@ -35,14 +35,14 @@ class PlanListItem extends React.Component {
     const { language } = this.props;
     const texts = Texts[language].planListItem;
     if (plan.state === "needs") {
-      const needsLength = plan.participants.filter(p => p.needs.length > 0)
+      const needsLength = plan.participants.filter((p) => p.needs.length > 0)
         .length;
       return `${needsLength} ${
         needsLength === 1 ? texts.participantNeeds : texts.participantsNeeds
       }`;
     }
     const availabilitiesLength = plan.participants.filter(
-      p => p.availabilities.length > 0
+      (p) => p.availabilities.length > 0
     ).length;
     return `${availabilitiesLength} ${
       availabilitiesLength === 1
@@ -56,9 +56,9 @@ class PlanListItem extends React.Component {
     const { language } = this.props;
     const texts = Texts[language].planListItem;
     const participants = (plan.state === "availabilities"
-      ? plan.participants.filter(p => p.availabilities.length > 0)
-      : plan.participants.filter(p => p.needs.length > 0)
-    ).map(participant => participant.user_id);
+      ? plan.participants.filter((p) => p.availabilities.length > 0)
+      : plan.participants.filter((p) => p.needs.length > 0)
+    ).map((participant) => participant.user_id);
     return (
       <React.Fragment>
         <div
@@ -73,7 +73,7 @@ class PlanListItem extends React.Component {
             <i
               style={{
                 fontSize: "3rem",
-                color: "#00838F"
+                color: "#00838F",
               }}
               className="fas fa-calendar center"
             />
@@ -147,5 +147,5 @@ PlanListItem.propTypes = {
   plan: PropTypes.object,
   groupId: PropTypes.string,
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

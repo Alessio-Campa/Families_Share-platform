@@ -37,5 +37,5 @@ export default withLanguage(StartUpGuide);
 
 StartUpGuide.propTypes = {
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

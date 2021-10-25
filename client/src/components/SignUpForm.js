@@ -14,9 +14,9 @@ import PrivacyPolicyModal from "./PrivacyPolicyModal";
 const theme = createMuiTheme({
   palette: {
     secondary: {
-      main: "#c43e00"
-    }
-  }
+      main: "#c43e00",
+    },
+  },
 });
 
 class SignUpForm extends React.Component {
@@ -32,7 +32,7 @@ class SignUpForm extends React.Component {
       phoneNumber: "",
       email: "",
       password: "",
-      passwordConfirm: ""
+      passwordConfirm: "",
     };
   }
 
@@ -93,7 +93,7 @@ class SignUpForm extends React.Component {
       profileVisibility: visible,
       givenName: given_name,
       familyName: family_name,
-      phoneNumber: number
+      phoneNumber: number,
     } = this.state;
     const { history, dispatch } = this.props;
     dispatch(
@@ -110,7 +110,7 @@ class SignUpForm extends React.Component {
     );
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     if (this.validate()) {
       this.submit();
@@ -118,7 +118,7 @@ class SignUpForm extends React.Component {
     this.setState({ formIsValidated: true });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { password } = this.state;
     const { language } = this.props;
     const { name, value } = event.target;
@@ -184,12 +184,12 @@ class SignUpForm extends React.Component {
       passwordConfirm,
       profileVisibility,
       policyModalIsOpen,
-      acceptTerms
+      acceptTerms,
     } = this.state;
     const texts = Texts[language].signUpForm;
     if (error) {
       enqueueSnackbar(`${texts.signupErr} ${email}`, {
-        variant: "error"
+        variant: "error",
       });
     }
     const formClass = [];
@@ -198,7 +198,7 @@ class SignUpForm extends React.Component {
     }
     return (
       <form
-        ref={form => {
+        ref={(form) => {
           this.formEl = form;
         }}
         onSubmit={this.handleSubmit}
@@ -340,13 +340,13 @@ SignUpForm.propTypes = {
   history: PropTypes.object,
   error: PropTypes.bool,
   enqueueSnackbar: PropTypes.func,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };
 
 function mapStateToProps(state) {
   const { error } = state.registration;
   return {
-    error
+    error,
   };
 }
 

@@ -13,7 +13,7 @@ const Venice = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -31,7 +31,7 @@ const Venice = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -45,7 +45,7 @@ const Venice = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -70,7 +70,7 @@ const Venice = {
             <li>Community management: venezia@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -83,7 +83,7 @@ const Venice = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -96,7 +96,7 @@ const Venice = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -117,7 +117,7 @@ const Venice = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -154,7 +154,7 @@ const Venice = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -214,7 +214,7 @@ const Venice = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -225,8 +225,8 @@ const Venice = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -240,7 +240,7 @@ const Venice = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -263,7 +263,7 @@ const Venice = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -278,7 +278,7 @@ const Venice = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -303,7 +303,7 @@ const Venice = {
             <li>Community management: venezia@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -317,7 +317,7 @@ const Venice = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -332,7 +332,7 @@ const Venice = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -354,7 +354,7 @@ const Venice = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -396,7 +396,7 @@ const Venice = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -465,7 +465,7 @@ const Venice = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -477,14 +477,14 @@ const Venice = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Thessaloniki = {
   en: [],
-  el: []
+  el: [],
 };
 
 const Bologna = {
@@ -500,7 +500,7 @@ const Bologna = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -518,7 +518,7 @@ const Bologna = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -532,7 +532,7 @@ const Bologna = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -557,7 +557,7 @@ const Bologna = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -570,7 +570,7 @@ const Bologna = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -583,7 +583,7 @@ const Bologna = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -604,7 +604,7 @@ const Bologna = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -641,7 +641,7 @@ const Bologna = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -701,7 +701,7 @@ const Bologna = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -712,8 +712,8 @@ const Bologna = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -727,7 +727,7 @@ const Bologna = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -750,7 +750,7 @@ const Bologna = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -765,7 +765,7 @@ const Bologna = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -790,7 +790,7 @@ const Bologna = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -804,7 +804,7 @@ const Bologna = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -819,7 +819,7 @@ const Bologna = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -841,7 +841,7 @@ const Bologna = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -883,7 +883,7 @@ const Bologna = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -952,7 +952,7 @@ const Bologna = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -964,9 +964,9 @@ const Bologna = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Rome = {
@@ -982,7 +982,7 @@ const Rome = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -1000,7 +1000,7 @@ const Rome = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1014,7 +1014,7 @@ const Rome = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1039,7 +1039,7 @@ const Rome = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -1052,7 +1052,7 @@ const Rome = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -1065,7 +1065,7 @@ const Rome = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -1086,7 +1086,7 @@ const Rome = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -1123,7 +1123,7 @@ const Rome = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -1183,7 +1183,7 @@ const Rome = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -1194,8 +1194,8 @@ const Rome = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -1209,7 +1209,7 @@ const Rome = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -1232,7 +1232,7 @@ const Rome = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1247,7 +1247,7 @@ const Rome = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1272,7 +1272,7 @@ const Rome = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -1286,7 +1286,7 @@ const Rome = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -1301,7 +1301,7 @@ const Rome = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -1323,7 +1323,7 @@ const Rome = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -1365,7 +1365,7 @@ const Rome = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -1434,7 +1434,7 @@ const Rome = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -1446,9 +1446,9 @@ const Rome = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Foscari = {
@@ -1464,7 +1464,7 @@ const Foscari = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -1482,7 +1482,7 @@ const Foscari = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1496,7 +1496,7 @@ const Foscari = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1521,7 +1521,7 @@ const Foscari = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -1534,7 +1534,7 @@ const Foscari = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -1547,7 +1547,7 @@ const Foscari = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -1568,7 +1568,7 @@ const Foscari = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -1605,7 +1605,7 @@ const Foscari = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -1665,7 +1665,7 @@ const Foscari = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -1676,8 +1676,8 @@ const Foscari = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -1691,7 +1691,7 @@ const Foscari = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -1714,7 +1714,7 @@ const Foscari = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1729,7 +1729,7 @@ const Foscari = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1754,7 +1754,7 @@ const Foscari = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -1768,7 +1768,7 @@ const Foscari = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -1783,7 +1783,7 @@ const Foscari = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -1805,7 +1805,7 @@ const Foscari = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -1847,7 +1847,7 @@ const Foscari = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -1916,7 +1916,7 @@ const Foscari = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -1928,9 +1928,9 @@ const Foscari = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Ferrara = {
@@ -1946,7 +1946,7 @@ const Ferrara = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -1964,7 +1964,7 @@ const Ferrara = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -1978,7 +1978,7 @@ const Ferrara = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2003,7 +2003,7 @@ const Ferrara = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -2016,7 +2016,7 @@ const Ferrara = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -2029,7 +2029,7 @@ const Ferrara = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -2050,7 +2050,7 @@ const Ferrara = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -2087,7 +2087,7 @@ const Ferrara = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -2147,7 +2147,7 @@ const Ferrara = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -2158,8 +2158,8 @@ const Ferrara = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -2173,7 +2173,7 @@ const Ferrara = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -2196,7 +2196,7 @@ const Ferrara = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2211,7 +2211,7 @@ const Ferrara = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2236,7 +2236,7 @@ const Ferrara = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -2250,7 +2250,7 @@ const Ferrara = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -2265,7 +2265,7 @@ const Ferrara = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -2287,7 +2287,7 @@ const Ferrara = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -2329,7 +2329,7 @@ const Ferrara = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -2398,7 +2398,7 @@ const Ferrara = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -2410,9 +2410,9 @@ const Ferrara = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Nina = {
@@ -2428,7 +2428,7 @@ const Nina = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -2446,7 +2446,7 @@ const Nina = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2460,7 +2460,7 @@ const Nina = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2485,7 +2485,7 @@ const Nina = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -2498,7 +2498,7 @@ const Nina = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -2511,7 +2511,7 @@ const Nina = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -2532,7 +2532,7 @@ const Nina = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -2569,7 +2569,7 @@ const Nina = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -2629,7 +2629,7 @@ const Nina = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -2640,8 +2640,8 @@ const Nina = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -2655,7 +2655,7 @@ const Nina = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -2678,7 +2678,7 @@ const Nina = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2693,7 +2693,7 @@ const Nina = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2718,7 +2718,7 @@ const Nina = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -2732,7 +2732,7 @@ const Nina = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -2747,7 +2747,7 @@ const Nina = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -2769,7 +2769,7 @@ const Nina = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -2811,7 +2811,7 @@ const Nina = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -2880,7 +2880,7 @@ const Nina = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -2892,9 +2892,9 @@ const Nina = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Parma = {
@@ -2910,7 +2910,7 @@ const Parma = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -2928,7 +2928,7 @@ const Parma = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2942,7 +2942,7 @@ const Parma = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -2967,7 +2967,7 @@ const Parma = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -2980,7 +2980,7 @@ const Parma = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -2993,7 +2993,7 @@ const Parma = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -3014,7 +3014,7 @@ const Parma = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -3051,7 +3051,7 @@ const Parma = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -3111,7 +3111,7 @@ const Parma = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -3122,8 +3122,8 @@ const Parma = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -3137,7 +3137,7 @@ const Parma = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -3160,7 +3160,7 @@ const Parma = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3175,7 +3175,7 @@ const Parma = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3200,7 +3200,7 @@ const Parma = {
             <li>Community management: bologna@families-share.eu </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -3214,7 +3214,7 @@ const Parma = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -3229,7 +3229,7 @@ const Parma = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -3251,7 +3251,7 @@ const Parma = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -3293,7 +3293,7 @@ const Parma = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -3362,7 +3362,7 @@ const Parma = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -3374,9 +3374,9 @@ const Parma = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Budapest = {
@@ -3392,7 +3392,7 @@ const Budapest = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -3410,7 +3410,7 @@ const Budapest = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3424,7 +3424,7 @@ const Budapest = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3451,7 +3451,7 @@ const Budapest = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -3464,7 +3464,7 @@ const Budapest = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -3477,7 +3477,7 @@ const Budapest = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -3498,7 +3498,7 @@ const Budapest = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -3535,7 +3535,7 @@ const Budapest = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -3595,7 +3595,7 @@ const Budapest = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -3606,8 +3606,8 @@ const Budapest = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   hu: [
     {
@@ -3621,7 +3621,7 @@ const Budapest = {
           Minden más, lényeges csoportszabályt célszerű személyesen megbeszélni,
           és fontos, hogy azokat a csoport minden tagja elfogadja.
         </p>
-      )
+      ),
     },
     {
       question: "Mit tegyek, ha le kell mondanom az előre vállalt idősávom?",
@@ -3642,7 +3642,7 @@ const Budapest = {
           döntsetek arról, hogy lehetséges-e külsős szolgáltató bevonása ilyen
           helyzetekben vagy sem).
         </p>
-      )
+      ),
     },
     {
       question: "Mit tegyek, ha nincs tapasztalatom gyerekcsoportokkal?",
@@ -3655,7 +3655,7 @@ const Budapest = {
           csatornánkon néhány szülő élményeit, akik tavaly nyáron részt vettek a
           Families_Share programjain! Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3687,7 +3687,7 @@ const Budapest = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Hogyan hozhatok létre egy új csoportot?",
@@ -3702,7 +3702,7 @@ const Budapest = {
           adminisztrátorával, hogy –akár önálló szülőként, akár egy adott
           csoportoddal– felvegyenek a csoportba.
         </p>
-      )
+      ),
     },
     {
       question: "Milyen tevékenységeket szervezhetek?",
@@ -3717,7 +3717,7 @@ const Budapest = {
           időpontok vagy idősávok megadásával szervezhetsz programokat,
           amelyekre ezután te és a gyereke(i)d is feliratkozhattok.
         </p>
-      )
+      ),
     },
     {
       question: "Mi a szerepe a csoport adminisztrátornak?",
@@ -3739,7 +3739,7 @@ const Budapest = {
           szerepkört. Javasoljuk, hogy a megfelelő működés érdekében
           csoportonként legalább két adminisztrátort jelöljetek ki.
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3778,7 +3778,7 @@ const Budapest = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Mi a teendő, ha egy gyerek megsebesült?",
@@ -3838,7 +3838,7 @@ const Budapest = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "Mi a teendő, ha nem tudsz bejutni a foglalkozás helyszínére?",
@@ -3849,9 +3849,9 @@ const Budapest = {
           elérhető a telefonszáma. Ha őket nem éred el, keresd a csoport
           adminisztrátorát/adminisztrátorait vagy a közösségi vezetőt.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Padova = {
@@ -3867,7 +3867,7 @@ const Padova = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -3885,7 +3885,7 @@ const Padova = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3899,7 +3899,7 @@ const Padova = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -3923,7 +3923,7 @@ const Padova = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -3936,7 +3936,7 @@ const Padova = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -3949,7 +3949,7 @@ const Padova = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -3970,7 +3970,7 @@ const Padova = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -4007,7 +4007,7 @@ const Padova = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -4067,7 +4067,7 @@ const Padova = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -4078,8 +4078,8 @@ const Padova = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -4093,7 +4093,7 @@ const Padova = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -4116,7 +4116,7 @@ const Padova = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4131,7 +4131,7 @@ const Padova = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4155,7 +4155,7 @@ const Padova = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -4169,7 +4169,7 @@ const Padova = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -4184,7 +4184,7 @@ const Padova = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -4206,7 +4206,7 @@ const Padova = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -4248,7 +4248,7 @@ const Padova = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -4317,7 +4317,7 @@ const Padova = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -4329,9 +4329,9 @@ const Padova = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Martellago = {
@@ -4347,7 +4347,7 @@ const Martellago = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -4365,7 +4365,7 @@ const Martellago = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4379,7 +4379,7 @@ const Martellago = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4403,7 +4403,7 @@ const Martellago = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -4416,7 +4416,7 @@ const Martellago = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -4429,7 +4429,7 @@ const Martellago = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -4450,7 +4450,7 @@ const Martellago = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -4487,7 +4487,7 @@ const Martellago = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -4547,7 +4547,7 @@ const Martellago = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -4558,8 +4558,8 @@ const Martellago = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -4573,7 +4573,7 @@ const Martellago = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -4596,7 +4596,7 @@ const Martellago = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4611,7 +4611,7 @@ const Martellago = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4635,7 +4635,7 @@ const Martellago = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -4649,7 +4649,7 @@ const Martellago = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -4664,7 +4664,7 @@ const Martellago = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -4686,7 +4686,7 @@ const Martellago = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -4728,7 +4728,7 @@ const Martellago = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -4797,7 +4797,7 @@ const Martellago = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -4809,9 +4809,9 @@ const Martellago = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Andria = {
@@ -4827,7 +4827,7 @@ const Andria = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -4845,7 +4845,7 @@ const Andria = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4859,7 +4859,7 @@ const Andria = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -4883,7 +4883,7 @@ const Andria = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -4896,7 +4896,7 @@ const Andria = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -4909,7 +4909,7 @@ const Andria = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -4930,7 +4930,7 @@ const Andria = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -4967,7 +4967,7 @@ const Andria = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -5027,7 +5027,7 @@ const Andria = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -5038,8 +5038,8 @@ const Andria = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -5053,7 +5053,7 @@ const Andria = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -5076,7 +5076,7 @@ const Andria = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5091,7 +5091,7 @@ const Andria = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5115,7 +5115,7 @@ const Andria = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -5129,7 +5129,7 @@ const Andria = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -5144,7 +5144,7 @@ const Andria = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -5166,7 +5166,7 @@ const Andria = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -5208,7 +5208,7 @@ const Andria = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -5277,7 +5277,7 @@ const Andria = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -5289,9 +5289,9 @@ const Andria = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Dadama = {
@@ -5307,7 +5307,7 @@ const Dadama = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -5325,7 +5325,7 @@ const Dadama = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5339,7 +5339,7 @@ const Dadama = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5363,7 +5363,7 @@ const Dadama = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -5376,7 +5376,7 @@ const Dadama = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -5389,7 +5389,7 @@ const Dadama = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -5410,7 +5410,7 @@ const Dadama = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -5447,7 +5447,7 @@ const Dadama = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -5507,7 +5507,7 @@ const Dadama = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -5518,8 +5518,8 @@ const Dadama = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -5533,7 +5533,7 @@ const Dadama = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -5556,7 +5556,7 @@ const Dadama = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5571,7 +5571,7 @@ const Dadama = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5595,7 +5595,7 @@ const Dadama = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -5609,7 +5609,7 @@ const Dadama = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -5624,7 +5624,7 @@ const Dadama = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -5646,7 +5646,7 @@ const Dadama = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -5688,7 +5688,7 @@ const Dadama = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -5757,7 +5757,7 @@ const Dadama = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -5769,9 +5769,9 @@ const Dadama = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Aduepollici = {
@@ -5787,7 +5787,7 @@ const Aduepollici = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -5805,7 +5805,7 @@ const Aduepollici = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5819,7 +5819,7 @@ const Aduepollici = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -5843,7 +5843,7 @@ const Aduepollici = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -5856,7 +5856,7 @@ const Aduepollici = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -5869,7 +5869,7 @@ const Aduepollici = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -5890,7 +5890,7 @@ const Aduepollici = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -5927,7 +5927,7 @@ const Aduepollici = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -5987,7 +5987,7 @@ const Aduepollici = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -5998,8 +5998,8 @@ const Aduepollici = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -6013,7 +6013,7 @@ const Aduepollici = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -6036,7 +6036,7 @@ const Aduepollici = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6051,7 +6051,7 @@ const Aduepollici = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6075,7 +6075,7 @@ const Aduepollici = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -6089,7 +6089,7 @@ const Aduepollici = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -6104,7 +6104,7 @@ const Aduepollici = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -6126,7 +6126,7 @@ const Aduepollici = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -6168,7 +6168,7 @@ const Aduepollici = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -6237,7 +6237,7 @@ const Aduepollici = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -6249,9 +6249,9 @@ const Aduepollici = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Homeschooling = {
@@ -6267,7 +6267,7 @@ const Homeschooling = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -6285,7 +6285,7 @@ const Homeschooling = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6299,7 +6299,7 @@ const Homeschooling = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6323,7 +6323,7 @@ const Homeschooling = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -6336,7 +6336,7 @@ const Homeschooling = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -6349,7 +6349,7 @@ const Homeschooling = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -6370,7 +6370,7 @@ const Homeschooling = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -6407,7 +6407,7 @@ const Homeschooling = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -6467,7 +6467,7 @@ const Homeschooling = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -6478,8 +6478,8 @@ const Homeschooling = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -6493,7 +6493,7 @@ const Homeschooling = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -6516,7 +6516,7 @@ const Homeschooling = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6531,7 +6531,7 @@ const Homeschooling = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6555,7 +6555,7 @@ const Homeschooling = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -6569,7 +6569,7 @@ const Homeschooling = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -6584,7 +6584,7 @@ const Homeschooling = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -6606,7 +6606,7 @@ const Homeschooling = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -6648,7 +6648,7 @@ const Homeschooling = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -6717,7 +6717,7 @@ const Homeschooling = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -6729,9 +6729,9 @@ const Homeschooling = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Pederobba = {
@@ -6747,7 +6747,7 @@ const Pederobba = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -6765,7 +6765,7 @@ const Pederobba = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6779,7 +6779,7 @@ const Pederobba = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -6803,7 +6803,7 @@ const Pederobba = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -6816,7 +6816,7 @@ const Pederobba = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -6829,7 +6829,7 @@ const Pederobba = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -6850,7 +6850,7 @@ const Pederobba = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -6887,7 +6887,7 @@ const Pederobba = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -6947,7 +6947,7 @@ const Pederobba = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -6958,8 +6958,8 @@ const Pederobba = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -6973,7 +6973,7 @@ const Pederobba = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -6996,7 +6996,7 @@ const Pederobba = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7011,7 +7011,7 @@ const Pederobba = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7035,7 +7035,7 @@ const Pederobba = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -7049,7 +7049,7 @@ const Pederobba = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -7064,7 +7064,7 @@ const Pederobba = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -7086,7 +7086,7 @@ const Pederobba = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -7128,7 +7128,7 @@ const Pederobba = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -7197,7 +7197,7 @@ const Pederobba = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -7209,9 +7209,9 @@ const Pederobba = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Verona = {
@@ -7227,7 +7227,7 @@ const Verona = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -7245,7 +7245,7 @@ const Verona = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7259,7 +7259,7 @@ const Verona = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7283,7 +7283,7 @@ const Verona = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -7296,7 +7296,7 @@ const Verona = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -7309,7 +7309,7 @@ const Verona = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -7330,7 +7330,7 @@ const Verona = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -7367,7 +7367,7 @@ const Verona = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -7427,7 +7427,7 @@ const Verona = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -7438,8 +7438,8 @@ const Verona = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -7453,7 +7453,7 @@ const Verona = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -7476,7 +7476,7 @@ const Verona = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7491,7 +7491,7 @@ const Verona = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7515,7 +7515,7 @@ const Verona = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -7529,7 +7529,7 @@ const Verona = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -7544,7 +7544,7 @@ const Verona = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -7566,7 +7566,7 @@ const Verona = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -7608,7 +7608,7 @@ const Verona = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -7677,7 +7677,7 @@ const Verona = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -7689,9 +7689,9 @@ const Verona = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Pescara = {
@@ -7707,7 +7707,7 @@ const Pescara = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -7725,7 +7725,7 @@ const Pescara = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7739,7 +7739,7 @@ const Pescara = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7763,7 +7763,7 @@ const Pescara = {
             <li>Unique number of emergency 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -7776,7 +7776,7 @@ const Pescara = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -7789,7 +7789,7 @@ const Pescara = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -7810,7 +7810,7 @@ const Pescara = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -7847,7 +7847,7 @@ const Pescara = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -7907,7 +7907,7 @@ const Pescara = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -7918,8 +7918,8 @@ const Pescara = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -7933,7 +7933,7 @@ const Pescara = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -7956,7 +7956,7 @@ const Pescara = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7971,7 +7971,7 @@ const Pescara = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -7995,7 +7995,7 @@ const Pescara = {
             <li>Carabinieri 112 </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -8009,7 +8009,7 @@ const Pescara = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -8024,7 +8024,7 @@ const Pescara = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -8046,7 +8046,7 @@ const Pescara = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -8088,7 +8088,7 @@ const Pescara = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -8157,7 +8157,7 @@ const Pescara = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -8169,9 +8169,9 @@ const Pescara = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Development = {
@@ -8187,7 +8187,7 @@ const Development = {
           different or additional rule has to be discussed offline and approved
           by all group members.
         </p>
-      )
+      ),
     },
     {
       question: "What happens if I am not able to comply with my shift?",
@@ -8205,7 +8205,7 @@ const Development = {
           decide if the involvement of external professional can be an option or
           not)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8219,7 +8219,7 @@ const Development = {
           of the parents who last summer took part to Families Share activities
           in our YouTube channel Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8244,7 +8244,7 @@ const Development = {
             <li>Community management: bla@email.com </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "How can I create a new group?",
@@ -8257,7 +8257,7 @@ const Development = {
           (selecting the option ‘search group’) and ask to join it, as a single
           parent or with your group, by contacting the administrator.
         </p>
-      )
+      ),
     },
     {
       question: "Which activities can I organize?",
@@ -8270,7 +8270,7 @@ const Development = {
           schedule the activities identifying different timeslots. Later you can
           register yourself and/or your children for joining the activities.
         </p>
-      )
+      ),
     },
     {
       question: "Which is the role of the group administrator?",
@@ -8291,7 +8291,7 @@ const Development = {
           suggest to have at least two people with the administrative role
           within a group.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENCY: What to do if a child is missing?",
@@ -8328,7 +8328,7 @@ const Development = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if a child injured him/herself?",
@@ -8388,7 +8388,7 @@ const Development = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "What to do if you are locked out of the co-playing location?",
@@ -8399,8 +8399,8 @@ const Development = {
           is available. In case you do not have these numbers, contact the group
           administrator(s) or the community managers.
         </p>
-      )
-    }
+      ),
+    },
   ],
   hu: [
     {
@@ -8414,7 +8414,7 @@ const Development = {
           Minden más, lényeges csoportszabályt célszerű személyesen megbeszélni,
           és fontos, hogy azokat a csoport minden tagja elfogadja.
         </p>
-      )
+      ),
     },
     {
       question: "Mit tegyek, ha le kell mondanom az előre vállalt idősávom?",
@@ -8435,7 +8435,7 @@ const Development = {
           döntsetek arról, hogy lehetséges-e külsős szolgáltató bevonása ilyen
           helyzetekben vagy sem).
         </p>
-      )
+      ),
     },
     {
       question: "Mit tegyek, ha nincs tapasztalatom gyerekcsoportokkal?",
@@ -8448,7 +8448,7 @@ const Development = {
           csatornánkon néhány szülő élményeit, akik tavaly nyáron részt vettek a
           Families_Share programjain! Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8480,7 +8480,7 @@ const Development = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Hogyan hozhatok létre egy új csoportot?",
@@ -8495,7 +8495,7 @@ const Development = {
           adminisztrátorával, hogy –akár önálló szülőként, akár egy adott
           csoportoddal– felvegyenek a csoportba.
         </p>
-      )
+      ),
     },
     {
       question: "Milyen tevékenységeket szervezhetek?",
@@ -8510,7 +8510,7 @@ const Development = {
           időpontok vagy idősávok megadásával szervezhetsz programokat,
           amelyekre ezután te és a gyereke(i)d is feliratkozhattok.
         </p>
-      )
+      ),
     },
     {
       question: "Mi a szerepe a csoport adminisztrátornak?",
@@ -8532,7 +8532,7 @@ const Development = {
           szerepkört. Javasoljuk, hogy a megfelelő működés érdekében
           csoportonként legalább két adminisztrátort jelöljetek ki.
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8571,7 +8571,7 @@ const Development = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Mi a teendő, ha egy gyerek megsebesült?",
@@ -8631,7 +8631,7 @@ const Development = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question: "Mi a teendő, ha nem tudsz bejutni a foglalkozás helyszínére?",
@@ -8642,8 +8642,8 @@ const Development = {
           elérhető a telefonszáma. Ha őket nem éred el, keresd a csoport
           adminisztrátorát/adminisztrátorait vagy a közösségi vezetőt.
         </p>
-      )
-    }
+      ),
+    },
   ],
   nl: [
     {
@@ -8657,7 +8657,7 @@ const Development = {
           groepsregels bespreek je best offline met alle andere groepsleden
           aanwezig om samen te beslissen en iedereens goedkeuring te krijgen.
         </p>
-      )
+      ),
     },
     {
       question: "Wat gebeurt er als ik mijn beurt niet kan opnemen?",
@@ -8675,7 +8675,7 @@ const Development = {
           situaties (bv. beslissen of de betrokkenheid van externe professional
           een optie kan zijn of niet)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8690,7 +8690,7 @@ const Development = {
           van de ouders die afgelopen zomer hebben deelgenomen aan activiteiten
           van Families Share in ons YouTube-kanaal Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8716,7 +8716,7 @@ const Development = {
             <li>Cokido helpdesk: 0492761123</li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Hoe kan ik een nieuwe groep maken?",
@@ -8731,7 +8731,7 @@ const Development = {
           ouder of met je groep, door contact op te nemen met de
           groepsbeheerder.
         </p>
-      )
+      ),
     },
     {
       question: "Welke activiteiten kan ik organiseren?",
@@ -8745,7 +8745,7 @@ const Development = {
           tijdsloten en dagen te bepalen. Later kan jezelh en / of je kinderen
           aanmelden voor deelname aan de activiteiten.
         </p>
-      )
+      ),
     },
     {
       question: "Welke rol speelt de groepsbeheerder?",
@@ -8766,7 +8766,7 @@ const Development = {
           zodanig worden ingesteld. We raden aan om ten minste twee mensen met
           deze administratieve rol binnen een groep te hebben.
         </p>
-      )
+      ),
     },
     {
       question: "NOODGEVAL: Wat te doen als een kind verdwijnt?",
@@ -8799,7 +8799,7 @@ const Development = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "NOODGEVAL: Wat te doen met een gewond kind?",
@@ -8859,7 +8859,7 @@ const Development = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -8870,8 +8870,8 @@ const Development = {
           en je je telefoon bij hebt. Neem contact op met de groepsbeheerder (s)
           of de communitybeheerders als je niet over deze nummers beschikt.
         </p>
-      )
-    }
+      ),
+    },
   ],
   it: [
     {
@@ -8885,7 +8885,7 @@ const Development = {
           analogo fra i membri del gruppo. Regole diverse o ulteriori devono
           essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -8908,7 +8908,7 @@ const Development = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8923,7 +8923,7 @@ const Development = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -8948,7 +8948,7 @@ const Development = {
             <li>Community management: bla@email.com </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -8962,7 +8962,7 @@ const Development = {
           chiedere di entrare a farne parte, come singolo o come gruppo di
           genitori, contattando l’amministratore.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -8977,7 +8977,7 @@ const Development = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -8999,7 +8999,7 @@ const Development = {
           Consigliamo di avere almeno due persone con il ruolo di amministratore
           all’interno di un gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -9041,7 +9041,7 @@ const Development = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -9110,7 +9110,7 @@ const Development = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -9122,8 +9122,8 @@ const Development = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
+      ),
+    },
   ],
   el: [],
   fr: [
@@ -9131,26 +9131,54 @@ const Development = {
       question: "Comment fonctionne le groupe ?",
       answer: (
         <p>
-          Chaque groupe peut décider comment organiser les tours de garde et gérer la rotation des horaires. En général, au sein d'un groupe, le temps mis à la disposition par chaque parent doit être aussi équilibré que possible, chaque parent offrant à peu près le même temps. Cependant, chaque règle différente ou supplémentaire doit être discutée hors ligne et approuvée par tous les membres du groupe.
+          Chaque groupe peut décider comment organiser les tours de garde et
+          gérer la rotation des horaires. En général, au sein d'un groupe, le
+          temps mis à la disposition par chaque parent doit être aussi équilibré
+          que possible, chaque parent offrant à peu près le même temps.
+          Cependant, chaque règle différente ou supplémentaire doit être
+          discutée hors ligne et approuvée par tous les membres du groupe.
         </p>
-      )
+      ),
     },
     {
-      question: "Que se passe-t-il si je ne suis pas en mesure d'assurer mon tour de garde ?",
+      question:
+        "Que se passe-t-il si je ne suis pas en mesure d'assurer mon tour de garde ?",
       answer: (
         <p>
-          Si vous ne pouvez pas participer, vous devez contacter immédiatement le ou les administrateurs du groupe pour trouver une solution. La solution préférée est de trouver un parent du groupe qui peut vous remplacer. Dans le cas où ce n'est pas faisable, il est possible d'impliquer un professionnel de la garde d'enfants externe ou d'annuler le tour et l'activité. Cependant, cette dernière option ne devrait être adoptée que dans le cas où d'autres solutions ne seraient pas possibles, afin de ne pas causer de difficultés aux autres familles. En outre, il est recommandé aux groupes de décider à l'avance, une fois le groupe formé, comment faire face à ces inconvénients (par exemple décider si la participation d'un professionnel externe peut être une option ou non)
+          Si vous ne pouvez pas participer, vous devez contacter immédiatement
+          le ou les administrateurs du groupe pour trouver une solution. La
+          solution préférée est de trouver un parent du groupe qui peut vous
+          remplacer. Dans le cas où ce n'est pas faisable, il est possible
+          d'impliquer un professionnel de la garde d'enfants externe ou
+          d'annuler le tour et l'activité. Cependant, cette dernière option ne
+          devrait être adoptée que dans le cas où d'autres solutions ne seraient
+          pas possibles, afin de ne pas causer de difficultés aux autres
+          familles. En outre, il est recommandé aux groupes de décider à
+          l'avance, une fois le groupe formé, comment faire face à ces
+          inconvénients (par exemple décider si la participation d'un
+          professionnel externe peut être une option ou non)
         </p>
-      )
+      ),
     },
     {
       question:
         "Que se passe-t-il si je n'ai aucune expérience dans la gestion de groupes d'enfants ?",
       answer: (
         <p>
-          Au cas où vous auriez peur de gérer un groupe d'enfants, notre expérience avec les parents qui ont participé aux activités précédentes de Families Share nous a appris que l'inquiétude est compréhensible mais pas réelle, car en réalité tout est plus facile que cela en a l'air. Écoutez les histoires des parents qui ont participé l'été dernier aux activités Families Share sur notre chaîne YouTube <a href="https://www.youtube.com/channel/UCUd_D8PkEic9pPEY3SysmXw">Families - Share EU </a>
+          Au cas où vous auriez peur de gérer un groupe d'enfants, notre
+          expérience avec les parents qui ont participé aux activités
+          précédentes de Families Share nous a appris que l'inquiétude est
+          compréhensible mais pas réelle, car en réalité tout est plus facile
+          que cela en a l'air. Écoutez les histoires des parents qui ont
+          participé l'été dernier aux activités Families Share sur notre chaîne
+          YouTube
+{" "}
+          <a href="https://www.youtube.com/channel/UCUd_D8PkEic9pPEY3SysmXw">
+            Families - Share EU
+{" "}
+          </a>
         </p>
-      )
+      ),
     },
     {
       question:
@@ -9158,9 +9186,16 @@ const Development = {
       answer: (
         <div>
           <p>
-            Pour une gestion de groupe optimale et pour des raisons de sécurité, nous recommandons de ne pas dépasser le ratio parents-enfants 1:6.
-            Jetez un coup d'œil aux besoins spéciaux des enfants participant à des activités communes (p. ex. allergies, intolérances et autres besoins spéciaux) en exportant les informations de l'activité.
-            En cas d'urgence, contactez les premiers secours et informez l'administrateur du groupe ainsi que les parents de l'enfant via les contacts disponibles dans la section réservée aux membres de l'application ou de la plateforme. Gardez les numéros d'urgence à portée de main :
+            Pour une gestion de groupe optimale et pour des raisons de sécurité,
+            nous recommandons de ne pas dépasser le ratio parents-enfants 1:6.
+            Jetez un coup d'œil aux besoins spéciaux des enfants participant à
+            des activités communes (p. ex. allergies, intolérances et autres
+            besoins spéciaux) en exportant les informations de l'activité. En
+            cas d'urgence, contactez les premiers secours et informez
+            l'administrateur du groupe ainsi que les parents de l'enfant via les
+            contacts disponibles dans la section réservée aux membres de
+            l'application ou de la plateforme. Gardez les numéros d'urgence à
+            portée de main :
           </p>
           <ul>
             <li>Belgique : Ambulance 112</li>
@@ -9170,66 +9205,111 @@ const Development = {
             <li>Gestion de la communauté : hallo@cokido.org</li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Comment créer un nouveau groupe ?",
       answer: (
         <p>
-          La première étape pour entrer dans le monde de Families Share est de créer un nouveau groupe de parents. Vous pouvez impliquer votre réseau personnel et créer votre propre groupe, en sélectionnant « créer un groupe » et en invitant vos amis à le rejoindre, ou en recherchant un groupe existant dans la zone (en sélectionnant l'option « rechercher groupe ») et en demandant à le rejoindre, en tant que parent individuellement ou avec votre groupe, en contactant l'administrateur.
+          La première étape pour entrer dans le monde de Families Share est de
+          créer un nouveau groupe de parents. Vous pouvez impliquer votre réseau
+          personnel et créer votre propre groupe, en sélectionnant « créer un
+          groupe » et en invitant vos amis à le rejoindre, ou en recherchant un
+          groupe existant dans la zone (en sélectionnant l'option « rechercher
+          groupe ») et en demandant à le rejoindre, en tant que parent
+          individuellement ou avec votre groupe, en contactant l'administrateur.
         </p>
-      )
+      ),
     },
     {
       question: "Quelles activités puis-je organiser ?",
       answer: (
         <p>
-          Grâce à l'application Families Share tous les types d'activités de garde d'enfants peuvent être organisées : semaines ou jours de co-jeu pendant les vacances scolaires, activités d'accompagnement ou de ramassage d'enfants à l'école, activités péri ou parascolaires, visites touristiques, etc. Avec l'application les parents planifient des activités différentes en fonction des créneaux horaires. Ensuite, vous pouvez vous inscrire, et/ou vos enfants, pour participer aux activités.
+          Grâce à l'application Families Share tous les types d'activités de
+          garde d'enfants peuvent être organisées : semaines ou jours de co-jeu
+          pendant les vacances scolaires, activités d'accompagnement ou de
+          ramassage d'enfants à l'école, activités péri ou parascolaires,
+          visites touristiques, etc. Avec l'application les parents planifient
+          des activités différentes en fonction des créneaux horaires. Ensuite,
+          vous pouvez vous inscrire, et/ou vos enfants, pour participer aux
+          activités.
         </p>
-      )
+      ),
     },
     {
       question: "Quel est le rôle de l'administrateur du groupe ?",
       answer: (
         <p>
-          L'administrateur du groupe joue un rôle central au sein de la plateforme Families Share. Tout d'abord, il/elle crée le groupe et il/elle est la personne de contact qui peut être contactée par des utilisateurs, des externes au groupe, pour demander des informations au sujet du groupe. L'administrateur du groupe ajoute également de nouveaux membres au groupe. De plus, l'administrateur peut modifier les activités et les créneaux horaires, il peut exporter les informations du groupe ainsi que les détails de l'activité, même une fois l'activité terminée. L'administrateur définit les caractéristiques du groupe (visible/invisible) et il/elle a le contrôle sur l'activité de planification avancée. Enfin, l'administrateur peut décider de rendre d'autres membres administrateurs. Il n'y a pas un nombre maximum d'administrateurs au sein d'un groupe, chaque membre peut être défini comme tel. Nous suggérons d'avoir au moins deux personnes ayant un rôle administratif au sein d'un groupe.
+          L'administrateur du groupe joue un rôle central au sein de la
+          plateforme Families Share. Tout d'abord, il/elle crée le groupe et
+          il/elle est la personne de contact qui peut être contactée par des
+          utilisateurs, des externes au groupe, pour demander des informations
+          au sujet du groupe. L'administrateur du groupe ajoute également de
+          nouveaux membres au groupe. De plus, l'administrateur peut modifier
+          les activités et les créneaux horaires, il peut exporter les
+          informations du groupe ainsi que les détails de l'activité, même une
+          fois l'activité terminée. L'administrateur définit les
+          caractéristiques du groupe (visible/invisible) et il/elle a le
+          contrôle sur l'activité de planification avancée. Enfin,
+          l'administrateur peut décider de rendre d'autres membres
+          administrateurs. Il n'y a pas un nombre maximum d'administrateurs au
+          sein d'un groupe, chaque membre peut être défini comme tel. Nous
+          suggérons d'avoir au moins deux personnes ayant un rôle administratif
+          au sein d'un groupe.
         </p>
-      )
+      ),
     },
     {
       question: "Que faire si un enfant est porté disparu ?",
       answer: (
         <div>
           <p>
-            La première chose à faire lorsqu'un enfant est porté disparu est d'avertir ses parents s'ils n'étaient pas présents à l'activité de co-jeu.
-            Cherchez dans les environs immédiats. Les enfants plus âgés ont tendance à aller chez des amis, appelez alors tout ami, parents ou voisins dont l'enfant serait proche. Si l'enfant n'est pas retrouvé, appelez la police, qui est tenue d'intégrer immédiatement le nom et les informations de l'enfant disparu dans le système national, afin d'élargir la recherche.
-            Soyez prêt à fournir autant d'informations clés que possible, comme par exemple :
+            La première chose à faire lorsqu'un enfant est porté disparu est
+            d'avertir ses parents s'ils n'étaient pas présents à l'activité de
+            co-jeu. Cherchez dans les environs immédiats. Les enfants plus âgés
+            ont tendance à aller chez des amis, appelez alors tout ami, parents
+            ou voisins dont l'enfant serait proche. Si l'enfant n'est pas
+            retrouvé, appelez la police, qui est tenue d'intégrer immédiatement
+            le nom et les informations de l'enfant disparu dans le système
+            national, afin d'élargir la recherche. Soyez prêt à fournir autant
+            d'informations clés que possible, comme par exemple :
           </p>
           <ul>
             <li>Nom complet de l'enfant</li>
             <li>Poids de l'enfant</li>
             <li>Taille de l'enfant</li>
             <li>Âge et date de naissance de l'enfant</li>
-            <li>Vêtements que l'enfant portait la dernière fois qu'il a été vu</li>
-            <li>raits caractéristiques d'identification, comme des lunettes ou une tache de naissance</li>
-            <li>Noms et coordonnées des amis ou des connaissances proches de l'enfant</li>
+            <li>
+              Vêtements que l'enfant portait la dernière fois qu'il a été vu
+            </li>
+            <li>
+              raits caractéristiques d'identification, comme des lunettes ou une
+              tache de naissance
+            </li>
+            <li>
+              Noms et coordonnées des amis ou des connaissances proches de
+              l'enfant
+            </li>
             <li>Lieux fréquemment visités</li>
             <li>Problèmes de santé de l'enfant</li>
             <li>
-              out autre détail éventuellement pertinent sur l'heure ou le lieu où l'enfant a disparu
-              Les parents de l'enfant ainsi que les parents co-jouant doivent garder leur ligne téléphonique ouverte.
+              out autre détail éventuellement pertinent sur l'heure ou le lieu
+              où l'enfant a disparu Les parents de l'enfant ainsi que les
+              parents co-jouant doivent garder leur ligne téléphonique ouverte.
               (informations réadaptées par safewise.com)
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "URGENCE : Que faire si un enfant s'est blessé ?",
       answer: (
         <div>
           <p>
-            Si un enfant se blesse, il y a différentes actions possibles à entreprendre. Tout d'abord, vous devez comprendre à quel point la situation est grave.
+            Si un enfant se blesse, il y a différentes actions possibles à
+            entreprendre. Tout d'abord, vous devez comprendre à quel point la
+            situation est grave.
           </p>
           <ol>
             <li>
@@ -9237,15 +9317,22 @@ const Development = {
               <ul>
                 <li>-ne respire plus</li>
                 <li>
-                  - a du mal à respirer (par exemple, si vous remarquez qu'il/elle respire rapidement, en haletant, sa respiration devient très sifflante, ou les muscles juste sous la cage thoracique s'enfoncent quand il/elle respire)
+                  - a du mal à respirer (par exemple, si vous remarquez
+                  qu'il/elle respire rapidement, en haletant, sa respiration
+                  devient très sifflante, ou les muscles juste sous la cage
+                  thoracique s'enfoncent quand il/elle respire)
                 </li>
                 <li>
-                  - est inconscient ou semble ne pas avoir conscience de ce qui se passe
+                  - est inconscient ou semble ne pas avoir conscience de ce qui
+                  se passe
                 </li>
-                <li>-  une coupure qui n'arrête pas de saigner ou est fort ouverte</li>
+                <li>
+                  - une coupure qui n'arrête pas de saigner ou est fort ouverte
+                </li>
                 <li>- ne se réveille pas</li>
                 <li>
-                  - fait une crise pour la première fois, même si il/elle semble récupérer
+                  - fait une crise pour la première fois, même si il/elle semble
+                  récupérer
                 </li>
               </ul>
             </li>
@@ -9253,18 +9340,25 @@ const Development = {
               <p>Emmenez l'enfant au service de premiers soins s'il:</p>
               <ul>
                 <li>
-                  - a de la fièvre et demeure léthargique malgré avoir reçu du paracétamol ou de l'ibuprofène
+                  - a de la fièvre et demeure léthargique malgré avoir reçu du
+                  paracétamol ou de l'ibuprofène
                 </li>
                 <li>- a une douleur sévère au ventre (abdominale)</li>
                 <li>
-                  - a une blessure aux jambes ou aux bras et ne peut pas s'en servir
+                  - a une blessure aux jambes ou aux bras et ne peut pas s'en
+                  servir
                 </li>
-                <li>- a avalé du poison ou des comprimés
-(https://www.health.belgium.be/fr)</li>
+                <li>
+                  - a avalé du poison ou des comprimés
+                  (https://www.health.belgium.be/fr)
+                </li>
               </ul>
             </li>
             <li>
-              <p>Utilisez la trousse de premiers soins en cas de blessures mineures comme :</p>
+              <p>
+                Utilisez la trousse de premiers soins en cas de blessures
+                mineures comme :
+              </p>
               <ul>
                 <li>- coupures</li>
                 <li>- éraflures</li>
@@ -9274,17 +9368,21 @@ const Development = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
         "URGENCE : Que faire si vous êtes bloqué hors du lieu de co-jeu ?",
       answer: (
         <p>
-          Si vous avez votre téléphone avec vous, contactez le(s) autre(s) parent(s) participant à l'activité (s'il(s) est(sont) à l'intérieur) ou le responsable de l'emplacement si le numéro est disponible. Si vous n'avez pas ces numéros, contactez le ou les administrateurs du groupe ou les responsables de la communauté.
+          Si vous avez votre téléphone avec vous, contactez le(s) autre(s)
+          parent(s) participant à l'activité (s'il(s) est(sont) à l'intérieur)
+          ou le responsable de l'emplacement si le numéro est disponible. Si
+          vous n'avez pas ces numéros, contactez le ou les administrateurs du
+          groupe ou les responsables de la communauté.
         </p>
-      )
-    }
+      ),
+    },
   ],
 };
 
@@ -9307,7 +9405,7 @@ const FBK = {
           da assicurare un impegno in termini di tempo analogo fra i membri del
           gruppo. essere discusse e concordate offline tra i membri del gruppo.
         </p>
-      )
+      ),
     },
     {
       question: "Cosa succede se non riesco a rispettare il mio turno?",
@@ -9330,7 +9428,7 @@ const FBK = {
           un servizio di baby-sitting o altre figure professionali esterne al
           gruppo).
         </p>
-      )
+      ),
     },
     {
       question:
@@ -9345,7 +9443,7 @@ const FBK = {
           precedenti esperienze Families Share nel nostro canale YouTube
           Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -9373,7 +9471,7 @@ const FBK = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Come posso creare un nuovo gruppo?",
@@ -9388,7 +9486,7 @@ const FBK = {
           contattare il team Families_Share per capire come organizzare le
           attività, sempre in sinergia con il team HR.
         </p>
-      )
+      ),
     },
     {
       question: "Che attività si possono organizzare?",
@@ -9403,7 +9501,7 @@ const FBK = {
           genitore, successivamente, aggiunge se stesso ed i propri figli alle
           attività desiderate.
         </p>
-      )
+      ),
     },
     {
       question: "Quali sono i ruoli dell’amministratore del gruppo?",
@@ -9424,7 +9522,7 @@ const FBK = {
           amministratori. Non c’è un numero massimo di amministratori
           all’interno del gruppo, ogni membro può essere impostato come tale.
         </p>
-      )
+      ),
     },
     {
       question: "EMERGENZE: Cosa fare se un/a bambino/a si è perso/a?",
@@ -9466,7 +9564,7 @@ const FBK = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "EMERGENZE Cosa fare se un/a bambino/a si ferisce?",
@@ -9535,7 +9633,7 @@ const FBK = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -9547,9 +9645,9 @@ const FBK = {
           numero è a disposizione. Nel caso in cui tu non abbia questi numeri,
           contatta l&apos;amministratore del gruppo o il community manager.
         </p>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 };
 
 const Cokido = {
@@ -9566,7 +9664,7 @@ const Cokido = {
           groepsregels bespreek je best offline met alle andere groepsleden
           aanwezig om samen te beslissen en iedereens goedkeuring te krijgen.
         </p>
-      )
+      ),
     },
     {
       question: "Wat gebeurt er als ik mijn beurt niet kan opnemen?",
@@ -9584,7 +9682,7 @@ const Cokido = {
           situaties (bv. beslissen of de betrokkenheid van externe professional
           een optie kan zijn of niet)
         </p>
-      )
+      ),
     },
     {
       question:
@@ -9599,7 +9697,7 @@ const Cokido = {
           van de ouders die afgelopen zomer hebben deelgenomen aan activiteiten
           van Families Share in ons YouTube-kanaal Families - Share EU
         </p>
-      )
+      ),
     },
     {
       question:
@@ -9625,7 +9723,7 @@ const Cokido = {
             <li>Cokido helpdesk: 0492761123</li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Hoe kan ik een nieuwe groep maken?",
@@ -9640,7 +9738,7 @@ const Cokido = {
           ouder of met je groep, door contact op te nemen met de
           groepsbeheerder.
         </p>
-      )
+      ),
     },
     {
       question: "Welke activiteiten kan ik organiseren?",
@@ -9654,7 +9752,7 @@ const Cokido = {
           tijdsloten en dagen te bepalen. Later kan jezelh en / of je kinderen
           aanmelden voor deelname aan de activiteiten.
         </p>
-      )
+      ),
     },
     {
       question: "Welke rol speelt de groepsbeheerder?",
@@ -9675,7 +9773,7 @@ const Cokido = {
           zodanig worden ingesteld. We raden aan om ten minste twee mensen met
           deze administratieve rol binnen een groep te hebben.
         </p>
-      )
+      ),
     },
     {
       question: "NOODGEVAL: Wat te doen als een kind verdwijnt?",
@@ -9708,7 +9806,7 @@ const Cokido = {
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "NOODGEVAL: Wat te doen met een gewond kind?",
@@ -9768,7 +9866,7 @@ const Cokido = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
@@ -9779,34 +9877,62 @@ const Cokido = {
           en je je telefoon bij hebt. Neem contact op met de groepsbeheerder (s)
           of de communitybeheerders als je niet over deze nummers beschikt.
         </p>
-      )
-    }
+      ),
+    },
   ],
   fr: [
     {
       question: "Comment fonctionne le groupe ?",
       answer: (
         <p>
-          Chaque groupe peut décider comment organiser les tours de garde et gérer la rotation des horaires. En général, au sein d'un groupe, le temps mis à la disposition par chaque parent doit être aussi équilibré que possible, chaque parent offrant à peu près le même temps. Cependant, chaque règle différente ou supplémentaire doit être discutée hors ligne et approuvée par tous les membres du groupe.
+          Chaque groupe peut décider comment organiser les tours de garde et
+          gérer la rotation des horaires. En général, au sein d'un groupe, le
+          temps mis à la disposition par chaque parent doit être aussi équilibré
+          que possible, chaque parent offrant à peu près le même temps.
+          Cependant, chaque règle différente ou supplémentaire doit être
+          discutée hors ligne et approuvée par tous les membres du groupe.
         </p>
-      )
+      ),
     },
     {
-      question: "Que se passe-t-il si je ne suis pas en mesure d'assurer mon tour de garde ?",
+      question:
+        "Que se passe-t-il si je ne suis pas en mesure d'assurer mon tour de garde ?",
       answer: (
         <p>
-          Si vous ne pouvez pas participer, vous devez contacter immédiatement le ou les administrateurs du groupe pour trouver une solution. La solution préférée est de trouver un parent du groupe qui peut vous remplacer. Dans le cas où ce n'est pas faisable, il est possible d'impliquer un professionnel de la garde d'enfants externe ou d'annuler le tour et l'activité. Cependant, cette dernière option ne devrait être adoptée que dans le cas où d'autres solutions ne seraient pas possibles, afin de ne pas causer de difficultés aux autres familles. En outre, il est recommandé aux groupes de décider à l'avance, une fois le groupe formé, comment faire face à ces inconvénients (par exemple décider si la participation d'un professionnel externe peut être une option ou non)
+          Si vous ne pouvez pas participer, vous devez contacter immédiatement
+          le ou les administrateurs du groupe pour trouver une solution. La
+          solution préférée est de trouver un parent du groupe qui peut vous
+          remplacer. Dans le cas où ce n'est pas faisable, il est possible
+          d'impliquer un professionnel de la garde d'enfants externe ou
+          d'annuler le tour et l'activité. Cependant, cette dernière option ne
+          devrait être adoptée que dans le cas où d'autres solutions ne seraient
+          pas possibles, afin de ne pas causer de difficultés aux autres
+          familles. En outre, il est recommandé aux groupes de décider à
+          l'avance, une fois le groupe formé, comment faire face à ces
+          inconvénients (par exemple décider si la participation d'un
+          professionnel externe peut être une option ou non)
         </p>
-      )
+      ),
     },
     {
       question:
         "Que se passe-t-il si je n'ai aucune expérience dans la gestion de groupes d'enfants ?",
       answer: (
         <p>
-          Au cas où vous auriez peur de gérer un groupe d'enfants, notre expérience avec les parents qui ont participé aux activités précédentes de Families Share nous a appris que l'inquiétude est compréhensible mais pas réelle, car en réalité tout est plus facile que cela en a l'air. Écoutez les histoires des parents qui ont participé l'été dernier aux activités Families Share sur notre chaîne YouTube <a href="https://www.youtube.com/channel/UCUd_D8PkEic9pPEY3SysmXw">Families - Share EU </a>
+          Au cas où vous auriez peur de gérer un groupe d'enfants, notre
+          expérience avec les parents qui ont participé aux activités
+          précédentes de Families Share nous a appris que l'inquiétude est
+          compréhensible mais pas réelle, car en réalité tout est plus facile
+          que cela en a l'air. Écoutez les histoires des parents qui ont
+          participé l'été dernier aux activités Families Share sur notre chaîne
+          YouTube
+{" "}
+          <a href="https://www.youtube.com/channel/UCUd_D8PkEic9pPEY3SysmXw">
+            Families - Share EU
+{" "}
+          </a>
         </p>
-      )
+      ),
     },
     {
       question:
@@ -9814,9 +9940,16 @@ const Cokido = {
       answer: (
         <div>
           <p>
-            Pour une gestion de groupe optimale et pour des raisons de sécurité, nous recommandons de ne pas dépasser le ratio parents-enfants 1:6.
-            Jetez un coup d'œil aux besoins spéciaux des enfants participant à des activités communes (p. ex. allergies, intolérances et autres besoins spéciaux) en exportant les informations de l'activité.
-            En cas d'urgence, contactez les premiers secours et informez l'administrateur du groupe ainsi que les parents de l'enfant via les contacts disponibles dans la section réservée aux membres de l'application ou de la plateforme. Gardez les numéros d'urgence à portée de main :
+            Pour une gestion de groupe optimale et pour des raisons de sécurité,
+            nous recommandons de ne pas dépasser le ratio parents-enfants 1:6.
+            Jetez un coup d'œil aux besoins spéciaux des enfants participant à
+            des activités communes (p. ex. allergies, intolérances et autres
+            besoins spéciaux) en exportant les informations de l'activité. En
+            cas d'urgence, contactez les premiers secours et informez
+            l'administrateur du groupe ainsi que les parents de l'enfant via les
+            contacts disponibles dans la section réservée aux membres de
+            l'application ou de la plateforme. Gardez les numéros d'urgence à
+            portée de main :
           </p>
           <ul>
             <li>Belgique : Ambulance 112</li>
@@ -9826,66 +9959,111 @@ const Cokido = {
             <li>Gestion de la communauté : hallo@cokido.org</li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "Comment créer un nouveau groupe ?",
       answer: (
         <p>
-          La première étape pour entrer dans le monde de Families Share est de créer un nouveau groupe de parents. Vous pouvez impliquer votre réseau personnel et créer votre propre groupe, en sélectionnant « créer un groupe » et en invitant vos amis à le rejoindre, ou en recherchant un groupe existant dans la zone (en sélectionnant l'option « rechercher groupe ») et en demandant à le rejoindre, en tant que parent individuellement ou avec votre groupe, en contactant l'administrateur.
+          La première étape pour entrer dans le monde de Families Share est de
+          créer un nouveau groupe de parents. Vous pouvez impliquer votre réseau
+          personnel et créer votre propre groupe, en sélectionnant « créer un
+          groupe » et en invitant vos amis à le rejoindre, ou en recherchant un
+          groupe existant dans la zone (en sélectionnant l'option « rechercher
+          groupe ») et en demandant à le rejoindre, en tant que parent
+          individuellement ou avec votre groupe, en contactant l'administrateur.
         </p>
-      )
+      ),
     },
     {
       question: "Quelles activités puis-je organiser ?",
       answer: (
         <p>
-          Grâce à l'application Families Share tous les types d'activités de garde d'enfants peuvent être organisées : semaines ou jours de co-jeu pendant les vacances scolaires, activités d'accompagnement ou de ramassage d'enfants à l'école, activités péri ou parascolaires, visites touristiques, etc. Avec l'application les parents planifient des activités différentes en fonction des créneaux horaires. Ensuite, vous pouvez vous inscrire, et/ou vos enfants, pour participer aux activités.
+          Grâce à l'application Families Share tous les types d'activités de
+          garde d'enfants peuvent être organisées : semaines ou jours de co-jeu
+          pendant les vacances scolaires, activités d'accompagnement ou de
+          ramassage d'enfants à l'école, activités péri ou parascolaires,
+          visites touristiques, etc. Avec l'application les parents planifient
+          des activités différentes en fonction des créneaux horaires. Ensuite,
+          vous pouvez vous inscrire, et/ou vos enfants, pour participer aux
+          activités.
         </p>
-      )
+      ),
     },
     {
       question: "Quel est le rôle de l'administrateur du groupe ?",
       answer: (
         <p>
-          L'administrateur du groupe joue un rôle central au sein de la plateforme Families Share. Tout d'abord, il/elle crée le groupe et il/elle est la personne de contact qui peut être contactée par des utilisateurs, des externes au groupe, pour demander des informations au sujet du groupe. L'administrateur du groupe ajoute également de nouveaux membres au groupe. De plus, l'administrateur peut modifier les activités et les créneaux horaires, il peut exporter les informations du groupe ainsi que les détails de l'activité, même une fois l'activité terminée. L'administrateur définit les caractéristiques du groupe (visible/invisible) et il/elle a le contrôle sur l'activité de planification avancée. Enfin, l'administrateur peut décider de rendre d'autres membres administrateurs. Il n'y a pas un nombre maximum d'administrateurs au sein d'un groupe, chaque membre peut être défini comme tel. Nous suggérons d'avoir au moins deux personnes ayant un rôle administratif au sein d'un groupe.
+          L'administrateur du groupe joue un rôle central au sein de la
+          plateforme Families Share. Tout d'abord, il/elle crée le groupe et
+          il/elle est la personne de contact qui peut être contactée par des
+          utilisateurs, des externes au groupe, pour demander des informations
+          au sujet du groupe. L'administrateur du groupe ajoute également de
+          nouveaux membres au groupe. De plus, l'administrateur peut modifier
+          les activités et les créneaux horaires, il peut exporter les
+          informations du groupe ainsi que les détails de l'activité, même une
+          fois l'activité terminée. L'administrateur définit les
+          caractéristiques du groupe (visible/invisible) et il/elle a le
+          contrôle sur l'activité de planification avancée. Enfin,
+          l'administrateur peut décider de rendre d'autres membres
+          administrateurs. Il n'y a pas un nombre maximum d'administrateurs au
+          sein d'un groupe, chaque membre peut être défini comme tel. Nous
+          suggérons d'avoir au moins deux personnes ayant un rôle administratif
+          au sein d'un groupe.
         </p>
-      )
+      ),
     },
     {
       question: "Que faire si un enfant est porté disparu ?",
       answer: (
         <div>
           <p>
-            La première chose à faire lorsqu'un enfant est porté disparu est d'avertir ses parents s'ils n'étaient pas présents à l'activité de co-jeu.
-            Cherchez dans les environs immédiats. Les enfants plus âgés ont tendance à aller chez des amis, appelez alors tout ami, parents ou voisins dont l'enfant serait proche. Si l'enfant n'est pas retrouvé, appelez la police, qui est tenue d'intégrer immédiatement le nom et les informations de l'enfant disparu dans le système national, afin d'élargir la recherche.
-            Soyez prêt à fournir autant d'informations clés que possible, comme par exemple :
+            La première chose à faire lorsqu'un enfant est porté disparu est
+            d'avertir ses parents s'ils n'étaient pas présents à l'activité de
+            co-jeu. Cherchez dans les environs immédiats. Les enfants plus âgés
+            ont tendance à aller chez des amis, appelez alors tout ami, parents
+            ou voisins dont l'enfant serait proche. Si l'enfant n'est pas
+            retrouvé, appelez la police, qui est tenue d'intégrer immédiatement
+            le nom et les informations de l'enfant disparu dans le système
+            national, afin d'élargir la recherche. Soyez prêt à fournir autant
+            d'informations clés que possible, comme par exemple :
           </p>
           <ul>
             <li>Nom complet de l'enfant</li>
             <li>Poids de l'enfant</li>
             <li>Taille de l'enfant</li>
             <li>Âge et date de naissance de l'enfant</li>
-            <li>Vêtements que l'enfant portait la dernière fois qu'il a été vu</li>
-            <li>Traits caractéristiques d'identification, comme des lunettes ou une tache de naissance</li>
-            <li>Noms et coordonnées des amis ou des connaissances proches de l'enfant</li>
+            <li>
+              Vêtements que l'enfant portait la dernière fois qu'il a été vu
+            </li>
+            <li>
+              Traits caractéristiques d'identification, comme des lunettes ou
+              une tache de naissance
+            </li>
+            <li>
+              Noms et coordonnées des amis ou des connaissances proches de
+              l'enfant
+            </li>
             <li>Lieux fréquemment visités</li>
             <li>Problèmes de santé de l'enfant</li>
             <li>
-              Tout autre détail éventuellement pertinent sur l'heure ou le lieu où l'enfant a disparu
-              Les parents de l'enfant ainsi que les parents co-jouant doivent garder leur ligne téléphonique ouverte.
+              Tout autre détail éventuellement pertinent sur l'heure ou le lieu
+              où l'enfant a disparu Les parents de l'enfant ainsi que les
+              parents co-jouant doivent garder leur ligne téléphonique ouverte.
               (informations réadaptées par safewise.com)
             </li>
           </ul>
         </div>
-      )
+      ),
     },
     {
       question: "URGENCE : Que faire si un enfant s'est blessé ?",
       answer: (
         <div>
           <p>
-            Si un enfant se blesse, il y a différentes actions possibles à entreprendre. Tout d'abord, vous devez comprendre à quel point la situation est grave.
+            Si un enfant se blesse, il y a différentes actions possibles à
+            entreprendre. Tout d'abord, vous devez comprendre à quel point la
+            situation est grave.
           </p>
           <ol>
             <li>
@@ -9893,15 +10071,22 @@ const Cokido = {
               <ul>
                 <li>- ne respire plus</li>
                 <li>
-                  - a du mal à respirer (par exemple, si vous remarquez qu'il/elle respire rapidement, en haletant, sa respiration devient très sifflante, ou les muscles juste sous la cage thoracique s'enfoncent quand il/elle respire)
+                  - a du mal à respirer (par exemple, si vous remarquez
+                  qu'il/elle respire rapidement, en haletant, sa respiration
+                  devient très sifflante, ou les muscles juste sous la cage
+                  thoracique s'enfoncent quand il/elle respire)
                 </li>
                 <li>
-                  - est inconscient ou semble ne pas avoir conscience de ce qui se passe
+                  - est inconscient ou semble ne pas avoir conscience de ce qui
+                  se passe
                 </li>
-                <li>- une coupure qui n'arrête pas de saigner ou est fort ouverte</li>
+                <li>
+                  - une coupure qui n'arrête pas de saigner ou est fort ouverte
+                </li>
                 <li>- ne se réveille pas</li>
                 <li>
-                  - fait une crise pour la première fois, même si il/elle semble récupérer
+                  - fait une crise pour la première fois, même si il/elle semble
+                  récupérer
                 </li>
               </ul>
             </li>
@@ -9909,18 +10094,25 @@ const Cokido = {
               <p>Emmenez l'enfant au service de premiers soins s'il:</p>
               <ul>
                 <li>
-                  - a de la fièvre et demeure léthargique malgré avoir reçu du paracétamol ou de l'ibuprofène
+                  - a de la fièvre et demeure léthargique malgré avoir reçu du
+                  paracétamol ou de l'ibuprofène
                 </li>
                 <li>- a une douleur sévère au ventre (abdominale)</li>
                 <li>
-                  - a une blessure aux jambes ou aux bras et ne peut pas s'en servir
+                  - a une blessure aux jambes ou aux bras et ne peut pas s'en
+                  servir
                 </li>
-                <li>- a avalé du poison ou des comprimés
-(https://www.health.belgium.be/fr)</li>
+                <li>
+                  - a avalé du poison ou des comprimés
+                  (https://www.health.belgium.be/fr)
+                </li>
               </ul>
             </li>
             <li>
-              <p>Utilisez la trousse de premiers soins en cas de blessures mineures comme :</p>
+              <p>
+                Utilisez la trousse de premiers soins en cas de blessures
+                mineures comme :
+              </p>
               <ul>
                 <li>- coupures</li>
                 <li>- éraflures</li>
@@ -9930,17 +10122,21 @@ const Cokido = {
             </li>
           </ol>
         </div>
-      )
+      ),
     },
     {
       question:
         "URGENCE : Que faire si vous êtes bloqué hors du lieu de co-jeu ?",
       answer: (
         <p>
-          Si vous avez votre téléphone avec vous, contactez le(s) autre(s) parent(s) participant à l'activité (s'il(s) est(sont) à l'intérieur) ou le responsable de l'emplacement si le numéro est disponible. Si vous n'avez pas ces numéros, contactez le ou les administrateurs du groupe ou les responsables de la communauté.
+          Si vous avez votre téléphone avec vous, contactez le(s) autre(s)
+          parent(s) participant à l'activité (s'il(s) est(sont) à l'intérieur)
+          ou le responsable de l'emplacement si le numéro est disponible. Si
+          vous n'avez pas ces numéros, contactez le ou les administrateurs du
+          groupe ou les responsables de la communauté.
         </p>
-      )
-    }
+      ),
+    },
   ],
 };
 
@@ -9965,7 +10161,7 @@ const Faqs = {
   Martellago,
   Andria,
   Homeschooling,
-  Pederobba
+  Pederobba,
 };
 
 export default Faqs;

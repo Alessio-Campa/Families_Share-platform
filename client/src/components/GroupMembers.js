@@ -11,39 +11,39 @@ import LoadingSpinner from "./LoadingSpinner";
 import Log from "./Log";
 import GroupMembersNavbar from "./GroupMembersNavbar";
 
-const getGroupChildren = groupId => {
+const getGroupChildren = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/children`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
 
-const getGroupMembers = groupId => {
+const getGroupMembers = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/members`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
-const getGroupSettings = groupId => {
+const getGroupSettings = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/settings`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
-        open: ""
+        open: "",
       };
     });
 };
@@ -55,7 +55,7 @@ class GroupMembers extends React.Component {
     this.state = {
       fetchedGroupMembers: false,
       group,
-      optionsModalIsOpen: false
+      optionsModalIsOpen: false,
     };
   }
 
@@ -67,7 +67,7 @@ class GroupMembers extends React.Component {
     const children = await getGroupChildren(groupId);
     const acceptedMembers = [];
     let pendingRequests = 0;
-    members.forEach(member => {
+    members.forEach((member) => {
       if (member.user_accepted && member.group_accepted) {
         acceptedMembers.push(member);
       } else if (member.user_accepted && !member.group_accepted) {
@@ -81,7 +81,7 @@ class GroupMembers extends React.Component {
       settings,
       userIsAdmin,
       pendingRequests,
-      fetchedGroupMembers: true
+      fetchedGroupMembers: true,
     });
   }
 
@@ -91,10 +91,10 @@ class GroupMembers extends React.Component {
     this.setState({ optionsModalIsOpen: false });
     axios
       .post(`/api/groups/${groupId}/contacts/export`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -124,7 +124,7 @@ class GroupMembers extends React.Component {
       settings,
       children,
       pendingRequests,
-      optionsModalIsOpen
+      optionsModalIsOpen,
     } = this.state;
     const { language } = this.props;
     const texts = Texts[language].groupMembers;
@@ -132,8 +132,8 @@ class GroupMembers extends React.Component {
       {
         label: texts.export,
         style: "optionsModalButton",
-        handle: this.handleExport
-      }
+        handle: this.handleExport,
+      },
     ];
     const membersPath = `/groups/${group.group_id}/members`;
     return fetchedGroupMembers ? (
@@ -187,7 +187,7 @@ class GroupMembers extends React.Component {
           <Switch>
             <Route
               path={`${membersPath}/parents`}
-              render={props => (
+              render={(props) => (
                 <React.Fragment>
                   {userIsAdmin && (
                     <GroupMembersAdminOptions
@@ -208,7 +208,7 @@ class GroupMembers extends React.Component {
             />
             <Route
               path={`${membersPath}/children`}
-              render={props => (
+              render={(props) => (
                 <GroupMembersList
                   key="children"
                   {...props}
@@ -234,5 +234,5 @@ GroupMembers.propTypes = {
   group: PropTypes.object,
   history: PropTypes.object,
   userIsAdmin: PropTypes.bool,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

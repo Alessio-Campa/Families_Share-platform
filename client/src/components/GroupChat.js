@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import BackNavigation from "./BackNavigation";
 import GroupMessages from "./GroupMessages";
 
-const GroupChat = props => {
+const GroupChat = (props) => {
   const { history, userIsAdmin, group } = props;
   const handleGoBack = () => {
     if (history.length === 1) {
@@ -25,5 +25,5 @@ export default GroupChat;
 GroupChat.propTypes = {
   group: PropTypes.object,
   userIsAdmin: PropTypes.bool,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

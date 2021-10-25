@@ -15,20 +15,20 @@ class NotificationScreen extends React.Component {
     const { groupId, notificationId } = match.params;
     axios
       .get(`/api/groups/${groupId}/notifications/${notificationId}`)
-      .then(response => {
+      .then((response) => {
         const notification = response.data;
         this.setState({
           notificationHeader: notification.header,
           notificationMain: notification.main,
-          fetchedNotificationData: true
+          fetchedNotificationData: true,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           notificationHeader: "",
           notificationMain: "",
-          fetchedNotificationData: true
+          fetchedNotificationData: true,
         });
       });
   }
@@ -43,7 +43,7 @@ class NotificationScreen extends React.Component {
     const {
       fetchedNotificationData,
       notificationHeader,
-      notificationMain
+      notificationMain,
     } = this.state;
     const texts = Texts[language].notificationScreen;
     return (
@@ -72,5 +72,5 @@ export default withLanguage(NotificationScreen);
 NotificationScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };

@@ -14,152 +14,152 @@ import PrivateRoute from "./components/PrivateRoute";
 const styles = () => ({
   info: { backgroundColor: "#202124" },
   message: {
-    fontSize: 15
+    fontSize: 15,
   },
   root: {
     width: "90vw",
     left: "50%",
-    transform: "translateX(-50%)"
-  }
+    transform: "translateX(-50%)",
+  },
 });
 
 const Loading = <LoadingSpinner />;
 
 const LogInScreen = Loadable({
   loader: () => import("./components/LogInScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const CommunityInterface = Loadable({
   loader: () => import("./components/CommunityManagementScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const GroupManagementScreen = Loadable({
   loader: () => import("./components/GroupManagementScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const MyCalendarScreen = Loadable({
   loader: () => import("./components/MyCalendarScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const GroupMainScreen = Loadable({
   loader: () => import("./components/GroupMainScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const MyFamiliesShareScreen = Loadable({
   loader: () => import("./components/MyFamiliesShareScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const StartUpGuide = Loadable({
   loader: () => import("./components/StartUpGuide"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const FaqsScreen = Loadable({
   loader: () => import("./components/FaqsScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const NoMatchScreen = Loadable({
   loader: () => import("./components/NoMatchScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const ProfileScreen = Loadable({
   loader: () => import("./components/ProfileScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const EditProfileScreen = Loadable({
   loader: () => import("./components/EditProfileScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const ChildProfileScreen = Loadable({
   loader: () => import("./components/ChildProfileScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const CreateChildScreen = Loadable({
   loader: () => import("./components/CreateChildScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const SearchGroupScreen = Loadable({
   loader: () => import("./components/SearchGroupScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const EditChildProfileScreen = Loadable({
   loader: () => import("./components/EditChildProfileScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const EditActivityScreen = Loadable({
   loader: () => import("./components/EditActivityScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const AdditionalInfoScreen = Loadable({
   loader: () => import("./components/AdditionalInfoScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const EditGroupScreen = Loadable({
   loader: () => import("./components/EditGroupScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const CreateGroupScreen = Loadable({
   loader: () => import("./components/CreateGroupScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const ActivityScreen = Loadable({
   loader: () => import("./components/ActivityScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const CreateActivityScreen = Loadable({
   loader: () => import("./components/CreateActivityScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const CreatePlanScreen = Loadable({
   loader: () => import("./components/CreatePlanScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const ManagePlanScreen = Loadable({
   loader: () => import("./components/ManagePlanScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const EditPlanScreen = Loadable({
   loader: () => import("./components/EditPlanScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const PendingRequestsScreen = Loadable({
   loader: () => import("./components/PendingRequestsScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const ForgotPasswordScreen = Loadable({
   loader: () => import("./components/ForgotPasswordScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const ChangePasswordScreen = Loadable({
   loader: () => import("./components/ChangePasswordScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const LandingScreen = Loadable({
   loader: () => import("./components/LandingScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const AboutScreen = Loadable({
   loader: () => import("./components/AboutScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const TimeslotScreen = Loadable({
   loader: () => import("./components/TimeslotScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const TimeslotEmergencyScreen = Loadable({
   loader: () => import("./components/TimeslotEmergencyScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const EditTimeslotScreen = Loadable({
   loader: () => import("./components/EditTimeslotScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 const SignUpScreen = Loadable({
   loader: () => import("./components/SignUpScreen"),
-  loading: () => Loading
+  loading: () => Loading,
 });
 
 axios.interceptors.request.use(
-  config => {
+  (config) => {
     let userToken = "";
     const user = localStorage.getItem("user");
     if (user) {
@@ -171,7 +171,7 @@ axios.interceptors.request.use(
 
     return config;
   },
-  error => Promise.reject(error)
+  (error) => Promise.reject(error)
 );
 
 class App extends React.Component {
@@ -183,7 +183,7 @@ class App extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.action === "deviceToken") {
       localStorage.setItem("deviceToken", data.token);
@@ -200,13 +200,13 @@ class App extends React.Component {
           maxSnack={1}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "center"
+            horizontal: "center",
           }}
           autoHideDuration={4000}
           classes={{
             variantInfo: classes.info,
             message: classes.message,
-            root: classes.root
+            root: classes.root,
           }}
           hideIconVariant
         >
@@ -215,12 +215,12 @@ class App extends React.Component {
               <Route
                 exact
                 path="/"
-                render={props =>
+                render={(props) =>
                   localStorage.getItem("user") ? (
                     <Redirect
                       to={{
                         pathname: "/myfamiliesshare",
-                        state: { from: props.location }
+                        state: { from: props.location },
                       }}
                     />
                   ) : (
@@ -283,7 +283,7 @@ class App extends React.Component {
               />
               <Route
                 path="/profiles/:profileId"
-                render={props =>
+                render={(props) =>
                   localStorage.getItem("user") ? (
                     <ProfileScreen
                       key={props.match.params.profileId}
@@ -293,7 +293,7 @@ class App extends React.Component {
                     <Redirect
                       to={{
                         pathname: "/login",
-                        state: { from: props.location }
+                        state: { from: props.location },
                       }}
                     />
                   )
@@ -398,7 +398,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 export default withStyles(styles)(App);

@@ -35,17 +35,17 @@ class AnnouncementBar extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.action === "fileUpload") {
       const image = `data:image/png;base64, ${data.value}`;
       this.setState({
-        photos: [{ photo: dataURLtoFile(image, "photo.png"), preview: image }]
+        photos: [{ photo: dataURLtoFile(image, "photo.png"), preview: image }],
       });
     }
   };
 
-  handleEnter = event => {
+  handleEnter = (event) => {
     if (event.keyCode === 13) this.handleSend();
   };
 
@@ -64,50 +64,50 @@ class AnnouncementBar extends React.Component {
       bodyFormData.append("user_id", user_id);
       axios
         .post(`/api/groups/${groupId}/announcements`, bodyFormData)
-        .then(response => {
+        .then((response) => {
           Log.info(response);
           handleRefresh();
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
         });
       this.setState({ message: "", photos: [] });
     }
   };
 
-  handleMessageChange = event => {
+  handleMessageChange = (event) => {
     this.setState({ message: event.target.value });
   };
 
-  getPhotoPreview = photo => {
+  getPhotoPreview = (photo) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         const photoWithPrev = photo;
         photoWithPrev.preview = e.target.result;
         resolve(photoWithPrev);
       };
-      reader.onerror = e => {
+      reader.onerror = (e) => {
         reject(e);
       };
       reader.readAsDataURL(photo.photo);
     });
   };
 
-  handleImageUpload = async event => {
+  handleImageUpload = async (event) => {
     const { enqueueSnackbar, language } = this.props;
     const snackMessage = Texts[language].replyBar.maxFilesError;
     if (event.target.files) {
-      const photos = [...event.target.files].map(file => {
+      const photos = [...event.target.files].map((file) => {
         return { photo: file, preview: "" };
       });
       if (photos.length > 3) {
         enqueueSnackbar(snackMessage, {
-          variant: "error"
+          variant: "error",
         });
       } else {
         const photosWithPreview = await Promise.all(
-          photos.map(photo => this.getPhotoPreview(photo))
+          photos.map((photo) => this.getPhotoPreview(photo))
         );
         this.setState({ photos: photosWithPreview });
       }
@@ -120,10 +120,10 @@ class AnnouncementBar extends React.Component {
     );
   };
 
-  handlePreviewDelete = photo => {
+  handlePreviewDelete = (photo) => {
     const { photos } = this.state;
     this.setState({
-      photos: photos.filter(p => p.preview !== photo.preview)
+      photos: photos.filter((p) => p.preview !== photo.preview),
     });
   };
 
@@ -190,7 +190,7 @@ AnnouncementBar.propTypes = {
   handleRefresh: PropTypes.func,
   groupId: PropTypes.string,
   language: PropTypes.string,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };
 
 export default withSnackbar(withLanguage(AnnouncementBar));

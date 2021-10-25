@@ -20,7 +20,7 @@ function signup(
   function failure(error) {
     return { type: registrationConstants.SIGNUP_FAILURE, error };
   }
-  return dispatch => {
+  return (dispatch) => {
     dispatch(request());
     setTimeout(() => {
       registrationServices
@@ -34,11 +34,11 @@ function signup(
           deviceToken
         )
         .then(
-          user => {
+          (user) => {
             dispatch(success(user));
             history.push("/myfamiliesshare");
           },
-          error => {
+          (error) => {
             dispatch(failure(error));
           }
         );
@@ -47,7 +47,7 @@ function signup(
 }
 
 const registrationActions = {
-  signup
+  signup,
 };
 
 export default registrationActions;

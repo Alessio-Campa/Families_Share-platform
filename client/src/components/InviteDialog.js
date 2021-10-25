@@ -13,7 +13,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
-import { createMuiTheme, MuiThemeProvider, withStyles } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  MuiThemeProvider,
+  withStyles,
+} from "@material-ui/core/styles";
 import Log from "./Log";
 import AutoComplete from "./AutoComplete";
 import Texts from "../Constants/Texts";
@@ -25,30 +29,30 @@ const styles = () => ({
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiListItemText: {
       primary: {
-        fontSize: "1.4rem"
-      }
+        fontSize: "1.4rem",
+      },
     },
     MuiButton: {
       root: {
         fontSize: "1.4rem",
-        color: "#009688"
-      }
+        color: "#009688",
+      },
     },
     MuiDialog: {
       paperWidthSm: {
         width: "80vw",
-        maxWidth: 400
+        maxWidth: 400,
       },
       paperScrollPaper: {
-        maxHeight: 800
-      }
-    }
-  }
+        maxHeight: 800,
+      },
+    },
+  },
 });
 
 class InviteDialog extends React.Component {
@@ -61,7 +65,7 @@ class InviteDialog extends React.Component {
       searchedForInput: false,
       matchingUsers: [],
       users: [],
-      inviteIds: []
+      inviteIds: [],
     };
   }
 
@@ -69,31 +73,31 @@ class InviteDialog extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .get("/api/profiles?searchBy=visibility&visible=true")
-      .then(res => {
-        const users = res.data.filter(user => user.user_id !== userId);
-        users.forEach(user => {
+      .then((res) => {
+        const users = res.data.filter((user) => user.user_id !== userId);
+        users.forEach((user) => {
           user.name = `${user.given_name} ${user.family_name}`;
         });
         this.setState({ users });
         this.handleSearch("");
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   }
 
-  handleKeyPress = e => {
+  handleKeyPress = (e) => {
     const { searchInput } = this.state;
     if (e.key === "Enter") {
       this.handleSearch(searchInput);
     }
   };
 
-  handleSearch = val => {
+  handleSearch = (val) => {
     const value = val.toLowerCase().trim();
     const { users } = this.state;
     const matchingUsers = [];
-    users.forEach(user => {
+    users.forEach((user) => {
       if (user.name.toLowerCase().includes(value)) {
         matchingUsers.push(user);
       }
@@ -101,11 +105,11 @@ class InviteDialog extends React.Component {
     this.setState({
       searchedForInput: true,
       searchInput: value,
-      matchingUsers
+      matchingUsers,
     });
   };
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     this.setState({ searchInput: event.target.value, searchedForInput: false });
     if (event.target.value === "") this.handleSearch("");
   };
@@ -117,7 +121,7 @@ class InviteDialog extends React.Component {
       if (inviteType === "member") {
         handleInvite(inviteIds);
       } else {
-        handleInvite(users.filter(user => user.user_id === inviteIds[0])[0]);
+        handleInvite(users.filter((user) => user.user_id === inviteIds[0])[0]);
       }
     } else {
       handleClose();
@@ -126,11 +130,11 @@ class InviteDialog extends React.Component {
       inviteIds: [],
       searchInput: "",
       searchedForInput: false,
-      matchingUsers: []
+      matchingUsers: [],
     });
   };
 
-  handleSelect = id => {
+  handleSelect = (id) => {
     const { inviteIds, inviteType } = this.state;
     const indexOf = inviteIds.indexOf(id);
     if (inviteType === "member") {
@@ -159,7 +163,7 @@ class InviteDialog extends React.Component {
       searchedForInput,
       users,
       matchingUsers,
-      inviteIds
+      inviteIds,
     } = this.state;
     const { language, isOpen, classes } = this.props;
     const texts = Texts[language].inviteModal;
@@ -209,36 +213,36 @@ class InviteDialog extends React.Component {
                 handleSearch={this.handleSearch}
               />
             ) : (
-                <List>
-                  {matchingUsers.map(user => {
-                    const selected = inviteIds.includes(user.user_id);
-                    return (
-                      <ListItem
-                        button
-                        onClick={() => this.handleSelect(user.user_id)}
-                        key={user.user_id}
-                        selected={selected}
-                      >
-                        <ListItemAvatar>
-                          <Avatar
-                            src={path(user, ["image", "path"])}
-                            sizes="small"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={`${user.given_name} ${user.family_name}`}
+              <List>
+                {matchingUsers.map((user) => {
+                  const selected = inviteIds.includes(user.user_id);
+                  return (
+                    <ListItem
+                      button
+                      onClick={() => this.handleSelect(user.user_id)}
+                      key={user.user_id}
+                      selected={selected}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          src={path(user, ["image", "path"])}
+                          sizes="small"
                         />
-                        <ListItemIcon>
-                          <i
-                            className="fas fa-circle inviteSelect"
-                            style={selected ? {} : { display: "none" }}
-                          />
-                        </ListItemIcon>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              )}
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={`${user.given_name} ${user.family_name}`}
+                      />
+                      <ListItemIcon>
+                        <i
+                          className="fas fa-circle inviteSelect"
+                          style={selected ? {} : { display: "none" }}
+                        />
+                      </ListItemIcon>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            )}
           </DialogContent>
           <DialogActions>
             <Button fontSize={20} variant="text" onClick={this.handleClose}>
@@ -257,7 +261,7 @@ InviteDialog.propTypes = {
   handleClose: PropTypes.func,
   handleInvite: PropTypes.func,
   inviteType: PropTypes.string,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withStyles(styles)(withLanguage(InviteDialog));

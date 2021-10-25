@@ -12,10 +12,10 @@ Modal.setAppElement("#root");
 const getMyNotifications = (userId, page) => {
   return axios
     .get(`/api/users/${userId}/notifications`, { params: { page } })
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
@@ -27,7 +27,7 @@ class NotificationsModal extends React.Component {
     this.state = {
       notifications: [],
       user_id: JSON.parse(localStorage.getItem("user")).id,
-      fetchedAll: false
+      fetchedAll: false,
     };
   }
 
@@ -50,7 +50,7 @@ class NotificationsModal extends React.Component {
     const newNotifications = await getMyNotifications(user_id, page);
     this.setState({
       notifications: notifications.concat(newNotifications),
-      fetchedAll: newNotifications.length < 10
+      fetchedAll: newNotifications.length < 10,
     });
   };
 
@@ -65,7 +65,7 @@ class NotificationsModal extends React.Component {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.8)"
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
       },
       content: {
         top: "5rem",
@@ -75,8 +75,8 @@ class NotificationsModal extends React.Component {
         backgroundColor: "#ffffff",
         width: "90%",
         height: "85%",
-        borderRadius: "5px"
-      }
+        borderRadius: "5px",
+      },
     };
     return (
       <Modal
@@ -139,7 +139,7 @@ class NotificationsModal extends React.Component {
 NotificationsModal.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(NotificationsModal);

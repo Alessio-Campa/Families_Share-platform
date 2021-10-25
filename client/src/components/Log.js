@@ -5,7 +5,7 @@ const COLOURS = {
   trace: "lightblue",
   info: "blue",
   warn: "pink",
-  error: "red"
+  error: "red",
 }; // choose better colours :)
 
 class Log {

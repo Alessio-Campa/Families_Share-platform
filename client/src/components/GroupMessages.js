@@ -16,14 +16,14 @@ class GroupMessages extends React.Component {
     const { groupId } = this.props;
     axios
       .get(`/api/groups/${groupId}/announcements`)
-      .then(response => {
+      .then((response) => {
         const announcements = response.data;
         this.setState({
           fetchedAnnouncements: true,
-          announcements
+          announcements,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ fetchedAnnouncements: true, announcements: [] });
       });
@@ -33,14 +33,14 @@ class GroupMessages extends React.Component {
     const { groupId } = this.props;
     axios
       .get(`/api/groups/${groupId}/announcements`)
-      .then(async response => {
+      .then(async (response) => {
         const announcements = response.data;
         await this.setState({
-          announcements
+          announcements,
         });
         await this.announcementsStart.scrollIntoView({ behavior: "smooth" });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -52,7 +52,7 @@ class GroupMessages extends React.Component {
     const blocks = [...Array(Math.ceil(length / 2)).keys()];
     return (
       <ul>
-        {blocks.map(block => {
+        {blocks.map((block) => {
           let indexes;
           if (length <= 2) {
             indexes = [...Array(length).keys()];
@@ -60,16 +60,16 @@ class GroupMessages extends React.Component {
             indexes = [
               ...Array(
                 (block + 1) * 2 <= length ? 2 : length - block * 2
-              ).keys()
-            ].map(x => block * 2 + x);
+              ).keys(),
+            ].map((x) => block * 2 + x);
           }
           return (
             <LazyLoad height={450} once offset={100}>
-              {indexes.map(index => (
+              {indexes.map((index) => (
                 <li
                   style={{ padding: "2rem 0" }}
                   key={index}
-                  ref={ref => {
+                  ref={(ref) => {
                     if (index === 0) {
                       this.announcementsStart = ref;
                     }
@@ -118,5 +118,5 @@ export default GroupMessages;
 
 GroupMessages.propTypes = {
   groupId: PropTypes.string,
-  userIsAdmin: PropTypes.bool
+  userIsAdmin: PropTypes.bool,
 };

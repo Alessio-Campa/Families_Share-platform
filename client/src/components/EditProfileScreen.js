@@ -29,11 +29,11 @@ class EditProfileScreen extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .get(`/api/users/${userId}/profile`)
-      .then(response => {
+      .then((response) => {
         const profile = response.data;
         this.setState({ fetchedProfile: true, ...profile });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ image: { path: "" } });
       });
@@ -43,13 +43,13 @@ class EditProfileScreen extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.action === "fileUpload") {
       const image = `data:image/png;base64, ${data.value}`;
       this.setState({
         image: { path: image },
-        file: dataURLtoFile(image, "photo.png")
+        file: dataURLtoFile(image, "photo.png"),
       });
     }
   };
@@ -97,7 +97,7 @@ class EditProfileScreen extends React.Component {
       contact_option,
       phone_type,
       address,
-      description
+      description,
     } = this.state;
     const { city, street, number, address_id } = address;
     const bodyFormData = new FormData();
@@ -119,14 +119,14 @@ class EditProfileScreen extends React.Component {
     axios
       .patch(`/api/users/${userId}/profile`, bodyFormData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         history.goBack();
       });
@@ -144,11 +144,11 @@ class EditProfileScreen extends React.Component {
     this.setState({ formIsValidated: true });
   };
 
-  handleImageChange = event => {
+  handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.setState({ image: { path: e.target.result }, file });
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -161,7 +161,7 @@ class EditProfileScreen extends React.Component {
     );
   };
 
-  handleAddressChange = event => {
+  handleAddressChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     const { address } = this.state;
@@ -169,20 +169,20 @@ class EditProfileScreen extends React.Component {
     this.setState({ address });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     this.setState({ [name]: value });
   };
 
-  handleVisibility = event => {
+  handleVisibility = (event) => {
     const visible = event.target.value === "visible";
     this.setState({ visible });
   };
 
-  handleContact = event => {
+  handleContact = (event) => {
     const {
-      target: { value }
+      target: { value },
     } = event;
     this.setState({ contact_option: value });
   };
@@ -201,7 +201,7 @@ class EditProfileScreen extends React.Component {
       phone_type,
       email,
       address,
-      description
+      description,
     } = this.state;
     const bottomBorder = { borderBottom: "1px solid rgba(0,0,0,0.5)" };
     const texts = Texts[language].editProfileScreen;
@@ -211,10 +211,10 @@ class EditProfileScreen extends React.Component {
     }
     return fetchedProfile ? (
       <form
-        ref={form => {
+        ref={(form) => {
           this.formEl = form;
         }}
-        onSubmit={event => event.preventDefault()}
+        onSubmit={(event) => event.preventDefault()}
         className={formClass}
         noValidate
       >
@@ -409,7 +409,7 @@ class EditProfileScreen extends React.Component {
                 name="description"
                 className="editProfileInputField form-control "
                 placeholder={texts.description}
-                onChange={event => {
+                onChange={(event) => {
                   this.handleChange(event);
                   autosize(document.querySelectorAll("textarea"));
                 }}
@@ -446,5 +446,5 @@ export default withLanguage(EditProfileScreen);
 EditProfileScreen.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
 };

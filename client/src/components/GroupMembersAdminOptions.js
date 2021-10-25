@@ -11,9 +11,9 @@ import Log from "./Log";
 const theme = createMuiTheme({
   palette: {
     secondary: {
-      main: "#c43e00"
-    }
-  }
+      main: "#c43e00",
+    },
+  },
 });
 
 class GroupMembersAdminOptions extends React.Component {
@@ -23,7 +23,7 @@ class GroupMembersAdminOptions extends React.Component {
     this.state = {
       groupIsOpen,
       inviteModalIsOpen: false,
-      groupId
+      groupId,
     };
   }
 
@@ -37,13 +37,13 @@ class GroupMembersAdminOptions extends React.Component {
     const { groupId, groupIsOpen } = this.state;
     axios
       .patch(`/api/groups/${groupId}/settings`, {
-        open: !groupIsOpen
+        open: !groupIsOpen,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.setState({ groupIsOpen: !groupIsOpen });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -54,17 +54,17 @@ class GroupMembersAdminOptions extends React.Component {
     this.setState({ inviteModalIsOpen: true });
   };
 
-  handleInvite = inviteIds => {
+  handleInvite = (inviteIds) => {
     const { groupId } = this.state;
     const elem = document.getElementsByTagName("body")[0];
     elem.style.overflow = "auto";
     this.setState({ inviteModalIsOpen: false });
     axios
       .post(`/api/groups/${groupId}/members`, { inviteIds })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -125,7 +125,7 @@ class GroupMembersAdminOptions extends React.Component {
 GroupMembersAdminOptions.propTypes = {
   groupIsOpen: PropTypes.bool,
   groupId: PropTypes.string,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(GroupMembersAdminOptions);

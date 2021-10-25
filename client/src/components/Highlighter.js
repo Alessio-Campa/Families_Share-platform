@@ -25,7 +25,7 @@ const Highlighter = ({ highlight, text }) => {
 
 Highlighter.propTypes = {
   text: PropTypes.string,
-  highlight: PropTypes.string
+  highlight: PropTypes.string,
 };
 
 export default Highlighter;

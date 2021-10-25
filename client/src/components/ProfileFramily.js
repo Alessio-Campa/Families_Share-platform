@@ -15,7 +15,7 @@ class ProfileFramily extends React.Component {
       modalIsOpen: false,
       profileId,
       myProfile,
-      framily: []
+      framily: [],
     };
   }
 
@@ -23,11 +23,11 @@ class ProfileFramily extends React.Component {
     const { profileId } = this.state;
     axios
       .get(`/api/users/${profileId}/framily`)
-      .then(response => {
+      .then((response) => {
         const framily = response.data;
         this.setState({ framily });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -36,27 +36,27 @@ class ProfileFramily extends React.Component {
     const { profileId } = this.state;
     axios
       .get(`/api/users/${profileId}/framily`)
-      .then(response => {
+      .then((response) => {
         const framily = response.data;
         this.setState({ framily });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
 
-  handleAddFramily = inviteIds => {
+  handleAddFramily = (inviteIds) => {
     this.setState({ modalIsOpen: false });
     const elem = document.getElementsByTagName("body")[0];
     elem.style.overflow = "auto";
     const { profileId } = this.state;
     axios
       .post(`/api/users/${profileId}/framily`, { inviteIds })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.refresh();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -108,7 +108,7 @@ class ProfileFramily extends React.Component {
 }
 
 ProfileFramily.propTypes = {
-  profileId: PropTypes.string
+  profileId: PropTypes.string,
 };
 
 export default ProfileFramily;

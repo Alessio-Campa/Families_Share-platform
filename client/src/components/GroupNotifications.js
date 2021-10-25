@@ -12,11 +12,11 @@ class GroupNotifications extends React.Component {
     const { groupId } = this.props;
     axios
       .get(`/api/groups/${groupId}/notifications`)
-      .then(response => {
+      .then((response) => {
         const notifications = response.data;
         this.setState({ fetchedGroupNotifications: true, notifications });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ fetchedGroupNotifications: true, notifications: [] });
       });
@@ -30,7 +30,7 @@ class GroupNotifications extends React.Component {
           card={{
             cardHeader: notification.header,
             cardInfo: notification.description,
-            learnMore: false
+            learnMore: false,
           }}
         />
       </li>
@@ -53,5 +53,5 @@ class GroupNotifications extends React.Component {
 export default GroupNotifications;
 
 GroupNotifications.propTypes = {
-  groupId: PropTypes.string
+  groupId: PropTypes.string,
 };

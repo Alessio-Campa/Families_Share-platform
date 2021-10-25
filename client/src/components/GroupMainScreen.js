@@ -9,47 +9,47 @@ import Log from "./Log";
 
 const GroupInfo = Loadable({
   loader: () => import("./GroupInfo"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 const GroupMembers = Loadable({
   loader: () => import("./GroupMembers"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 const GroupActivities = Loadable({
   loader: () => import("./GroupActivities"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 const GroupCalendar = Loadable({
   loader: () => import("./GroupCalendar"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 const GroupChat = Loadable({
   loader: () => import("./GroupChat"),
-  loading: () => <div />
+  loading: () => <div />,
 });
 
-const getGroupMembers = groupId => {
+const getGroupMembers = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/members`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
-const getGroup = groupId => {
+const getGroup = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
         name: "",
-        group_id: ""
+        group_id: "",
       };
     });
 };
@@ -70,7 +70,7 @@ export default class GroupMainScreen extends React.Component {
     this.state = {
       groupId,
       allowNavigation: false,
-      fetchedGroup: false
+      fetchedGroup: false,
     };
   }
 
@@ -80,7 +80,7 @@ export default class GroupMainScreen extends React.Component {
     const group = await getGroup(groupId);
     group.members = await getGroupMembers(groupId);
     const user = group.members.filter(
-      member =>
+      (member) =>
         member.user_id === JSON.parse(localStorage.getItem("user")).id &&
         member.user_accepted &&
         member.group_accepted
@@ -92,7 +92,7 @@ export default class GroupMainScreen extends React.Component {
       allowNavigation,
       userIsAdmin,
       group,
-      fetchedGroup: true
+      fetchedGroup: true,
     });
   }
 
@@ -109,7 +109,7 @@ export default class GroupMainScreen extends React.Component {
         <Switch>
           <Route
             path={`${currentPath}/info`}
-            render={props => (
+            render={(props) => (
               <GroupInfo
                 {...props}
                 group={group}
@@ -119,13 +119,13 @@ export default class GroupMainScreen extends React.Component {
           />
           <Route
             path={`${currentPath}/chat`}
-            render={props => (
+            render={(props) => (
               <GroupChat {...props} group={group} userIsAdmin={userIsAdmin} />
             )}
           />
           <Route
             path={`${currentPath}/members`}
-            render={props => (
+            render={(props) => (
               <GroupMembers
                 {...props}
                 group={group}
@@ -136,7 +136,7 @@ export default class GroupMainScreen extends React.Component {
           <Route
             exact
             path={`${currentPath}/activities`}
-            render={props => (
+            render={(props) => (
               <GroupActivities
                 {...props}
                 group={group}
@@ -147,7 +147,7 @@ export default class GroupMainScreen extends React.Component {
           <Route
             exact
             path={`${currentPath}/calendar`}
-            render={props => (
+            render={(props) => (
               <GroupCalendar
                 {...props}
                 group={group}
@@ -167,5 +167,5 @@ export default class GroupMainScreen extends React.Component {
 GroupMainScreen.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
-  group: PropTypes.object
+  group: PropTypes.object,
 };

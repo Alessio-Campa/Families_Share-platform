@@ -100,5 +100,5 @@ export default withRouter(TimeslotPreview);
 
 TimeslotPreview.propTypes = {
   timeslot: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

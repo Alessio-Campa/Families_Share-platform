@@ -16,36 +16,36 @@ class SearchGroupScreen extends React.Component {
       matchingGroups: [],
       groups: [],
       fetchedGroups: false,
-      searchBarIsVisible: false
+      searchBarIsVisible: false,
     };
   }
 
   componentDidMount() {
     axios
       .get("/api/groups?searchBy=visibility&visible=true")
-      .then(res => {
+      .then((res) => {
         const groups = res.data;
         this.setState({ fetchedGroups: true, groups });
         this.handleSearch("");
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ fetchedGroups: true });
       });
   }
 
-  handleKeyPress = e => {
+  handleKeyPress = (e) => {
     const { searchInput } = this.state;
     if (e.key === "Enter") {
       this.handleSearch(searchInput);
     }
   };
 
-  handleSearch = val => {
+  handleSearch = (val) => {
     const value = val.toLowerCase().trim();
     const { groups } = this.state;
     const matchingGroups = [];
-    groups.forEach(group => {
+    groups.forEach((group) => {
       if (group.name.toLowerCase().includes(value)) {
         matchingGroups.push(group.group_id);
       }
@@ -53,11 +53,11 @@ class SearchGroupScreen extends React.Component {
     this.setState({
       searchedForInput: true,
       searchInput: value,
-      matchingGroups
+      matchingGroups,
     });
   };
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     this.setState({ searchInput: event.target.value, searchedForInput: false });
     if (event.target.value === "") this.handleSearch("");
   };
@@ -76,7 +76,7 @@ class SearchGroupScreen extends React.Component {
       searchInput,
       searchedForInput,
       groups,
-      matchingGroups
+      matchingGroups,
     } = this.state;
     const texts = Texts[language].searchGroupModal;
     return (
@@ -143,7 +143,7 @@ class SearchGroupScreen extends React.Component {
 
 SearchGroupScreen.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(SearchGroupScreen);

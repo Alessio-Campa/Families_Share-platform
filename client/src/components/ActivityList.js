@@ -26,7 +26,7 @@ const GroupList = ({ activities, history, language }) => {
 GroupList.propTypes = {
   activities: PropTypes.array,
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withRouter(withLanguage(GroupList));

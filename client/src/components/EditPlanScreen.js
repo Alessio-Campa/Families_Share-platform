@@ -13,7 +13,7 @@ import {
   Mood,
   Cake,
   Event,
-  ChildCare
+  ChildCare,
 } from "@material-ui/icons";
 import Texts from "../Constants/Texts";
 import LoadingSpinner from "./LoadingSpinner";
@@ -23,7 +23,7 @@ import Log from "./Log";
 class EditPlanScreen extends React.Component {
   state = {
     fetchedPlan: false,
-    formIsValidated: false
+    formIsValidated: false,
   };
 
   componentDidMount() {
@@ -31,7 +31,7 @@ class EditPlanScreen extends React.Component {
     const { planId, groupId } = match.params;
     axios
       .get(`/api/groups/${groupId}/plans/${planId}`)
-      .then(response => {
+      .then((response) => {
         const {
           name,
           description,
@@ -40,7 +40,7 @@ class EditPlanScreen extends React.Component {
           min_volunteers,
           category,
           location,
-          deadline
+          deadline,
         } = response.data;
         this.setState({
           fetchedPlan: true,
@@ -51,10 +51,10 @@ class EditPlanScreen extends React.Component {
           ratio,
           minVolunteers: min_volunteers,
           state,
-          deadline: moment(deadline).format("YYYY-MM-DD")
+          deadline: moment(deadline).format("YYYY-MM-DD"),
         });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           fetchedPlan: true,
@@ -64,7 +64,7 @@ class EditPlanScreen extends React.Component {
           deadline: new Date(),
           ratio: 0,
           minVolunteers: 0,
-          state: 0
+          state: 0,
         });
       });
   }
@@ -107,7 +107,7 @@ class EditPlanScreen extends React.Component {
     return true;
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const state = Object.assign({}, this.state);
     const { name } = event.target;
     const { value } = event.target;
@@ -119,7 +119,7 @@ class EditPlanScreen extends React.Component {
     this.setState(state);
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     if (this.validate()) {
       this.handleSave();
@@ -139,7 +139,7 @@ class EditPlanScreen extends React.Component {
       ratio,
       category,
       deadline,
-      minVolunteers
+      minVolunteers,
     } = this.state;
     this.setState({ fetchedActivity: false });
     const patch = {
@@ -151,16 +151,16 @@ class EditPlanScreen extends React.Component {
         ratio,
         deadline: new Date(deadline),
         category,
-        min_volunteers: minVolunteers
-      }
+        min_volunteers: minVolunteers,
+      },
     };
     axios
       .patch(`/api/groups/${groupId}/plans/${planId}`, patch)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         history.goBack();
       });
@@ -177,7 +177,7 @@ class EditPlanScreen extends React.Component {
       ratio,
       minVolunteers,
       state,
-      formIsValidated
+      formIsValidated,
     } = this.state;
     const formClass = [];
     if (formIsValidated) {
@@ -217,7 +217,7 @@ class EditPlanScreen extends React.Component {
         </div>
         <div id="editActivityMainContainer" style={{ padding: "8rem 0" }}>
           <form
-            ref={form => {
+            ref={(form) => {
               this.formEl = form;
             }}
             onSubmit={this.handleSubmit}
@@ -267,7 +267,7 @@ class EditPlanScreen extends React.Component {
                   name="description"
                   placeholder={texts.description}
                   value={description}
-                  onChange={event => {
+                  onChange={(event) => {
                     this.handleChange(event);
                     autosize(document.querySelectorAll("textarea"));
                   }}
@@ -283,7 +283,7 @@ class EditPlanScreen extends React.Component {
                 className="col-8-10"
                 style={{
                   height: "5rem",
-                  display: "flex"
+                  display: "flex",
                 }}
               >
                 <Select
@@ -291,7 +291,7 @@ class EditPlanScreen extends React.Component {
                   value={category}
                   onChange={this.handleChange}
                   inputProps={{
-                    name: "category"
+                    name: "category",
                   }}
                 >
                   <MenuItem value="learning">
@@ -406,7 +406,7 @@ class EditPlanScreen extends React.Component {
                 className="col-5-10"
                 style={{
                   height: "5rem",
-                  display: "flex"
+                  display: "flex",
                 }}
               >
                 <Select
@@ -414,7 +414,7 @@ class EditPlanScreen extends React.Component {
                   displayEmpty
                   onChange={this.handleChange}
                   inputProps={{
-                    name: "state"
+                    name: "state",
                   }}
                 >
                   <MenuItem value="needs">
@@ -451,5 +451,5 @@ export default withLanguage(EditPlanScreen);
 EditPlanScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };

@@ -36,7 +36,7 @@ const FaqsScreen = ({ language, history }) => {
 
 FaqsScreen.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withRouter(withLanguage(FaqsScreen));

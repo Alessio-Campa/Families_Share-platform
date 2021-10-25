@@ -12,7 +12,7 @@ class AnnouncementReplies extends React.Component {
     this.state = {
       newReply: "",
       showReplies: false,
-      fetchedReplies: false
+      fetchedReplies: false,
     };
   }
 
@@ -21,11 +21,11 @@ class AnnouncementReplies extends React.Component {
     const { announcementId } = this.props;
     axios
       .get(`/api/groups/${groupId}/announcements/${announcementId}/replies`)
-      .then(response => {
+      .then((response) => {
         const replies = response.data;
         this.setState({ fetchedReplies: true, replies });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ fetchedReplies: true, replies: [] });
       });
@@ -36,11 +36,11 @@ class AnnouncementReplies extends React.Component {
     const { announcementId } = this.props;
     axios
       .get(`/api/groups/${groupId}/announcements/${announcementId}/replies`)
-      .then(response => {
+      .then((response) => {
         const replies = response.data;
         this.setState({ replies });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -51,19 +51,19 @@ class AnnouncementReplies extends React.Component {
     axios
       .post(`/api/groups/${groupId}/announcements/${announcementId}/replies`, {
         user_id: JSON.parse(localStorage.getItem("user")).id,
-        message: newReply
+        message: newReply,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.refresh();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
     this.setState({ newReply: "" });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ newReply: event.target.value });
   };
 
@@ -91,7 +91,7 @@ class AnnouncementReplies extends React.Component {
     );
   };
 
-  handleEnter = event => {
+  handleEnter = (event) => {
     if (event.keyCode === 13) this.handleSend();
   };
 
@@ -149,7 +149,7 @@ AnnouncementReplies.propTypes = {
   announcementId: PropTypes.string,
   groupId: PropTypes.string,
   userIsAdmin: PropTypes.bool,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(AnnouncementReplies);

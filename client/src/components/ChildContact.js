@@ -45,5 +45,5 @@ export default withRouter(ChildContact);
 
 ChildContact.propTypes = {
   member: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

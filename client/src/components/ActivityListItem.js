@@ -8,13 +8,13 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
 
-const getUsersChildren = userId => {
+const getUsersChildren = (userId) => {
   return axios
     .get(`/api/users/${userId}/children`)
-    .then(response => {
-      return response.data.map(child => child.child_id);
+    .then((response) => {
+      return response.data.map((child) => child.child_id);
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
@@ -23,10 +23,10 @@ const getUsersChildren = userId => {
 const getTimeslots = (groupId, activityId) => {
   return axios
     .get(`/api/groups/${groupId}/activities/${activityId}/timeslots`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
@@ -46,13 +46,13 @@ class ActivityListItem extends React.Component {
     const activityId = activity.activity_id;
     const usersChildren = await getUsersChildren(userId);
     const timeslots = await getTimeslots(groupId, activityId);
-    let dates = timeslots.map(timeslot => timeslot.start.dateTime);
+    let dates = timeslots.map((timeslot) => timeslot.start.dateTime);
     dates = dates.sort((a, b) => {
       return new Date(a) - new Date(b);
     });
     const uniqueDates = [];
     const temp = [];
-    dates.forEach(date => {
+    dates.forEach((date) => {
       const t = moment(date).format("DD-MM-YYYY");
       if (!temp.includes(t)) {
         temp.push(t);
@@ -84,7 +84,7 @@ class ActivityListItem extends React.Component {
     this.setState({ fetchedTimeslots: true, activity });
   }
 
-  handleActivityClick = event => {
+  handleActivityClick = (event) => {
     const { history } = this.props;
     const { pathname } = history.location;
     history.push(`${pathname}/${event.currentTarget.id}`);
@@ -100,7 +100,7 @@ class ActivityListItem extends React.Component {
       datesString = `${texts.every} ${moment(selectedDates[0]).format("Do")}`;
     } else {
       const eachMonthsDates = {};
-      selectedDates.forEach(selectedDate => {
+      selectedDates.forEach((selectedDate) => {
         const key = moment(selectedDate).format("MMMM YYYY");
         if (eachMonthsDates[key] === undefined) {
           eachMonthsDates[key] = [selectedDate];
@@ -112,7 +112,7 @@ class ActivityListItem extends React.Component {
       const dates = Object.values(eachMonthsDates);
       for (let i = 0; i < months.length; i += 1) {
         let monthString = "";
-        dates[i].forEach(date => {
+        dates[i].forEach((date) => {
           monthString += ` ${moment(date).format("DD")},`;
         });
         monthString = monthString.substr(0, monthString.length - 1);
@@ -146,7 +146,7 @@ class ActivityListItem extends React.Component {
             <i
               style={{
                 fontSize: "3rem",
-                color: activity.color
+                color: activity.color,
               }}
               className="fas fa-certificate center"
             />
@@ -191,5 +191,5 @@ ActivityListItem.propTypes = {
   activity: PropTypes.object,
   groupId: PropTypes.string,
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

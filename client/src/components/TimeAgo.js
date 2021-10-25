@@ -10,5 +10,5 @@ const TimeAgo = ({ date }) => {
 export default withLanguage(TimeAgo);
 
 TimeAgo.propTypes = {
-  date: PropTypes.string
+  date: PropTypes.string,
 };

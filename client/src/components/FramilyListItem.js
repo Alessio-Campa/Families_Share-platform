@@ -15,20 +15,20 @@ class FramilyListItem extends React.Component {
     fetchedProfile: false,
     modalIsOpen: false,
     right: 0,
-    top: 0
+    top: 0,
   };
 
   componentDidMount() {
     const { framilyId, profileId } = this.props;
     axios
       .get(`/api/users/${framilyId}/profile`)
-      .then(response => {
+      .then((response) => {
         const profile = response.data;
         const myProfile =
           JSON.parse(localStorage.getItem("user")).id === profileId;
         this.setState({ fetchedProfile: true, profile, myProfile });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           fetchedProfile: true,
@@ -36,17 +36,17 @@ class FramilyListItem extends React.Component {
             image: { path: "" },
             given_name: "",
             family_name: "",
-            user_id: ""
-          }
+            user_id: "",
+          },
         });
       });
   }
 
-  mouseDown = event => {
+  mouseDown = (event) => {
     this.setState({
       timer: new Date().getTime(),
       right: "5%",
-      top: event.clientY
+      top: event.clientY,
     });
   };
 
@@ -60,11 +60,11 @@ class FramilyListItem extends React.Component {
     }
   };
 
-  touchDown = event => {
+  touchDown = (event) => {
     this.setState({
       timer: new Date().getTime(),
       right: "5%",
-      top: event.touches[0].clientY
+      top: event.touches[0].clientY,
     });
   };
 
@@ -84,8 +84,8 @@ class FramilyListItem extends React.Component {
       {
         label: texts.delete,
         style: "optionsModCapturealButton",
-        handle: this.handleDeleteFramily
-      }
+        handle: this.handleDeleteFramily,
+      },
     ];
     const { profile } = this.state;
     const route = `/profiles/${framilyId}/info`;
@@ -133,5 +133,5 @@ FramilyListItem.propTypes = {
   framilyId: PropTypes.string,
   profileId: PropTypes.string,
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

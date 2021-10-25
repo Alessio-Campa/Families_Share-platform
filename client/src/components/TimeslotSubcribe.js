@@ -6,8 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = () => ({
   avatar: {
     width: "3rem",
-    height: "3rem"
-  }
+    height: "3rem",
+  },
 });
 
 const TimeslotSubscribe = ({
@@ -18,7 +18,7 @@ const TimeslotSubscribe = ({
   handleUnsubscribe,
   id,
   classes,
-  type
+  type,
 }) => {
   const handleClick = () => {
     if (subscribed) {
@@ -59,5 +59,5 @@ TimeslotSubscribe.propTypes = {
   handleSubscribe: PropTypes.func,
   handleUnsubscribe: PropTypes.func,
   type: PropTypes.string,
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };

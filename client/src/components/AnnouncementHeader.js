@@ -15,21 +15,21 @@ class AnnouncementHeader extends React.Component {
     confirmDialogIsOpen: false,
     deleteId: "",
     fetchedProfile: false,
-    profile: {}
+    profile: {},
   };
 
   componentDidMount() {
     const { userId } = this.props;
     axios
       .get(`/api/users/${userId}/profile`)
-      .then(response => {
+      .then((response) => {
         this.setState({ fetchedProfile: true, profile: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           fetchedProfile: true,
-          profile: { image: { path: "" }, family_name: "", given_name: "" }
+          profile: { image: { path: "" }, family_name: "", given_name: "" },
         });
       });
   }
@@ -40,14 +40,14 @@ class AnnouncementHeader extends React.Component {
       this.setState({ fetchedProfile: false });
       axios
         .get(`/api/users/${props.userId}/profile`)
-        .then(response => {
+        .then((response) => {
           this.setState({ fetchedProfile: true, profile: response.data });
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
           this.setState({
             fetchedProfile: true,
-            profile: { image: { path: "" }, family_name: "", given_name: "" }
+            profile: { image: { path: "" }, family_name: "", given_name: "" },
           });
         });
     }
@@ -58,23 +58,23 @@ class AnnouncementHeader extends React.Component {
     const { deleteId } = this.state;
     axios
       .delete(`/api/groups/${groupId}/announcements/${deleteId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         handleRefresh();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     if (choice === "agree") {
       this.handleDelete();
     }
     this.setState({ deleteId: "", confirmDialogIsOpen: false });
   };
 
-  handleConfirmDialogOpen = id => {
+  handleConfirmDialogOpen = (id) => {
     this.setState({ deleteId: id, confirmDialogIsOpen: true });
   };
 
@@ -135,7 +135,7 @@ AnnouncementHeader.propTypes = {
   createdAt: PropTypes.string,
   handleRefresh: PropTypes.func,
   userIsAdmin: PropTypes.bool,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(AnnouncementHeader);

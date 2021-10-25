@@ -22,7 +22,7 @@ const MyCalendarScreen = ({ history, language }) => {
 
 MyCalendarScreen.propTypes = {
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withRouter(withLanguage(MyCalendarScreen));

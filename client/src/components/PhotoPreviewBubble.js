@@ -29,7 +29,7 @@ const PhotoPreviewBubble = ({ photos, handleDelete }) => (
 );
 PhotoPreviewBubble.propTypes = {
   photos: PropTypes.array,
-  handleDelete: PropTypes.func
+  handleDelete: PropTypes.func,
 };
 
 export default PhotoPreviewBubble;
