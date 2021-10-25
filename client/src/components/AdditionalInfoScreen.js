@@ -10,10 +10,10 @@ import Log from "./Log";
 const styles = {
   checkbox: {
     "&$checked": {
-      color: "#00838F"
-    }
+      color: "#00838F",
+    },
   },
-  checked: {}
+  checked: {},
 };
 
 class AdditionalInfoScreen extends React.Component {
@@ -28,7 +28,7 @@ class AdditionalInfoScreen extends React.Component {
         allergies: "",
         special_needs: "",
         acceptAdditionalTerms: false,
-        other_info: ""
+        other_info: "",
       };
     }
   }
@@ -41,18 +41,18 @@ class AdditionalInfoScreen extends React.Component {
     history.replace({
       pathname: parentpath,
       state: {
-        ...this.state
-      }
+        ...this.state,
+      },
     });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     this.setState({ [name]: value });
   };
 
-  handleAcceptTermsChange = name => event => {
+  handleAcceptTermsChange = (name) => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
@@ -64,7 +64,7 @@ class AdditionalInfoScreen extends React.Component {
       editChild,
       allergies,
       special_needs,
-      other_info
+      other_info,
     } = this.state;
     if (acceptAdditionalTerms) {
       if (editChild) {
@@ -72,13 +72,13 @@ class AdditionalInfoScreen extends React.Component {
           .patch(`/api/users/${userId}/children/${childId}`, {
             allergies,
             special_needs,
-            other_info
+            other_info,
           })
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.goBack();
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
       } else {
@@ -95,8 +95,8 @@ class AdditionalInfoScreen extends React.Component {
     history.replace({
       pathname: parentpath,
       state: {
-        ...this.state
-      }
+        ...this.state,
+      },
     });
   };
 
@@ -107,7 +107,7 @@ class AdditionalInfoScreen extends React.Component {
       acceptAdditionalTerms,
       allergies,
       special_needs,
-      other_info
+      other_info,
     } = this.state;
     return (
       <React.Fragment>
@@ -193,7 +193,7 @@ AdditionalInfoScreen.propTypes = {
   history: PropTypes.object,
   classes: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default withLanguage(withStyles(styles)(AdditionalInfoScreen));

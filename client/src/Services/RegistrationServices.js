@@ -22,19 +22,19 @@ function signup(
       password,
       visible,
       language,
-      deviceToken
-    })
+      deviceToken,
+    }),
   })
-    .then(response => {
+    .then((response) => {
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     })
-    .catch(error => Promise.reject(error));
+    .catch((error) => Promise.reject(error));
 }
 
 const registrationServices = {
-  signup
+  signup,
 };
 
 export default registrationServices;

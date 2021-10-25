@@ -21,5 +21,5 @@ export default BackNavigation;
 BackNavigation.propTypes = {
   title: PropTypes.string,
   onClick: PropTypes.func,
-  fixed: PropTypes.bool
+  fixed: PropTypes.bool,
 };

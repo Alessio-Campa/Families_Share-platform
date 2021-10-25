@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const PrivateRoute = ({ component: Component, extraProps, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       localStorage.getItem("user") ? (
         <Component {...props} {...extraProps} />
       ) : (
@@ -22,5 +22,5 @@ export default PrivateRoute;
 PrivateRoute.propTypes = {
   component: PropTypes.func,
   extraProps: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
 };

@@ -11,36 +11,36 @@ import Texts from "../Constants/Texts";
 import Log from "./Log";
 import Images from "../Constants/Images";
 
-const getMyGroups = userId => {
+const getMyGroups = (userId) => {
   return axios
     .get(`/api/users/${userId}/groups`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
 
-const getMyTimeslots = userId => {
+const getMyTimeslots = (userId) => {
   return axios
     .get(`/api/users/${userId}/events`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
-const getMyUnreadNotifications = userId => {
+const getMyUnreadNotifications = (userId) => {
   return axios
     .get(`/api/users/${userId}/notifications/unread`)
-    .then(response => {
+    .then((response) => {
       return response.data.unreadNotifications;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return 0;
     });
@@ -49,10 +49,10 @@ const getMyUnreadNotifications = userId => {
 const updateDeviceToken = (userId, deviceToken) => {
   return axios
     .post(`/api/users/${userId}/deviceToken`, {
-      deviceToken
+      deviceToken,
     })
     .then()
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
     });
 };
@@ -64,7 +64,7 @@ class MyFamiliesShareScreen extends React.Component {
       fetchedUserInfo: false,
       myTimeslots: [],
       myGroups: [],
-      pendingInvites: 0
+      pendingInvites: 0,
     };
   }
 
@@ -76,23 +76,23 @@ class MyFamiliesShareScreen extends React.Component {
     }
     const groups = await getMyGroups(userId);
     const myGroups = groups
-      .filter(group => group.user_accepted && group.group_accepted)
-      .map(group => group.group_id);
+      .filter((group) => group.user_accepted && group.group_accepted)
+      .map((group) => group.group_id);
     const pendingInvites = groups.filter(
-      group => group.group_accepted && !group.user_accepted
+      (group) => group.group_accepted && !group.user_accepted
     ).length;
     const unreadNotifications = await getMyUnreadNotifications(userId);
     let myTimeslots = await getMyTimeslots(userId);
     myTimeslots = myTimeslots.filter(
-      t => new Date(t.start.dateTime).getTime() - new Date().getTime() > 0
+      (t) => new Date(t.start.dateTime).getTime() - new Date().getTime() > 0
     );
-    let dates = myTimeslots.map(timeslot => timeslot.start.dateTime);
+    let dates = myTimeslots.map((timeslot) => timeslot.start.dateTime);
     dates = dates.sort((a, b) => {
       return new Date(a) - new Date(b);
     });
     const uniqueDates = [];
     const temp = [];
-    dates.forEach(date => {
+    dates.forEach((date) => {
       const t = moment(date).format("DD-MM-YYYY");
       if (!temp.includes(t)) {
         temp.push(t);
@@ -105,7 +105,7 @@ class MyFamiliesShareScreen extends React.Component {
       dates: uniqueDates,
       myGroups,
       myTimeslots,
-      pendingInvites
+      pendingInvites,
     });
   }
 
@@ -146,7 +146,7 @@ class MyFamiliesShareScreen extends React.Component {
   renderPromptAction = () => {
     const {
       language,
-      history: { push: pushHistory }
+      history: { push: pushHistory },
     } = this.props;
     const texts = Texts[language].myFamiliesShareScreen;
     const { myGroups } = this.state;
@@ -204,7 +204,7 @@ class MyFamiliesShareScreen extends React.Component {
 
 MyFamiliesShareScreen.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(withRouter(MyFamiliesShareScreen));

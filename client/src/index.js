@@ -14,12 +14,12 @@ import App from "./App";
 const history = createBrowserHistory();
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN
+  dsn: process.env.REACT_APP_SENTRY_DSN,
 });
 
 ReactGA.initialize(process.env.REACT_APP_GA_ID);
 
-history.listen(location => {
+history.listen((location) => {
   ReactGA.pageview(location.pathname);
   if (window.isNative) {
     if (location.pathname === "/" || location.pathname === "/myfamiliesshare") {

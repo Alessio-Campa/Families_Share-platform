@@ -20,7 +20,7 @@ const CreatePlanScreen = ({ language, history }) => {
 
 CreatePlanScreen.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(CreatePlanScreen);

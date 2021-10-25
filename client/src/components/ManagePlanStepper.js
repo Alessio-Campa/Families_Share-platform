@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   withStyles,
   MuiThemeProvider,
-  createMuiTheme
+  createMuiTheme,
 } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import MomentLocaleUtils from "react-day-picker/moment";
@@ -28,20 +28,20 @@ import TimeslotSubscribe from "./TimeslotSubcribe";
 
 const modifiersStyles = {
   selected: {
-    backgroundColor: "#00838F"
-  }
+    backgroundColor: "#00838F",
+  },
 };
 
 const muiTheme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiStepLabel: {
       label: {
         fontFamily: "Roboto",
-        fontSize: "1.56rem"
-      }
+        fontSize: "1.56rem",
+      },
     },
     MuiStepIcon: {
       root: {
@@ -49,38 +49,38 @@ const muiTheme = createMuiTheme({
         width: "3rem",
         height: "3rem",
         "&$active": {
-          color: "#00838f"
+          color: "#00838f",
         },
         "&$completed": {
-          color: "#00838f"
-        }
-      }
+          color: "#00838f",
+        },
+      },
     },
     MuiButton: {
       root: {
         fontSize: "1.4rem",
-        fontFamily: "Roboto"
-      }
-    }
+        fontFamily: "Roboto",
+      },
+    },
   },
   palette: {
     secondary: {
-      main: "#c43e00"
-    }
-  }
+      main: "#c43e00",
+    },
+  },
 });
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    width: "95%"
+    width: "95%",
   },
   continueButton: {
     backgroundColor: "#00838f",
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     "&:hover": {
-      backgroundColor: "#00838f"
-    }
+      backgroundColor: "#00838f",
+    },
   },
   phaseButton: {
     backgroundColor: "#ff6f00",
@@ -88,42 +88,42 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     "&:hover": {
-      backgroundColor: "#ff6f00"
-    }
+      backgroundColor: "#ff6f00",
+    },
   },
   stepLabel: {
     root: {
       color: "#ffffff",
       "&$active": {
         color: "white",
-        fontWeight: 500
+        fontWeight: 500,
       },
       "&$completed": {
         color: theme.palette.text.primary,
-        fontWeight: 500
+        fontWeight: 500,
       },
       "&$alternativeLabel": {
         textAlign: "center",
         marginTop: 16,
-        fontSize: "5rem"
+        fontSize: "5rem",
       },
       "&$error": {
-        color: theme.palette.error.main
-      }
-    }
+        color: theme.palette.error.main,
+      },
+    },
   },
   cancelButton: {
     backgroundColor: "#ffffff",
     marginTop: theme.spacing.unit,
     color: "grey",
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
   },
   actionsContainer: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
   },
   resetContainer: {
-    padding: theme.spacing.unit * 3
-  }
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class ManagePlanStepper extends React.Component {
@@ -131,19 +131,19 @@ class ManagePlanStepper extends React.Component {
     super(props);
     const userId = JSON.parse(localStorage.getItem("user")).id;
     const { plan, parentsProfiles, childrenProfiles } = props;
-    plan.participant = plan.participants.find(p => p.user_id === userId) || {
+    plan.participant = plan.participants.find((p) => p.user_id === userId) || {
       user_id: userId,
       needs: [],
-      availabilities: []
+      availabilities: [],
     };
-    plan.participant.needs.forEach(need => {
+    plan.participant.needs.forEach((need) => {
       need.day = new Date(need.day);
     });
-    plan.participant.availabilities.forEach(availability => {
+    plan.participant.availabilities.forEach((availability) => {
       availability.day = new Date(availability.day);
     });
     let activeStep;
-    plan.participants = plan.participants.filter(p => p.user_id !== userId);
+    plan.participants = plan.participants.filter((p) => p.user_id !== userId);
     switch (plan.state) {
       case "needs":
         activeStep = 0;
@@ -170,7 +170,7 @@ class ManagePlanStepper extends React.Component {
       amStartTime: "09:00",
       amEndTime: "12:00",
       pmStartTime: "15:00",
-      pmEndTime: "18:00"
+      pmEndTime: "18:00",
     };
   }
 
@@ -182,7 +182,7 @@ class ManagePlanStepper extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const { activeStep } = this.state;
     const { history } = this.props;
     const data = JSON.parse(event.data);
@@ -208,9 +208,9 @@ class ManagePlanStepper extends React.Component {
       amStartTime,
       amEndTime,
       pmStartTime,
-      pmEndTime
+      pmEndTime,
     } = this.state;
-    plan.solution.forEach(s => {
+    plan.solution.forEach((s) => {
       const [date, meridiem] = s.slot.split("-");
       s.start = new Date(date);
       s.end = new Date(date);
@@ -235,29 +235,29 @@ class ManagePlanStepper extends React.Component {
       }
       s.volunteers = [];
     });
-    editedSolution.forEach(row => {
+    editedSolution.forEach((row) => {
       const keys = Object.keys(row);
-      keys.forEach(slot => {
+      keys.forEach((slot) => {
         const subscription = parentsProfiles.find(
-          p => `${p.given_name} ${p.family_name}` === row[slot]
+          (p) => `${p.given_name} ${p.family_name}` === row[slot]
         );
         if (subscription) {
           plan.solution
-            .find(s => s.slot === slot)
+            .find((s) => s.slot === slot)
             .volunteers.push(subscription.user_id);
         }
       });
     });
     if (timeslotsFilter === "discard") {
-      plan.solution = plan.solution.filter(s => s.volunteers.length > 0);
+      plan.solution = plan.solution.filter((s) => s.volunteers.length > 0);
     }
     plan.activitiesCreation = activitiesCreation;
     this.setState({ updatingPlan: true });
     axios
       .post(`/api/groups/${groupId}/plans/${planId}/activities`, {
-        plan
+        plan,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
 
         enqueueSnackbar(
@@ -265,12 +265,12 @@ class ManagePlanStepper extends React.Component {
             ? texts.manualSuccess
             : texts.automaticSuccess,
           {
-            variant: "info"
+            variant: "info",
           }
         );
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -281,16 +281,16 @@ class ManagePlanStepper extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .post(`/api/users/${userId}/requestlink`, {
-        link: history.location.pathname
+        link: history.location.pathname,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         enqueueSnackbar(texts.linkSuccess, {
-          variant: "info"
+          variant: "info",
         });
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -305,9 +305,9 @@ class ManagePlanStepper extends React.Component {
     delete plan.participant;
     axios
       .patch(`/api/groups/${groupId}/plans/${planId}`, {
-        plan
+        plan,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         if (plan.state === "needs" || plan.state === "availabilities") {
           enqueueSnackbar(
@@ -315,13 +315,13 @@ class ManagePlanStepper extends React.Component {
               ? texts.needsSuccess
               : texts.availabilitiesSuccess,
             {
-              variant: "info"
+              variant: "info",
             }
           );
           history.goBack();
         }
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -333,30 +333,30 @@ class ManagePlanStepper extends React.Component {
     const {
       activeStep,
       plan: {
-        participant: { availabilities, needs }
-      }
+        participant: { availabilities, needs },
+      },
     } = this.state;
     if (activeStep === 1) {
-      needs.forEach(need => {
+      needs.forEach((need) => {
         if (need.children.length === 0) {
           enqueueSnackbar(
             `${texts.needError} ${moment(need.day).format("MMM DD")}`,
             {
-              variant: "error"
+              variant: "error",
             }
           );
           valid = false;
         }
       });
     } else if (activeStep === 3) {
-      availabilities.forEach(availability => {
+      availabilities.forEach((availability) => {
         if (availability.meridiem === "") {
           enqueueSnackbar(
             `${texts.availabilityError} ${moment(availability.day).format(
               "MMM DD"
             )}`,
             {
-              variant: "error"
+              variant: "error",
             }
           );
           valid = false;
@@ -369,7 +369,7 @@ class ManagePlanStepper extends React.Component {
   handleContinue = () => {
     const {
       activeStep,
-      plan: { step: planStep }
+      plan: { step: planStep },
     } = this.state;
     if (this.validate()) {
       if (
@@ -382,16 +382,16 @@ class ManagePlanStepper extends React.Component {
       } else if (activeStep === 5) {
         this.createSolution();
       } else {
-        this.setState(state => ({
-          activeStep: state.activeStep + 1
+        this.setState((state) => ({
+          activeStep: state.activeStep + 1,
         }));
       }
     }
   };
 
   handleCancel = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1
+    this.setState((state) => ({
+      activeStep: state.activeStep - 1,
     }));
   };
 
@@ -404,11 +404,11 @@ class ManagePlanStepper extends React.Component {
     if (!selected) {
       plan.participant.needs.push({
         day,
-        children: myChildren.map(c => c.child_id)
+        children: myChildren.map((c) => c.child_id),
       });
     } else {
       plan.participant.needs = plan.participant.needs.filter(
-        n => moment(n.day).format() !== moment(day).format()
+        (n) => moment(n.day).format() !== moment(day).format()
       );
     }
     this.setState({ plan });
@@ -424,12 +424,12 @@ class ManagePlanStepper extends React.Component {
         ...plan.participant.availabilities,
         {
           day,
-          meridiem: "both"
-        }
+          meridiem: "both",
+        },
       ].sort((a, b) => new Date(a.day) - new Date(b.day));
     } else {
       plan.participant.availabilities = plan.participant.availabilities.filter(
-        n => n.day.getTime() !== day.getTime()
+        (n) => n.day.getTime() !== day.getTime()
       );
     }
     this.setState({ plan });
@@ -439,10 +439,10 @@ class ManagePlanStepper extends React.Component {
     const {
       plan,
       plan: {
-        participant: { needs }
-      }
+        participant: { needs },
+      },
     } = this.state;
-    const needIndex = needs.findIndex(n => n.day.getTime() === day.getTime());
+    const needIndex = needs.findIndex((n) => n.day.getTime() === day.getTime());
     plan.participant.needs[needIndex].children.push(childId);
     this.setState({ plan });
   };
@@ -451,12 +451,12 @@ class ManagePlanStepper extends React.Component {
     const {
       plan,
       plan: {
-        participant: { needs }
-      }
+        participant: { needs },
+      },
     } = this.state;
-    const needIndex = needs.findIndex(n => n.day.getTime() === day.getTime());
+    const needIndex = needs.findIndex((n) => n.day.getTime() === day.getTime());
 
-    const updatedNeeds = needs[needIndex].children.filter(c => c !== childId);
+    const updatedNeeds = needs[needIndex].children.filter((c) => c !== childId);
     plan.participant.needs[needIndex].children = updatedNeeds;
     this.setState({ plan });
   };
@@ -478,11 +478,11 @@ class ManagePlanStepper extends React.Component {
 
   getDisabledAvailabilityDates = () => {
     const {
-      plan: { participants, participant, from, to }
+      plan: { participants, participant, from, to },
     } = this.state;
     let needDates = [];
-    [...participants, participant].forEach(p => {
-      p.needs.forEach(n => {
+    [...participants, participant].forEach((p) => {
+      p.needs.forEach((n) => {
         needDates.push(moment(n.day).format("DD-MMMM-YYYY"));
       });
     });
@@ -495,24 +495,24 @@ class ManagePlanStepper extends React.Component {
     }
     allDates.push(end.format("DDMMYY"));
     const disabledDates = allDates
-      .filter(d => needDates.indexOf(d) === -1)
-      .map(d => moment(d).toDate());
+      .filter((d) => needDates.indexOf(d) === -1)
+      .map((d) => moment(d).toDate());
     return disabledDates;
   };
 
-  handleSolutionEditing = data => {
+  handleSolutionEditing = (data) => {
     this.setState({ editedSolution: data });
   };
 
-  handleTimeslotsFilter = filter => {
+  handleTimeslotsFilter = (filter) => {
     this.setState({ timeslotsFilter: filter });
   };
 
-  handleActivitesCreation = option => {
+  handleActivitesCreation = (option) => {
     this.setState({ activitiesCreation: option });
   };
 
-  handleTimeChange = event => {
+  handleTimeChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     this.setState({ [name]: value });
@@ -530,7 +530,7 @@ class ManagePlanStepper extends React.Component {
       amStartTime,
       amEndTime,
       pmStartTime,
-      pmEndTime
+      pmEndTime,
     } = this.state;
     const texts = Texts[language].managePlanStepper;
     switch (activeStep) {
@@ -547,12 +547,12 @@ class ManagePlanStepper extends React.Component {
               disabledDays={[
                 {
                   before: new Date(plan.from),
-                  after: new Date(plan.to)
-                }
+                  after: new Date(plan.to),
+                },
               ]}
               localeUtils={MomentLocaleUtils}
               locale={language}
-              selectedDays={plan.participant.needs.map(n => n.day)}
+              selectedDays={plan.participant.needs.map((n) => n.day)}
               onDayClick={this.handleNeedDayClick}
               modifiersStyles={modifiersStyles}
             />
@@ -561,12 +561,12 @@ class ManagePlanStepper extends React.Component {
       case 1:
         return (
           <ul className="needsList">
-            {plan.participant.needs.map(need => (
+            {plan.participant.needs.map((need) => (
               <li key={need.day.getTime()} className="needContainer">
                 <div className="needHeader">
                   {moment(need.day).format("MMM Do")}
                 </div>
-                {myChildren.map(child => (
+                {myChildren.map((child) => (
                   <TimeslotSubscribe
                     key={child.child_id}
                     name={child.given_name}
@@ -600,12 +600,12 @@ class ManagePlanStepper extends React.Component {
                 ...this.getDisabledAvailabilityDates(),
                 {
                   before: new Date(plan.from),
-                  after: new Date(plan.to)
-                }
+                  after: new Date(plan.to),
+                },
               ]}
               localeUtils={MomentLocaleUtils}
               locale={language}
-              selectedDays={plan.participant.availabilities.map(n => n.day)}
+              selectedDays={plan.participant.availabilities.map((n) => n.day)}
               onDayClick={this.handleAvailabilityDayClick}
               modifiersStyles={modifiersStyles}
             />
@@ -679,7 +679,7 @@ class ManagePlanStepper extends React.Component {
               <div style={{ width: "100" }}>
                 <Select
                   value={timeslotsFilter}
-                  onChange={event => {
+                  onChange={(event) => {
                     this.setState({ timeslotsFilter: event.target.value });
                   }}
                 >
@@ -697,7 +697,7 @@ class ManagePlanStepper extends React.Component {
               <div style={{ width: "100" }}>
                 <Select
                   value={activitiesCreation}
-                  onChange={event => {
+                  onChange={(event) => {
                     this.setState({ activitiesCreation: event.target.value });
                   }}
                 >
@@ -790,7 +790,7 @@ class ManagePlanStepper extends React.Component {
     const {
       activeStep,
       updatingPlan,
-      plan: { step: planStep }
+      plan: { step: planStep },
     } = this.state;
 
     return !updatingPlan ? (
@@ -848,7 +848,7 @@ ManagePlanStepper.propTypes = {
   enqueueSnackbar: PropTypes.func,
   parentsProfiles: PropTypes.array,
   childrenProfiles: PropTypes.array,
-  userIsAdmin: PropTypes.bool
+  userIsAdmin: PropTypes.bool,
 };
 export default withSnackbar(
   withRouter(withLanguage(withStyles(styles)(ManagePlanStepper)))

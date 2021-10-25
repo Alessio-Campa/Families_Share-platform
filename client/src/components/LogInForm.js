@@ -13,7 +13,7 @@ class LogInForm extends React.Component {
     this.state = {
       formIsValidated: false,
       email: "",
-      password: ""
+      password: "",
     };
   }
 
@@ -62,7 +62,7 @@ class LogInForm extends React.Component {
     );
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     if (this.validate()) {
       this.submit();
@@ -70,7 +70,7 @@ class LogInForm extends React.Component {
     this.setState({ formIsValidated: true });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     this.setState({ [name]: value });
@@ -83,7 +83,7 @@ class LogInForm extends React.Component {
     if (error) {
       enqueueSnackbar(texts.authenticationErr, {
         variant: "error",
-        preventDuplicate: true
+        preventDuplicate: true,
       });
     }
     const formClass = [];
@@ -93,7 +93,7 @@ class LogInForm extends React.Component {
     return (
       <React.Fragment>
         <form
-          ref={form => {
+          ref={(form) => {
             this.formEl = form;
           }}
           onSubmit={this.handleSubmit}
@@ -147,7 +147,7 @@ function mapStateToProps(state) {
   const { authentication } = state;
   const { error } = authentication;
   return {
-    error
+    error,
   };
 }
 
@@ -160,5 +160,5 @@ LogInForm.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
   error: PropTypes.bool,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };

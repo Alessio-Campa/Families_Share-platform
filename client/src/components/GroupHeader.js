@@ -29,7 +29,7 @@ class GroupHeader extends React.Component {
     this.setState({ confirmDialogIsOpen: true });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     if (choice === "agree") {
       this.handleDelete();
       this.setState({ confirmDialogIsOpen: false });
@@ -42,11 +42,11 @@ class GroupHeader extends React.Component {
     const { groupId, history } = this.props;
     axios
       .delete(`/api/groups/${groupId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.push("/myfamiliesshare");
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -57,7 +57,7 @@ class GroupHeader extends React.Component {
       groupName,
       groupBackground,
       language,
-      userIsAdmin
+      userIsAdmin,
     } = this.props;
     const { confirmDialogIsOpen } = this.state;
     const texts = Texts[language].groupHeader;
@@ -138,7 +138,7 @@ GroupHeader.propTypes = {
   groupName: PropTypes.string,
   userIsAdmin: PropTypes.bool,
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withRouter(withLanguage(GroupHeader));

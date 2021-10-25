@@ -13,7 +13,7 @@ const LanguageIcon = ({ language, style }) => {
 
 LanguageIcon.propTypes = {
   language: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default LanguageIcon;

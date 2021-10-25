@@ -20,7 +20,7 @@ class LogInScreen extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const { dispatch, history } = this.props;
     const data = JSON.parse(event.data);
     if (data.action === "googleLogin") {
@@ -37,7 +37,7 @@ class LogInScreen extends React.Component {
 
   handleTermsAndPolicy = () => {
     const message = {
-      action: "termsAndPolicy"
+      action: "termsAndPolicy",
     };
     if (window.isNative) {
       window.ReactNativeWebView.postMessage(JSON.stringify(message));
@@ -52,7 +52,7 @@ class LogInScreen extends React.Component {
       language,
       history,
       dispatch,
-      enqueueSnackbar
+      enqueueSnackbar,
     } = this.props;
     const texts = Texts[language].logInScreen;
     return (
@@ -82,7 +82,7 @@ class LogInScreen extends React.Component {
           <div className="row no-gutters">
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              render={renderProps => (
+              render={(renderProps) => (
                 <button
                   type="button"
                   onClick={() =>
@@ -98,7 +98,7 @@ class LogInScreen extends React.Component {
                 </button>
               )}
               buttonText="Login"
-              onSuccess={response =>
+              onSuccess={(response) =>
                 dispatch(
                   authenticationActions.googleLogin(
                     response,
@@ -108,9 +108,9 @@ class LogInScreen extends React.Component {
                   )
                 )
               }
-              onFailure={response => {
+              onFailure={(response) => {
                 enqueueSnackbar(response.error, {
-                  variant: "error"
+                  variant: "error",
                 });
               }}
             />
@@ -143,7 +143,7 @@ class LogInScreen extends React.Component {
 function mapStateToProps(state) {
   const { loggingIn } = state.authentication;
   return {
-    loggingIn
+    loggingIn,
   };
 }
 
@@ -156,5 +156,5 @@ LogInScreen.propTypes = {
   history: PropTypes.object,
   dispatch: PropTypes.func,
   enqueueSnackbar: PropTypes.func,
-  loggingIn: PropTypes.bool
+  loggingIn: PropTypes.bool,
 };

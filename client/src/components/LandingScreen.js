@@ -15,11 +15,11 @@ class LandingScreen extends React.Component {
   componentDidMount() {
     axios
       .get("/api/groups/suggestions")
-      .then(res => {
+      .then((res) => {
         const suggestions = res.data;
         this.setState({ fetchedSuggestions: true, suggestions });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({ fetchedSuggestions: true, error: true });
       });
@@ -39,7 +39,7 @@ class LandingScreen extends React.Component {
               cardHeader: texts.cardHeader,
               cardInfo: texts.cardInfo,
               learnMore: true,
-              link: "/about"
+              link: "/about",
             }}
           />
         </div>
@@ -53,7 +53,7 @@ class LandingScreen extends React.Component {
 }
 
 LandingScreen.propTypes = {
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(LandingScreen);

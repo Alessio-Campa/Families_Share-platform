@@ -25,7 +25,7 @@ const LandingNavbar = ({ language }) => {
 };
 
 LandingNavbar.propTypes = {
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(LandingNavbar);

@@ -7,7 +7,7 @@ function login(email, password, origin, deviceToken) {
     password,
     deviceToken,
     language,
-    origin
+    origin,
   };
   if (origin === "native") {
     data.version = localStorage.getItem("version");
@@ -16,14 +16,14 @@ function login(email, password, origin, deviceToken) {
     url: "/api/users/authenticate/email",
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
   })
-    .then(response => {
+    .then((response) => {
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     })
-    .catch(error => Promise.reject(error));
+    .catch((error) => Promise.reject(error));
 }
 
 function googleLogin(googleResponse, origin, deviceToken) {
@@ -34,7 +34,7 @@ function googleLogin(googleResponse, origin, deviceToken) {
       givenName: googleResponse.profileObj.givenName,
       familyName: googleResponse.profileObj.familyName,
       photo: googleResponse.profileObj.imageUrl,
-      email: googleResponse.profileObj.email
+      email: googleResponse.profileObj.email,
     };
     properResponse.idToken = googleResponse.tokenObj.id_token;
     properResponse.original = googleResponse;
@@ -43,7 +43,7 @@ function googleLogin(googleResponse, origin, deviceToken) {
       givenName: googleResponse.firstName,
       familyName: googleResponse.lastName,
       photo: googleResponse.photoURL,
-      email: googleResponse.email
+      email: googleResponse.email,
     };
     properResponse.idToken = googleResponse.auth.idToken;
     properResponse.original = googleResponse;
@@ -52,7 +52,7 @@ function googleLogin(googleResponse, origin, deviceToken) {
     response: properResponse,
     origin,
     deviceToken,
-    language
+    language,
   };
   if (origin === "native") {
     data.version = localStorage.getItem("version");
@@ -61,14 +61,14 @@ function googleLogin(googleResponse, origin, deviceToken) {
     url: "/api/users/authenticate/google",
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
   })
-    .then(response => {
+    .then((response) => {
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     })
-    .catch(error => Promise.reject(error));
+    .catch((error) => Promise.reject(error));
 }
 
 function logout() {
@@ -78,7 +78,7 @@ function logout() {
 const authenticationServices = {
   login,
   logout,
-  googleLogin
+  googleLogin,
 };
 
 export default authenticationServices;

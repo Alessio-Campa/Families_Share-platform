@@ -5,7 +5,7 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
 const ProfileNavbar = ({ language, history }) => {
-  const handleActiveTab = event => {
+  const handleActiveTab = (event) => {
     const { pathname } = history.location;
     const parentPath = pathname.slice(0, pathname.lastIndexOf("/"));
     history.replace(`${parentPath}/${event.target.id}`);
@@ -46,5 +46,5 @@ export default withRouter(withLanguage(ProfileNavbar));
 
 ProfileNavbar.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };

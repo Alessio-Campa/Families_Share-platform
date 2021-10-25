@@ -11,14 +11,14 @@ function googleLogin(response, history, origin, deviceToken) {
   function failure(error) {
     return { type: authenticationConstants.GOOGLE_LOGIN_FAILURE, error };
   }
-  return dispatch => {
+  return (dispatch) => {
     dispatch(request());
     authenticationServices.googleLogin(response, origin, deviceToken).then(
-      user => {
+      (user) => {
         dispatch(success(user));
         history.push("/myfamiliesshare");
       },
-      error => {
+      (error) => {
         dispatch(failure(error));
       }
     );
@@ -35,14 +35,14 @@ function login(email, password, history, origin, deviceToken) {
   function failure(error) {
     return { type: authenticationConstants.LOGIN_FAILURE, error };
   }
-  return dispatch => {
+  return (dispatch) => {
     dispatch(request());
     authenticationServices.login(email, password, origin, deviceToken).then(
-      user => {
+      (user) => {
         dispatch(success(user));
         history.push("/myfamiliesshare");
       },
-      error => {
+      (error) => {
         dispatch(failure(error));
       }
     );
@@ -58,7 +58,7 @@ function logout(history) {
 const authenticationActions = {
   login,
   logout,
-  googleLogin
+  googleLogin,
 };
 
 export default authenticationActions;

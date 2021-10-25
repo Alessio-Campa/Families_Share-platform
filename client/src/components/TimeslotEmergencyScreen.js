@@ -17,45 +17,45 @@ class TimeslotEmergencyScreen extends React.Component {
       this.state = {
         ...state.timeslot,
         confirmIsOpen: false,
-        confirmService: ""
+        confirmService: "",
       };
     } else {
       this.state = {
         summary: "",
         confirmIsOpen: false,
-        confirmService: ""
+        confirmService: "",
       };
     }
   }
 
   state = { confirmIsOpen: false };
 
-  handleConfirmClose = choice => {
+  handleConfirmClose = (choice) => {
     const { confirmService } = this.state;
     if (choice === "agree") {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: "phoneCall",
-          value: this.getServiceNumber(confirmService)
+          value: this.getServiceNumber(confirmService),
         })
       );
     }
     this.setState({ confirmIsOpen: false, confirmService: "" });
   };
 
-  handleEmergency = service => {
+  handleEmergency = (service) => {
     const { enqueueSnackbar, language } = this.props;
     const texts = Texts[language].timeslotEmergencyScreen;
     if (window.isNative) {
       this.setState({ confirmIsOpen: true, confirmService: service });
     } else {
       enqueueSnackbar(texts.copy, {
-        variant: "info"
+        variant: "info",
       });
     }
   };
 
-  getServiceNumber = service => {
+  getServiceNumber = (service) => {
     const citylab = process.env.REACT_APP_CITYLAB;
     let numbers;
     switch (citylab) {
@@ -79,7 +79,7 @@ class TimeslotEmergencyScreen extends React.Component {
       default:
         numbers = EmegencyNunbers.Greece;
     }
-    return numbers.find(n => n.service === service).number;
+    return numbers.find((n) => n.service === service).number;
   };
 
   render() {
@@ -98,7 +98,7 @@ class TimeslotEmergencyScreen extends React.Component {
         <BackNavigation title={summary} onClick={() => history.goBack()} />
         <div className="emergencyContainer">
           <div className="emergencyHeader">{texts.header}</div>
-          {services.map(service => (
+          {services.map((service) => (
             <div key={service} className="emergencyServiceContainer">
               <div className="emergencyServiceTitle">
                 {texts.services[service]}
@@ -124,7 +124,7 @@ class TimeslotEmergencyScreen extends React.Component {
 TimeslotEmergencyScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };
 
 export default withSnackbar(withLanguage(TimeslotEmergencyScreen));

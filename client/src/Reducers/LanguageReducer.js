@@ -7,7 +7,7 @@ function language(state = initialState, action) {
   switch (action.type) {
     case languageConstants.UPDATE_REQUEST:
       return {
-        language: action.language
+        language: action.language,
       };
     default:
       return state;

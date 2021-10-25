@@ -10,7 +10,7 @@ import Log from "./Log";
 
 class EditActivityScreen extends React.Component {
   state = {
-    fetchedActivity: false
+    fetchedActivity: false,
   };
 
   componentDidMount() {
@@ -18,7 +18,7 @@ class EditActivityScreen extends React.Component {
     const { activityId, groupId } = match.params;
     axios
       .get(`/api/groups/${groupId}/activities/${activityId}`)
-      .then(response => {
+      .then((response) => {
         const { name, description, color, location } = response.data;
         this.setState({
           fetchedActivity: true,
@@ -26,22 +26,22 @@ class EditActivityScreen extends React.Component {
           color,
           description,
           location,
-          validated: true
+          validated: true,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           fetchedActivity: true,
           name: "",
           color: "",
           description: "",
-          validated: false
+          validated: false,
         });
       });
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     const state = Object.assign({}, this.state);
     const { name } = event.target;
     const { value } = event.target;
@@ -53,7 +53,7 @@ class EditActivityScreen extends React.Component {
     this.setState(state);
   };
 
-  handleColorChange = color => {
+  handleColorChange = (color) => {
     const state = Object.assign({}, this.state);
     state.color = color.hex;
     this.setState(state);
@@ -69,15 +69,15 @@ class EditActivityScreen extends React.Component {
         name,
         color,
         location: location.trim(),
-        description: description.trim()
+        description: description.trim(),
       };
       axios
         .patch(`/api/groups/${groupId}/activities/${activityId}`, patch)
-        .then(response => {
+        .then((response) => {
           Log.info(response);
           history.goBack();
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
           history.goBack();
         });
@@ -91,7 +91,7 @@ class EditActivityScreen extends React.Component {
       name,
       description,
       location,
-      color
+      color,
     } = this.state;
     const { language, history } = this.props;
     const texts = Texts[language].editActivityScreen;
@@ -166,7 +166,7 @@ class EditActivityScreen extends React.Component {
                 className="verticalCenter"
                 placeholder={texts.description}
                 value={description}
-                onChange={event => {
+                onChange={(event) => {
                   this.handleChange(event);
                   autosize(document.querySelectorAll("textarea"));
                 }}
@@ -210,5 +210,5 @@ export default withLanguage(EditActivityScreen);
 EditActivityScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };

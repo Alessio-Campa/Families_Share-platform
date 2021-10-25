@@ -19,37 +19,37 @@ import withLanguage from "./LanguageContext";
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiListItemText: {
       primary: {
-        fontSize: "1.4rem"
-      }
+        fontSize: "1.4rem",
+      },
     },
     MuiButton: {
       root: {
         fontSize: "1.4rem",
-        color: "#009688"
-      }
+        color: "#009688",
+      },
     },
     MuiDialog: {
       paperWidthSm: {
         width: "80vw",
-        maxWidth: 400
+        maxWidth: 400,
       },
       paperScrollPaper: {
-        maxHeight: 800
-      }
-    }
-  }
+        maxHeight: 800,
+      },
+    },
+  },
 });
 
 class ParticipantsDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      users: [],
     };
   }
 
@@ -59,15 +59,15 @@ class ParticipantsDialog extends React.Component {
       .get("/api/profiles", {
         params: {
           ids,
-          searchBy: "ids"
-        }
+          searchBy: "ids",
+        },
       })
-      .then(res => {
+      .then((res) => {
         const users = res.data;
         this.setState({ users });
         this.handleSearch("");
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   }
@@ -94,7 +94,7 @@ class ParticipantsDialog extends React.Component {
           </DialogTitle>
           <DialogContent>
             <List>
-              {users.map(user => (
+              {users.map((user) => (
                 <ListItem key={user.user_id}>
                   <ListItemAvatar>
                     <Avatar src={path(user, ["image", "path"])} sizes="small" />
@@ -121,7 +121,7 @@ ParticipantsDialog.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
   participants: PropTypes.arrayOf(PropTypes.object),
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(ParticipantsDialog);

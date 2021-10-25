@@ -5,7 +5,7 @@ import BackNavigation from "./BackNavigation";
 import Texts from "../Constants/Texts";
 import CreateGroupStepper from "./CreateGroupStepper";
 
-const CreateGroupScreen = props => {
+const CreateGroupScreen = (props) => {
   const { history, language } = props;
   const texts = Texts[language].createGroup;
   return (
@@ -21,7 +21,7 @@ const CreateGroupScreen = props => {
 
 CreateGroupScreen.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(CreateGroupScreen);

@@ -13,13 +13,13 @@ class AboutScreen extends React.Component {
       aboutCollapsed: false,
       challengeCollapsed: false,
       solutionCollapsed: false,
-      policyCollapsed: false
+      policyCollapsed: false,
     };
   }
 
   handleFindMore = () => {
     const message = {
-      action: "findOutMore"
+      action: "findOutMore",
     };
     if (window.isNative) {
       window.ReactNativeWebView.postMessage(JSON.stringify(message));
@@ -33,7 +33,7 @@ class AboutScreen extends React.Component {
       aboutCollapsed,
       solutionCollapsed,
       challengeCollapsed,
-      policyCollapsed
+      policyCollapsed,
     } = this.state;
     const { history, language } = this.props;
     const texts = Texts[language].aboutScreen;
@@ -91,7 +91,7 @@ class AboutScreen extends React.Component {
                 className="transparentButton"
                 onClick={() =>
                   this.setState({
-                    challengeCollapsed: !challengeCollapsed
+                    challengeCollapsed: !challengeCollapsed,
                   })
                 }
               >
@@ -124,7 +124,7 @@ class AboutScreen extends React.Component {
                 className="transparentButton"
                 onClick={() =>
                   this.setState({
-                    solutionCollapsed: !solutionCollapsed
+                    solutionCollapsed: !solutionCollapsed,
                   })
                 }
               >
@@ -154,7 +154,7 @@ class AboutScreen extends React.Component {
                 className="transparentButton"
                 onClick={() =>
                   this.setState({
-                    policyCollapsed: !policyCollapsed
+                    policyCollapsed: !policyCollapsed,
                   })
                 }
               >
@@ -201,5 +201,5 @@ export default withLanguage(AboutScreen);
 
 AboutScreen.propTypes = {
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

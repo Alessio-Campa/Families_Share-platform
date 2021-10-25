@@ -14,7 +14,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 import BackNavigation from "./BackNavigation";
 import Texts from "../Constants/Texts";
@@ -22,28 +22,28 @@ import withLanguage from "./LanguageContext";
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiTable: {
       root: {
         border: "1px solid rgba(0,0,0,0.1)",
-        fontFamily: "Roboto"
-      }
+        fontFamily: "Roboto",
+      },
     },
     MuiTableCell: {
       root: {
         texAlign: "center",
         fontSize: "1.6rem!important",
-        border: "1px solid rgba(0,0,0,0.1)"
-      }
-    }
-  }
+        border: "1px solid rgba(0,0,0,0.1)",
+      },
+    },
+  },
 });
 
 class GroupManagementScreen extends React.Component {
   state = {
-    fetchedData: false
+    fetchedData: false,
   };
 
   async componentDidMount() {
@@ -53,7 +53,7 @@ class GroupManagementScreen extends React.Component {
     const metrics = metricsResponse.data;
     this.setState({
       fetchedData: true,
-      metrics
+      metrics,
     });
   }
 
@@ -94,14 +94,14 @@ class GroupManagementScreen extends React.Component {
 
   renderChart = () => {
     const {
-      metrics: { contributions }
+      metrics: { contributions },
     } = this.state;
-    const chartData = contributions.map(c => ({
+    const chartData = contributions.map((c) => ({
       volunteer: `${c.given_name} ${c.family_name}`,
-      value: c.contribution
+      value: c.contribution,
     }));
     const min = 0;
-    const max = Math.max(contributions.map(c => c.contribution));
+    const max = Math.max(contributions.map((c) => c.contribution));
     return (
       <div className="chartsContainer">
         <ResponsiveContainer width="80%" height={300}>
@@ -155,7 +155,7 @@ class GroupManagementScreen extends React.Component {
 GroupManagementScreen.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default withLanguage(GroupManagementScreen);

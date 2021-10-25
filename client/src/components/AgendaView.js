@@ -8,13 +8,13 @@ import TimeslotsList from "./TimeslotsList";
 const AgendaView = ({ events }) => {
   const getDates = () => {
     const timeslots = JSON.parse(JSON.stringify(events));
-    let dates = timeslots.map(event => event.start);
+    let dates = timeslots.map((event) => event.start);
     dates = dates.sort((a, b) => {
       return new Date(a) - new Date(b);
     });
     const uniqueDates = [];
     const temp = [];
-    dates.forEach(date => {
+    dates.forEach((date) => {
       const t = moment(date).format("DD-MM-YYYY");
       if (!temp.includes(t)) {
         temp.push(t);
@@ -41,5 +41,5 @@ const AgendaView = ({ events }) => {
 export default withLanguage(withRouter(AgendaView));
 
 AgendaView.propTypes = {
-  events: PropTypes.array
+  events: PropTypes.array,
 };

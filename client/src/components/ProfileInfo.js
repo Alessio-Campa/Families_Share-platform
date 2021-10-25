@@ -28,7 +28,7 @@ const ProfileInfo = ({ language, profile }) => {
             <h1>
               {`${path(profile, ["address", "street"])} ${path(profile, [
                 "address",
-                "number"
+                "number",
               ])}`}
             </h1>
             <h2>{texts.adress}</h2>
@@ -65,5 +65,5 @@ export default withLanguage(ProfileInfo);
 
 ProfileInfo.propTypes = {
   profile: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

@@ -17,7 +17,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Legend
+  Legend,
 } from "recharts";
 import Papa from "papaparse";
 import BackNavigation from "./BackNavigation";
@@ -27,28 +27,28 @@ import Log from "./Log";
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiTable: {
       root: {
         border: "1px solid rgba(0,0,0,0.1)",
-        fontFamily: "Roboto"
-      }
+        fontFamily: "Roboto",
+      },
     },
     MuiTableCell: {
       root: {
         texAlign: "center",
         fontSize: "1.6rem!important",
-        border: "1px solid rgba(0,0,0,0.1)"
-      }
-    }
-  }
+        border: "1px solid rgba(0,0,0,0.1)",
+      },
+    },
+  },
 });
 
 class CommunityInterface extends React.Component {
   state = {
-    fetchedData: false
+    fetchedData: false,
   };
 
   async componentDidMount() {
@@ -62,11 +62,11 @@ class CommunityInterface extends React.Component {
       fetchedData: true,
       analyticsData: parsedData,
       chartMonth: moment().format("MMMM-YYYY"),
-      chartNumber: 0
+      chartNumber: 0,
     });
   }
 
-  parseAnalytics = data => {
+  parseAnalytics = (data) => {
     const parsedData = Papa.parse(data, { delimiter: " " });
     parsedData.data.shift();
     parsedData.data.pop();
@@ -107,17 +107,17 @@ class CommunityInterface extends React.Component {
     );
   };
 
-  handleConfiguration = configuration => {
+  handleConfiguration = (configuration) => {
     const { configurations } = this.state;
     const updatedConfigurations = { ...configurations };
     updatedConfigurations[configuration] = !configurations[configuration];
     axios
       .patch("/api/community", { ...updatedConfigurations })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.setState({ configurations: updatedConfigurations });
       })
-      .catch(err => {
+      .catch((err) => {
         Log.error(err);
       });
   };
@@ -141,7 +141,7 @@ class CommunityInterface extends React.Component {
     });
   };
 
-  handleSelectChange = event => {
+  handleSelectChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     this.setState({ [name]: value });
@@ -152,15 +152,15 @@ class CommunityInterface extends React.Component {
     const { language } = this.props;
     const texts = Texts[language].communityInterface;
     const charts = [...Array(analyticsData[0].length - 1).keys()];
-    const chartsData = analyticsData.map(value => ({
+    const chartsData = analyticsData.map((value) => ({
       date: value[0],
-      value: parseInt(value[parseInt(chartNumber, 10) + 1], 10)
+      value: parseInt(value[parseInt(chartNumber, 10) + 1], 10),
     }));
     const monthlyData = chartsData.filter(
-      value => moment(value.date).format("MMMM-YYYY") === chartMonth
+      (value) => moment(value.date).format("MMMM-YYYY") === chartMonth
     );
     const min = 0;
-    const max = Math.max(chartsData.map(t => t.value));
+    const max = Math.max(chartsData.map((t) => t.value));
     return (
       <div className="chartsContainer">
         <div className="selectChartsContainer">
@@ -170,7 +170,7 @@ class CommunityInterface extends React.Component {
             onChange={this.handleSelectChange}
             name="chartNumber"
           >
-            {charts.map(d => (
+            {charts.map((d) => (
               <option key={d} value={d}>
                 {texts.charts[d]}
               </option>
@@ -184,9 +184,9 @@ class CommunityInterface extends React.Component {
           >
             {[
               ...new Set(
-                chartsData.map(data => moment(data.date).format("MMMM-YYYY"))
-              )
-            ].map(d => (
+                chartsData.map((data) => moment(data.date).format("MMMM-YYYY"))
+              ),
+            ].map((d) => (
               <option key={d} value={d}>
                 {d}
               </option>
@@ -244,7 +244,7 @@ class CommunityInterface extends React.Component {
 
 CommunityInterface.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(CommunityInterface);

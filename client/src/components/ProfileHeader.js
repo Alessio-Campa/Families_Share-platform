@@ -16,7 +16,7 @@ class ProfileHeader extends React.Component {
     optionsModalIsOpen: false,
     confirmDialogIsOpen: false,
     action: "",
-    imageModalIsOpen: false
+    imageModalIsOpen: false,
   };
 
   handleImageModalOpen = () => {
@@ -53,11 +53,11 @@ class ProfileHeader extends React.Component {
     const texts = Texts[language].profileHeader;
     axios
       .post(`/api/users/${userId}/export`)
-      .then(response => {
+      .then((response) => {
         enqueueSnackbar(texts.exportSuccess, { variant: "info" });
         Log.info(response);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -67,7 +67,7 @@ class ProfileHeader extends React.Component {
     const { profileId: userId } = match.params;
     axios
       .delete(`/api/users/${userId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         if (window.isNative)
           window.ReactNativeWebView.postMessage(
@@ -76,7 +76,7 @@ class ProfileHeader extends React.Component {
         localStorage.removeItem("user");
         history.push("/");
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -87,7 +87,7 @@ class ProfileHeader extends React.Component {
     const texts = Texts[language].profileHeader;
     axios
       .post(`/api/users/${userId}/suspend`)
-      .then(response => {
+      .then((response) => {
         enqueueSnackbar(texts.suspendSuccess, { variant: "info" });
         setTimeout(() => {
           Log.info(response);
@@ -95,7 +95,7 @@ class ProfileHeader extends React.Component {
           history.push("/");
         }, 2000);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         enqueueSnackbar(texts.error, { variant: "error" });
       });
@@ -106,15 +106,15 @@ class ProfileHeader extends React.Component {
     history.goBack();
   };
 
-  handleConfirmDialogOpen = action => {
+  handleConfirmDialogOpen = (action) => {
     this.setState({
       confirmDialogIsOpen: true,
       optionsModalIsOpen: false,
-      action
+      action,
     });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     const { action } = this.state;
     if (choice === "agree") {
       switch (action) {
@@ -141,7 +141,7 @@ class ProfileHeader extends React.Component {
       optionsModalIsOpen,
       confirmDialogIsOpen,
       action,
-      imageModalIsOpen
+      imageModalIsOpen,
     } = this.state;
     let confirmDialogTitle;
     switch (action) {
@@ -162,7 +162,7 @@ class ProfileHeader extends React.Component {
         style: "optionsModalButton",
         handle: () => {
           this.handleConfirmDialogOpen("delete");
-        }
+        },
       },
       // {
       //   label: texts.suspend,
@@ -176,8 +176,8 @@ class ProfileHeader extends React.Component {
         style: "optionsModalButton",
         handle: () => {
           this.handleConfirmDialogOpen("export");
-        }
-      }
+        },
+      },
     ];
     return (
       <div id="profileHeaderContainer">
@@ -250,7 +250,7 @@ ProfileHeader.propTypes = {
   photo: PropTypes.string,
   language: PropTypes.string,
   match: PropTypes.object,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };
 
 export default withRouter(withLanguage(withSnackbar(ProfileHeader)));

@@ -10,8 +10,8 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, info) {
     this.setState({ hasError: true });
-    Sentry.withScope(scope => {
-      Object.keys(info).forEach(key => {
+    Sentry.withScope((scope) => {
+      Object.keys(info).forEach((key) => {
         scope.setExtra(key, info[key]);
       });
       Sentry.captureException(error);
@@ -37,7 +37,7 @@ class ErrorBoundary extends React.Component {
 }
 
 ErrorBoundary.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default ErrorBoundary;

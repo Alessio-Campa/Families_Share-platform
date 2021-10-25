@@ -19,7 +19,7 @@ class Reply extends React.Component {
       fetchedProfile: false,
       confirmDialogIsOpen: false,
       deleteId: "",
-      profile: {}
+      profile: {},
     };
   }
 
@@ -27,14 +27,14 @@ class Reply extends React.Component {
     const { reply } = this.state;
     axios
       .get(`/api/users/${reply.user_id}/profile`)
-      .then(response => {
+      .then((response) => {
         this.setState({ fetchedProfile: true, profile: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         this.setState({
           fetchedProfile: true,
-          profile: { image: { path: "" }, family_name: "", given_name: "" }
+          profile: { image: { path: "" }, family_name: "", given_name: "" },
         });
       });
   }
@@ -48,23 +48,23 @@ class Reply extends React.Component {
       .delete(
         `/api/groups/${groupId}/announcements/${announcementId}/replies/${replyId}`
       )
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         handleRefresh();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     if (choice === "agree") {
       this.handleDelete();
     }
     this.setState({ deleteId: "", confirmDialogIsOpen: false });
   };
 
-  handleConfirmDialogOpen = id => {
+  handleConfirmDialogOpen = (id) => {
     this.setState({ deleteId: id, confirmDialogIsOpen: true });
   };
 
@@ -131,5 +131,5 @@ Reply.propTypes = {
   groupId: PropTypes.string,
   reply: PropTypes.object,
   language: PropTypes.string,
-  userIsAdmin: PropTypes.bool
+  userIsAdmin: PropTypes.bool,
 };

@@ -33,7 +33,7 @@ class OptionsModal extends React.Component {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(f, f, f, 0)"
+        backgroundColor: "rgba(f, f, f, 0)",
       },
       content: {
         top,
@@ -44,8 +44,8 @@ class OptionsModal extends React.Component {
         backgroundColor: "#ffffff",
         width: "13rem",
         height: "auto",
-        borderRadius: "2px"
-      }
+        borderRadius: "2px",
+      },
     };
     return (
       <Modal
@@ -57,7 +57,7 @@ class OptionsModal extends React.Component {
         contentLabel="Options Modal"
       >
         <ul>
-          {options.map(option => (
+          {options.map((option) => (
             <li key={option.label} className={option.style}>
               <button
                 type="button"
@@ -77,7 +77,7 @@ OptionsModal.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
   options: PropTypes.array,
-  position: PropTypes.object
+  position: PropTypes.object,
 };
 
 export default OptionsModal;

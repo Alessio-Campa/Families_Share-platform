@@ -13,7 +13,7 @@ import {
   Mood,
   Cake,
   Event,
-  ChildCare
+  ChildCare,
 } from "@material-ui/icons";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
@@ -22,27 +22,27 @@ import LoadingSpinner from "./LoadingSpinner";
 import Images from "../Constants/Images";
 import Log from "./Log";
 
-const getTimeslot = pathname => {
+const getTimeslot = (pathname) => {
   return axios
     .get(pathname)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
         start: {
-          dateTime: ""
+          dateTime: "",
         },
         end: {
-          dateTime: ""
+          dateTime: "",
         },
         extendedProperties: {
           shared: {
             parents: "[]",
-            children: "[]"
-          }
-        }
+            children: "[]",
+          },
+        },
       };
     });
 };
@@ -54,7 +54,7 @@ class EditTimeslotScreen extends React.Component {
     notifyUsers: false,
     fetchedTimeslot: false,
     confirmDialogIsOpen: false,
-    confirmDialogTitle: ""
+    confirmDialogTitle: "",
   };
 
   async componentDidMount() {
@@ -95,7 +95,7 @@ class EditTimeslotScreen extends React.Component {
         children: [],
         link: "",
         status: "ongoing",
-        category: ""
+        category: "",
       };
     }
     this.setState({ fetchedTimeslot: true, ...timeslot });
@@ -105,7 +105,7 @@ class EditTimeslotScreen extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const { madeChanges } = this.state;
     const { history } = this.props;
     const data = JSON.parse(event.data);
@@ -170,7 +170,7 @@ class EditTimeslotScreen extends React.Component {
     return true;
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     const { madeChanges } = this.state;
     const { history, action } = this.props;
     event.preventDefault();
@@ -196,13 +196,13 @@ class EditTimeslotScreen extends React.Component {
     pathname = `/api${pathname.substring(0, pathname.length - 5)}`;
     axios
       .delete(pathname, {
-        params: { summary, parents: JSON.stringify(parents) }
+        params: { summary, parents: JSON.stringify(parents) },
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.go(-2);
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -226,7 +226,7 @@ class EditTimeslotScreen extends React.Component {
       parents,
       children,
       notifyUsers,
-      link
+      link,
     } = this.state;
     const timeslot = {
       notifyUsers,
@@ -240,8 +240,8 @@ class EditTimeslotScreen extends React.Component {
           minute: startTime.substr(
             startTime.indexOf(":") + 1,
             startTime.length - 1
-          )
-        })
+          ),
+        }),
       },
       end: {
         dateTime: moment(dateTime).set({
@@ -249,8 +249,8 @@ class EditTimeslotScreen extends React.Component {
           year: moment(date).format("YYYY"),
           date: moment(date).format("DD"),
           hour: endTime.substr(0, endTime.indexOf(":")),
-          minute: endTime.substr(endTime.indexOf(":") + 1, endTime.length - 1)
-        })
+          minute: endTime.substr(endTime.indexOf(":") + 1, endTime.length - 1),
+        }),
       },
       description: description.trim(),
       location,
@@ -265,37 +265,37 @@ class EditTimeslotScreen extends React.Component {
           start: startTime.substr(0, startTime.indexOf(":")),
           end: endTime.substr(0, endTime.indexOf(":")),
           category,
-          link
-        }
-      }
+          link,
+        },
+      },
     };
     let { pathname } = history.location;
     if (action === "edit") {
       pathname = `/api${pathname.substring(0, pathname.length - 5)}`;
       axios
         .patch(pathname, timeslot)
-        .then(response => {
+        .then((response) => {
           Log.info(response);
           history.goBack();
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
         });
     } else {
       pathname = `/api${pathname.substring(0, pathname.length - 4)}/add`;
       axios
         .post(pathname, timeslot)
-        .then(response => {
+        .then((response) => {
           Log.info(response);
           history.goBack();
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
         });
     }
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     const { confirmDialogTrigger } = this.state;
     const { history } = this.props;
     if (choice === "agree") {
@@ -310,11 +310,11 @@ class EditTimeslotScreen extends React.Component {
     this.setState({
       confirmDialogIsOpen: false,
       confirmDialogTitle: "",
-      confirmDialogTrigger: ""
+      confirmDialogTrigger: "",
     });
   };
 
-  handleConfirmDialogOpen = confirmDialogTrigger => {
+  handleConfirmDialogOpen = (confirmDialogTrigger) => {
     const { language } = this.props;
     const { notifyUsers } = this.state;
     const texts = Texts[language].editTimeslotScreen;
@@ -329,7 +329,7 @@ class EditTimeslotScreen extends React.Component {
     this.setState({
       confirmDialogTitle,
       confirmDialogIsOpen: true,
-      confirmDialogTrigger
+      confirmDialogTrigger,
     });
   };
 
@@ -345,7 +345,7 @@ class EditTimeslotScreen extends React.Component {
     ).format("HH:mm")}-${moment(end.dateTime).format("HH:mm")}`;
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { notifyUsers } = this.state;
     const { action } = this.props;
     const { name, value } = event.target;
@@ -379,7 +379,7 @@ class EditTimeslotScreen extends React.Component {
       confirmDialogTitle,
       madeChanges,
       link,
-      category
+      category,
     } = this.state;
     const formClass = [];
     if (formIsValidated) {
@@ -434,7 +434,7 @@ class EditTimeslotScreen extends React.Component {
         </div>
         <div id="activityMainContainer" style={{ borderBottom: "none" }}>
           <form
-            ref={form => {
+            ref={(form) => {
               this.formEl = form;
             }}
             onSubmit={this.handleSubmit}
@@ -527,7 +527,7 @@ class EditTimeslotScreen extends React.Component {
                   className="expandedTimeslotInput"
                   placeholder={texts.description}
                   value={description}
-                  onChange={event => {
+                  onChange={(event) => {
                     this.handleChange(event);
                     autosize(document.querySelectorAll("textarea"));
                   }}
@@ -543,7 +543,7 @@ class EditTimeslotScreen extends React.Component {
                   value={category}
                   onChange={this.handleChange}
                   inputProps={{
-                    name: "category"
+                    name: "category",
                   }}
                 >
                   <MenuItem value="learning">
@@ -723,5 +723,5 @@ export default withLanguage(EditTimeslotScreen);
 EditTimeslotScreen.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
-  action: PropTypes.string
+  action: PropTypes.string,
 };

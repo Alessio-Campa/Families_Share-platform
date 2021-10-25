@@ -24,7 +24,7 @@ class PendingRequestsScreen extends React.Component {
     }
     this.state = {
       fetchedRequests: false,
-      requests_type
+      requests_type,
     };
   }
 
@@ -37,23 +37,23 @@ class PendingRequestsScreen extends React.Component {
       case "group_members":
         axios
           .get(`/api/groups/${groupId}/members`)
-          .then(res => {
+          .then((res) => {
             const requests = res.data.filter(
-              member => !member.group_accepted && member.user_accepted
+              (member) => !member.group_accepted && member.user_accepted
             );
-            const profileIds = requests.map(request => request.user_id);
+            const profileIds = requests.map((request) => request.user_id);
             return axios.get("/api/profiles", {
               params: {
                 ids: profileIds,
-                searchBy: "ids"
-              }
+                searchBy: "ids",
+              },
             });
           })
-          .then(res => {
+          .then((res) => {
             const profiles = res.data;
             this.setState({ fetchedRequests: true, requests: profiles });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
             this.setState({ fetchedRequests: true, requests: [] });
           });
@@ -61,23 +61,23 @@ class PendingRequestsScreen extends React.Component {
       case "user_groups":
         axios
           .get(`/api/users/${userId}/groups`)
-          .then(res => {
+          .then((res) => {
             const requests = res.data.filter(
-              member => member.group_accepted && !member.user_accepted
+              (member) => member.group_accepted && !member.user_accepted
             );
-            const groupIds = requests.map(request => request.group_id);
+            const groupIds = requests.map((request) => request.group_id);
             return axios.get("/api/groups", {
               params: {
                 ids: groupIds,
-                searchBy: "ids"
-              }
+                searchBy: "ids",
+              },
             });
           })
-          .then(res => {
+          .then((res) => {
             const groups = res.data;
             this.setState({ fetchedRequests: true, requests: groups });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
             this.setState({ fetchedRequests: true, requests: [] });
           });
@@ -85,13 +85,13 @@ class PendingRequestsScreen extends React.Component {
       case "group_activities":
         axios
           .get(`/api/groups/${groupId}/activities`)
-          .then(res => {
+          .then((res) => {
             const activities = res.data.filter(
-              activity => activity.status === "pending"
+              (activity) => activity.status === "pending"
             );
             this.setState({ fetchedRequests: true, requests: activities });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
             this.setState({ fetchedRequests: true, requests: [] });
           });
@@ -100,56 +100,56 @@ class PendingRequestsScreen extends React.Component {
     }
   }
 
-  handleConfirm = request => {
+  handleConfirm = (request) => {
     const { requests_type, requests } = this.state;
     const { match } = this.props;
     const { groupId } = match.params;
     switch (requests_type) {
       case "group_members":
         const filteredUsers = requests.filter(
-          req => req.user_id !== request.user_id
+          (req) => req.user_id !== request.user_id
         );
         axios
           .patch(`/api/groups/${groupId}/members`, {
             patch: { group_accepted: true },
-            id: request.user_id
+            id: request.user_id,
           })
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.setState({ requests: filteredUsers });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
         break;
       case "user_groups":
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const filteredGroups = requests.filter(
-          req => req.group_id !== request.group_id
+          (req) => req.group_id !== request.group_id
         );
         axios
           .patch(`/api/users/${userId}/groups/${request.group_id}`)
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.setState({ requests: filteredGroups });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
         break;
       case "group_activities":
         const filteredActivities = requests.filter(
-          req => req.activity_id !== request.activity_id
+          (req) => req.activity_id !== request.activity_id
         );
         axios
           .patch(`/api/groups/${groupId}/activities/${request.activity_id}`, {
-            status: "accepted"
+            status: "accepted",
           })
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.setState({ requests: filteredActivities });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
         break;
@@ -157,51 +157,51 @@ class PendingRequestsScreen extends React.Component {
     }
   };
 
-  handleDelete = request => {
+  handleDelete = (request) => {
     const { requests_type, requests } = this.state;
     const { match } = this.props;
     const { groupId } = match.params;
     switch (requests_type) {
       case "group_members":
         const filteredUsers = requests.filter(
-          req => req.user_id !== request.user_id
+          (req) => req.user_id !== request.user_id
         );
         axios
           .delete(`/api/groups/${groupId}/members/${request.user_id}`)
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.setState({ requests: filteredUsers });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
         break;
       case "user_groups":
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const filteredGroups = requests.filter(
-          req => req.group_id !== request.group_id
+          (req) => req.group_id !== request.group_id
         );
         axios
           .delete(`/api/users/${userId}/groups/${request.group_id}`)
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.setState({ requests: filteredGroups });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
         break;
       case "group_activities":
         const filterdActivities = requests.filter(
-          req => req.activity_id !== request.activity_id
+          (req) => req.activity_id !== request.activity_id
         );
         axios
           .delete(`/api/groups/${groupId}/activities/${request.activity_id}`)
-          .then(response => {
+          .then((response) => {
             Log.info(response);
             this.setState({ requests: filterdActivities });
           })
-          .catch(error => {
+          .catch((error) => {
             Log.error(error);
           });
         break;
@@ -209,7 +209,7 @@ class PendingRequestsScreen extends React.Component {
     }
   };
 
-  renderAvatar = request => {
+  renderAvatar = (request) => {
     const { history } = this.props;
     const { requests_type } = this.state;
     switch (requests_type) {
@@ -241,7 +241,7 @@ class PendingRequestsScreen extends React.Component {
             }
             style={{
               fontSize: "3rem",
-              color: request.color
+              color: request.color,
             }}
             className="fas fa-certificate center"
           />
@@ -251,7 +251,7 @@ class PendingRequestsScreen extends React.Component {
     }
   };
 
-  renderName = request => {
+  renderName = (request) => {
     const { requests_type } = this.state;
     const { history } = this.props;
     let requestName;
@@ -347,7 +347,7 @@ class PendingRequestsScreen extends React.Component {
 PendingRequestsScreen.propTypes = {
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default withLanguage(PendingRequestsScreen);

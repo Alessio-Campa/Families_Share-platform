@@ -10,7 +10,7 @@ import Images from "../Constants/Images";
 
 const muiTheme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiBottomNavigation: {
@@ -20,28 +20,28 @@ const muiTheme = createMuiTheme({
         height: "5.6rem",
         backgroundColor: "#00838F",
         width: "100%",
-        zIndex: 100
-      }
+        zIndex: 100,
+      },
     },
     MuiBottomNavigationAction: {
       root: {
         minWidth: 0,
-        maxWidth: 100000
+        maxWidth: 100000,
       },
       label: {
         color: "white",
         fontSize: "1.2rem",
         "&$selected": {
-          fontSize: "1.2rem"
-        }
-      }
+          fontSize: "1.2rem",
+        },
+      },
     },
     MuiButtonBase: {
       disabled: {
-        opacity: 0.1
-      }
-    }
-  }
+        opacity: 0.1,
+      },
+    },
+  },
 });
 
 const GroupNavbar = ({ history, language, match, allowNavigation }) => {
@@ -71,7 +71,7 @@ const GroupNavbar = ({ history, language, match, allowNavigation }) => {
     activeTab === "calendar",
     activeTab === "activities",
     activeTab === "members",
-    activeTab === "chat"
+    activeTab === "chat",
   ];
   return (
     <MuiThemeProvider theme={muiTheme}>
@@ -152,7 +152,7 @@ GroupNavbar.propTypes = {
   allowNavigation: PropTypes.bool,
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default withRouter(withLanguage(GroupNavbar));

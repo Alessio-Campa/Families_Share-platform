@@ -12,25 +12,25 @@ export default class GroupMembersList extends React.Component {
   componentDidMount() {
     const { members, list } = this.props;
     if (list === "parents") {
-      const memberIds = members.map(member => member.user_id);
+      const memberIds = members.map((member) => member.user_id);
       axios
         .get("/api/profiles", {
           params: {
             ids: memberIds,
-            searchBy: "ids"
-          }
+            searchBy: "ids",
+          },
         })
-        .then(response => {
+        .then((response) => {
           const users = response.data;
-          users.forEach(user => {
+          users.forEach((user) => {
             const temp = members.filter(
-              member => user.user_id === member.user_id
+              (member) => user.user_id === member.user_id
             )[0];
             user.admin = temp.admin;
           });
           this.setState({ fetchedResources: true, items: users });
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
           this.setState({ fetchedResources: true, items: [] });
         });
@@ -39,21 +39,21 @@ export default class GroupMembersList extends React.Component {
         .get("/api/children", {
           params: {
             ids: members,
-            searchBy: "ids"
-          }
+            searchBy: "ids",
+          },
         })
-        .then(response => {
+        .then((response) => {
           const children = response.data;
           this.setState({ fetchedResources: true, items: children });
         })
-        .catch(error => {
+        .catch((error) => {
           Log.error(error);
           this.setState({ fetchedResources: true, items: [] });
         });
     }
   }
 
-  handleAddAdmin = userId => {
+  handleAddAdmin = (userId) => {
     const { users } = this.state;
     let i = 0;
     let found = false;
@@ -67,7 +67,7 @@ export default class GroupMembersList extends React.Component {
     this.setState({ users });
   };
 
-  handleRemoveAdmin = userId => {
+  handleRemoveAdmin = (userId) => {
     const { users } = this.state;
     let i = 0;
     let found = false;
@@ -81,10 +81,10 @@ export default class GroupMembersList extends React.Component {
     this.setState({ users });
   };
 
-  handleRemoveUser = userId => {
+  handleRemoveUser = (userId) => {
     const { users } = this.state;
     this.setState({
-      users: users.filter(user => user.user_id !== userId)
+      users: users.filter((user) => user.user_id !== userId),
     });
   };
 
@@ -111,11 +111,11 @@ export default class GroupMembersList extends React.Component {
       if (letterIndices[letter] === undefined) letterIndices[letter] = [];
       letterIndices[letter].push(i);
     }
-    return letters.map(letter => (
+    return letters.map((letter) => (
       <li key={letter}>
         <div className="contactLetter">{letter}</div>
         <ul>
-          {letterIndices[letter].map(itemIndex => (
+          {letterIndices[letter].map((itemIndex) => (
             <li key={itemIndex} className="contactLiContainer">
               {list === "parents" ? (
                 <MemberContact
@@ -161,5 +161,5 @@ GroupMembersList.propTypes = {
   members: PropTypes.array,
   groupId: PropTypes.string,
   userIsAdmin: PropTypes.bool,
-  list: PropTypes.oneOf(["parents", "children"])
+  list: PropTypes.oneOf(["parents", "children"]),
 };

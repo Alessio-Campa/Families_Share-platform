@@ -8,43 +8,43 @@ import Texts from "../Constants/Texts";
 import Avatar from "./Avatar";
 import Log from "./Log";
 
-const getGroup = groupId => {
+const getGroup = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
         image: { path: "" },
         group_id: "",
-        name: ""
+        name: "",
       };
     });
 };
 
-const getGroupMembers = groupId => {
+const getGroupMembers = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/members`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
 };
-const getGroupSettings = groupId => {
+const getGroupSettings = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/settings`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return {
-        open: ""
+        open: "",
       };
     });
 };
@@ -58,7 +58,7 @@ class GroupListItem extends React.Component {
     // group.kids = await getGroupKids(groupId);
     group.settings = await getGroupSettings(groupId);
     group.members = members.filter(
-      member => member.user_accepted && member.group_accepted
+      (member) => member.user_accepted && member.group_accepted
     );
     this.setState({ fetchedGroupData: true, group });
   }
@@ -107,7 +107,7 @@ class GroupListItem extends React.Component {
 GroupListItem.propTypes = {
   groupId: PropTypes.string,
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withRouter(withLanguage(GroupListItem));

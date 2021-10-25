@@ -14,7 +14,7 @@ class ChildProfileHeader extends React.Component {
   state = {
     optionsModalIsOpen: false,
     confirmDialogIsOpen: false,
-    imageModalIsOpen: false
+    imageModalIsOpen: false,
   };
 
   handleImageModalOpen = () => {
@@ -48,11 +48,11 @@ class ChildProfileHeader extends React.Component {
     const { profileId: userId, childId } = match.params;
     axios
       .delete(`/api/users/${userId}/children/${childId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
         history.goBack();
       });
@@ -62,7 +62,7 @@ class ChildProfileHeader extends React.Component {
     this.setState({ optionsModalIsOpen: false, confirmDialogIsOpen: true });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     if (choice === "agree") {
       this.handleDelete();
     }
@@ -75,15 +75,15 @@ class ChildProfileHeader extends React.Component {
     const {
       imageModalIsOpen,
       confirmDialogIsOpen,
-      optionsModalIsOpen
+      optionsModalIsOpen,
     } = this.state;
     const texts = Texts[language].childProfileHeader;
     const options = [
       {
         label: texts.delete,
         style: "optionsModalButton",
-        handle: this.handleConfirmDialogOpen
-      }
+        handle: this.handleConfirmDialogOpen,
+      },
     ];
     return (
       <React.Fragment>
@@ -158,7 +158,7 @@ ChildProfileHeader.propTypes = {
   photo: PropTypes.string,
   match: PropTypes.object,
   history: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withRouter(withLanguage(ChildProfileHeader));

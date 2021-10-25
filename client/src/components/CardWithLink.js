@@ -19,33 +19,33 @@ const styles = {
     border: "1px solid #e0e0e0",
     left: "50%",
     transform: "translateX(-50%)",
-    position: "relative"
+    position: "relative",
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   header: {
     fontSize: "2.4rem",
-    color: "#010101"
+    color: "#010101",
   },
   info: {
     fontSize: "1.4rem",
-    color: "rgba(1, 1, 1, 0.87)"
+    color: "rgba(1, 1, 1, 0.87)",
   },
   infoWithButton: {
     fontSize: "1.4rem",
     color: "rgba(1, 1, 1, 0.87)",
     borderBottom: "1px solid #e0e0e0",
-    paddingBottom: "2rem"
+    paddingBottom: "2rem",
   },
   button: {
     fontSize: "1.4rem",
     fontWeight: 500,
     color: "#4671b6",
-    width: "auto"
-  }
+    width: "auto",
+  },
 };
 
 const CardWithLink = ({ history, card, classes, language }) => {
@@ -85,7 +85,7 @@ CardWithLink.propTypes = {
   card: PropTypes.object,
   history: PropTypes.object,
   language: PropTypes.string,
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 export default withRouter(withLanguage(withStyles(styles)(CardWithLink)));

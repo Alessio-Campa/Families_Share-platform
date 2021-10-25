@@ -16,7 +16,7 @@ const GroupAbout = ({ language, groupInfo, hasJoined }) => {
 GroupAbout.propTypes = {
   groupInfo: PropTypes.string,
   hasJoined: PropTypes.bool,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(GroupAbout);

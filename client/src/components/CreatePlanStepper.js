@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   withStyles,
   MuiThemeProvider,
-  createMuiTheme
+  createMuiTheme,
 } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -21,14 +21,14 @@ import Log from "./Log";
 
 const muiTheme = createMuiTheme({
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   overrides: {
     MuiStepLabel: {
       label: {
         fontFamily: "Roboto",
-        fontSize: "1.56rem"
-      }
+        fontSize: "1.56rem",
+      },
     },
     MuiStepIcon: {
       root: {
@@ -36,72 +36,72 @@ const muiTheme = createMuiTheme({
         width: "3rem",
         height: "3rem",
         "&$active": {
-          color: "#00838f"
+          color: "#00838f",
         },
         "&$completed": {
-          color: "#00838f"
-        }
-      }
+          color: "#00838f",
+        },
+      },
     },
     MuiButton: {
       root: {
         fontSize: "1.4rem",
-        fontFamily: "Roboto"
-      }
-    }
+        fontFamily: "Roboto",
+      },
+    },
   },
   palette: {
     secondary: {
-      main: "#c43e00"
-    }
-  }
+      main: "#c43e00",
+    },
+  },
 });
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    width: "95%"
+    width: "95%",
   },
   continueButton: {
     backgroundColor: "#00838f",
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     "&:hover": {
-      backgroundColor: "#00838f"
-    }
+      backgroundColor: "#00838f",
+    },
   },
   stepLabel: {
     root: {
       color: "#ffffff",
       "&$active": {
         color: "white",
-        fontWeight: 500
+        fontWeight: 500,
       },
       "&$completed": {
         color: theme.palette.text.primary,
-        fontWeight: 500
+        fontWeight: 500,
       },
       "&$alternativeLabel": {
         textAlign: "center",
         marginTop: 16,
-        fontSize: "5rem"
+        fontSize: "5rem",
       },
       "&$error": {
-        color: theme.palette.error.main
-      }
-    }
+        color: theme.palette.error.main,
+      },
+    },
   },
   cancelButton: {
     backgroundColor: "#ffffff",
     marginTop: theme.spacing.unit,
     color: "grey",
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
   },
   actionsContainer: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
   },
   resetContainer: {
-    padding: theme.spacing.unit * 3
-  }
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class CreatePlanStepper extends React.Component {
@@ -114,7 +114,7 @@ class CreatePlanStepper extends React.Component {
     creatingPlan: false,
     from: "",
     to: "",
-    deadline: ""
+    deadline: "",
   };
 
   componentDidMount() {
@@ -125,7 +125,7 @@ class CreatePlanStepper extends React.Component {
     document.removeEventListener("message", this.handleMessage, false);
   }
 
-  handleMessage = event => {
+  handleMessage = (event) => {
     const { activeStep } = this.state;
     const { history } = this.props;
     const data = JSON.parse(event.data);
@@ -150,13 +150,13 @@ class CreatePlanStepper extends React.Component {
         location,
         from,
         to,
-        deadline
+        deadline,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -167,9 +167,9 @@ class CreatePlanStepper extends React.Component {
       if (activeStep === 3) {
         this.createPlan();
       }
-      this.setState(state => ({
+      this.setState((state) => ({
         activeStep: state.activeStep + 1,
-        formIsValidated: false
+        formIsValidated: false,
       }));
     } else {
       this.setState({ formIsValidated: true });
@@ -177,12 +177,12 @@ class CreatePlanStepper extends React.Component {
   };
 
   handleCancel = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1
+    this.setState((state) => ({
+      activeStep: state.activeStep - 1,
     }));
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     const { language } = this.props;
     const { from } = this.state;
@@ -252,7 +252,7 @@ class CreatePlanStepper extends React.Component {
       description,
       from,
       to,
-      deadline
+      deadline,
     } = this.state;
     const texts = Texts[language].createPlanStepper;
     switch (activeStep) {
@@ -275,7 +275,7 @@ class CreatePlanStepper extends React.Component {
               className="textareaInput form-control"
               placeholder={texts.description}
               value={description}
-              onChange={event => {
+              onChange={(event) => {
                 this.handleChange(event);
                 autosize(document.querySelectorAll("textarea"));
               }}
@@ -358,16 +358,16 @@ class CreatePlanStepper extends React.Component {
     return !creatingPlan ? (
       <div className={classes.root}>
         <form
-          ref={form => {
+          ref={(form) => {
             this.formEl = form;
           }}
-          onSubmit={event => event.preventDefault()}
+          onSubmit={(event) => event.preventDefault()}
           className={formClass}
           noValidate
         >
           <MuiThemeProvider theme={muiTheme}>
             <Stepper activeStep={activeStep} orientation="vertical">
-              {steps.map(label => {
+              {steps.map((label) => {
                 return (
                   <Step key={label}>
                     <StepLabel className={classes.stepLabel}>{label}</StepLabel>
@@ -412,6 +412,6 @@ CreatePlanStepper.propTypes = {
   classes: PropTypes.object,
   history: PropTypes.object,
   language: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 export default withRouter(withLanguage(withStyles(styles)(CreatePlanStepper)));

@@ -14,11 +14,11 @@ import Log from "./Log";
 const fetchPlan = (groupId, planId) => {
   return axios
     .get(`/api/groups/${groupId}/plans/${planId}`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
 
-    .catch(err => {
+    .catch((err) => {
       Log.error(err);
       return {
         name: "",
@@ -27,68 +27,68 @@ const fetchPlan = (groupId, planId) => {
         description: "",
         location: "",
         availabilities: [],
-        needs: []
+        needs: [],
       };
     });
 };
 
-const fetchGroupMembers = groupId => {
+const fetchGroupMembers = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/members`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
 
-    .catch(err => {
+    .catch((err) => {
       Log.error(err);
       return [];
     });
 };
 
-const fetchMyChildren = userId => {
+const fetchMyChildren = (userId) => {
   return axios
     .get(`/api/users/${userId}/children`)
-    .then(response => {
-      return response.data.map(c => c.child_id);
+    .then((response) => {
+      return response.data.map((c) => c.child_id);
     })
 
-    .catch(err => {
+    .catch((err) => {
       Log.error(err);
       return [];
     });
 };
 
-const fetchChildProfiles = ids => {
+const fetchChildProfiles = (ids) => {
   return axios
     .get("/api/children", {
       params: {
         ids,
-        searchBy: "ids"
-      }
+        searchBy: "ids",
+      },
     })
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
 
-    .catch(err => {
+    .catch((err) => {
       Log.error(err);
       return [];
     });
 };
 
-const fetchParentsProfiles = ids => {
+const fetchParentsProfiles = (ids) => {
   return axios
     .get("/api/profiles", {
       params: {
         ids,
-        searchBy: "ids"
-      }
+        searchBy: "ids",
+      },
     })
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
 
-    .catch(err => {
+    .catch((err) => {
       Log.error(err);
       return [];
     });
@@ -101,7 +101,7 @@ class ManagePlanScreen extends React.Component {
       fetchedPlan: false,
       confirmDialogIsOpen: false,
       confirmDialogTitle: "",
-      optionsModalIsOpen: false
+      optionsModalIsOpen: false,
     };
   }
 
@@ -115,10 +115,10 @@ class ManagePlanScreen extends React.Component {
     let parents = [];
     if (plan.state === "planning") {
       let parentIds = members
-        .filter(m => m.user_accepted && m.group_accepted)
-        .map(m => m.user_id);
-      plan.solution.forEach(slot => {
-        slot.children.forEach(child => {
+        .filter((m) => m.user_accepted && m.group_accepted)
+        .map((m) => m.user_id);
+      plan.solution.forEach((slot) => {
+        slot.children.forEach((child) => {
           childIds.push(child);
         });
       });
@@ -129,7 +129,7 @@ class ManagePlanScreen extends React.Component {
       childIds = await fetchMyChildren(userId);
     }
     const children = await fetchChildProfiles(childIds);
-    const userIsAdmin = members.find(m => m.user_id === userId).admin;
+    const userIsAdmin = members.find((m) => m.user_id === userId).admin;
     this.setState({ fetchedPlan: true, plan, children, parents, userIsAdmin });
   }
 
@@ -138,16 +138,16 @@ class ManagePlanScreen extends React.Component {
     const { planId, groupId } = match.params;
     axios
       .delete(`/api/groups/${groupId}/plans/${planId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.goBack();
       })
-      .catch(err => {
+      .catch((err) => {
         Log.error(err);
       });
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     const { confirmDialogAction } = this.state;
     if (choice === "agree") {
       if (confirmDialogAction === "delete") {
@@ -159,11 +159,11 @@ class ManagePlanScreen extends React.Component {
     this.setState({
       confirmDialogIsOpen: false,
       confirmDialogTitle: "",
-      confirmDialogAction: ""
+      confirmDialogAction: "",
     });
   };
 
-  handleConfirmDialogOpen = action => {
+  handleConfirmDialogOpen = (action) => {
     const { language } = this.props;
     const texts = Texts[language].managePlanScreen;
     const confirmDialogTitle =
@@ -172,7 +172,7 @@ class ManagePlanScreen extends React.Component {
       confirmDialogTitle,
       confirmDialogAction: action,
       confirmDialogIsOpen: true,
-      optionsModalIsOpen: false
+      optionsModalIsOpen: false,
     });
   };
 
@@ -188,13 +188,13 @@ class ManagePlanScreen extends React.Component {
     const texts = Texts[language].managePlanScreen;
     axios
       .post(`/api/groups/${groupId}/plans/${planId}/export`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         enqueueSnackbar(texts.exportToaster, {
-          variant: "info"
+          variant: "info",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         Log.error(err);
       });
   };
@@ -213,25 +213,25 @@ class ManagePlanScreen extends React.Component {
       userIsAdmin,
       confirmDialogTitle,
       confirmDialogIsOpen,
-      optionsModalIsOpen
+      optionsModalIsOpen,
     } = this.state;
     const texts = Texts[language].managePlanScreen;
     const options = [
       {
         label: texts.edit,
         style: "optionsModalButton",
-        handle: this.handleEdit
+        handle: this.handleEdit,
       },
       {
         label: texts.export,
         style: "optionsModalButton",
-        handle: () => this.handleConfirmDialogOpen("export")
+        handle: () => this.handleConfirmDialogOpen("export"),
       },
       {
         label: texts.delete,
         style: "optionsModalButton",
-        handle: () => this.handleConfirmDialogOpen("delete")
-      }
+        handle: () => this.handleConfirmDialogOpen("delete"),
+      },
     ];
     return (
       <React.Fragment>
@@ -295,7 +295,7 @@ ManagePlanScreen.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
   match: PropTypes.object,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };
 
 export default withSnackbar(withLanguage(ManagePlanScreen));

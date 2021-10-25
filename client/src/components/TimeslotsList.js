@@ -8,13 +8,13 @@ import FilterTimeslotsDrawer from "./FilterTimeslotsDrawer";
 import TimeslotPreview from "./TimeslotPreview";
 import Log from "./Log";
 
-const getUsersChildren = userId => {
+const getUsersChildren = (userId) => {
   return axios
     .get(`/api/users/${userId}/children`)
-    .then(response => {
+    .then((response) => {
       return response.data;
     })
-    .catch(error => {
+    .catch((error) => {
       Log.error(error);
       return [];
     });
@@ -50,7 +50,7 @@ class TimeslotsList extends React.Component {
     filter: "all",
     filterDrawerVisible: false,
     timeslots: [],
-    usersChildren: []
+    usersChildren: [],
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -61,7 +61,7 @@ class TimeslotsList extends React.Component {
       );
       return {
         timeslots,
-        dates: nextProps.dates
+        dates: nextProps.dates,
       };
     }
     return null;
@@ -74,7 +74,7 @@ class TimeslotsList extends React.Component {
     this.setState({
       usersChildren,
       timeslots: handleTimeslots(timeslots, usersChildren),
-      dates
+      dates,
     });
   }
 
@@ -83,7 +83,7 @@ class TimeslotsList extends React.Component {
     this.setState({ filterDrawerVisible: !filterDrawerVisible });
   };
 
-  handleFilterDrawerClick = filterOption => {
+  handleFilterDrawerClick = (filterOption) => {
     this.setState({ filter: filterOption, filterDrawerVisible: false });
   };
 
@@ -91,7 +91,7 @@ class TimeslotsList extends React.Component {
     this.setState({ filterDrawerVisible: false });
   };
 
-  enoughParticipants = timeslot => {
+  enoughParticipants = (timeslot) => {
     const extendedProperties = timeslot.extendedProperties.shared;
     if (
       JSON.parse(extendedProperties.parents).length >=
@@ -104,7 +104,7 @@ class TimeslotsList extends React.Component {
     return false;
   };
 
-  filterTimeslot = timeslot => {
+  filterTimeslot = (timeslot) => {
     const { filter, usersChildren } = this.state;
     const parents = JSON.parse(timeslot.extendedProperties.shared.parents);
     const children = JSON.parse(timeslot.extendedProperties.shared.children);
@@ -121,7 +121,7 @@ class TimeslotsList extends React.Component {
         return parents.indexOf(userId) !== -1;
       case "myChildrenSigned":
         return (
-          usersChildren.filter(c => children.indexOf(c.child_id) !== -1)
+          usersChildren.filter((c) => children.indexOf(c.child_id) !== -1)
             .length > 0
         );
       default:
@@ -129,7 +129,7 @@ class TimeslotsList extends React.Component {
     }
   };
 
-  renderTimeslots = timeslots => {
+  renderTimeslots = (timeslots) => {
     return (
       <ul>
         {timeslots.map((timeslot, timeslotIndex) => {
@@ -149,7 +149,7 @@ class TimeslotsList extends React.Component {
       <ul id="timeslotDayContainer">
         {dates.map((date, index) => {
           const dayTimeslots = timeslots.filter(
-            timeslot =>
+            (timeslot) =>
               moment(date).format("D") ===
                 moment(timeslot.start.dateTime).format("D") &&
               this.filterTimeslot(timeslot)
@@ -213,5 +213,5 @@ export default withLanguage(TimeslotsList);
 TimeslotsList.propTypes = {
   dates: PropTypes.array,
   timeslots: PropTypes.array,
-  language: PropTypes.string
+  language: PropTypes.string,
 };

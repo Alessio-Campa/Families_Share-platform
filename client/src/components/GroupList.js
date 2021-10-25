@@ -18,12 +18,12 @@ const GroupList = ({ groupIds }) => {
             indexes = [
               ...Array(
                 (block + 1) * 4 <= length ? 4 : length - block * 4
-              ).keys()
-            ].map(x => block * 4 + x);
+              ).keys(),
+            ].map((x) => block * 4 + x);
           }
           return (
             <LazyLoad key={blockIndex} height={350} once offset={150}>
-              {indexes.map(index => (
+              {indexes.map((index) => (
                 <li key={index} style={{ margin: "1rem 0" }}>
                   <GroupListItem groupId={groupIds[index]} />
                 </li>
@@ -37,7 +37,7 @@ const GroupList = ({ groupIds }) => {
 };
 
 GroupList.propTypes = {
-  groupIds: PropTypes.array
+  groupIds: PropTypes.array,
 };
 
 export default withLanguage(GroupList);

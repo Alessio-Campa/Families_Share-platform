@@ -16,7 +16,7 @@ class CreateActivityTimeslots extends React.Component {
       dates,
       numberOfDays: dates.length,
       differentTimeslots,
-      activityTimeslots
+      activityTimeslots,
     };
   }
 
@@ -25,13 +25,13 @@ class CreateActivityTimeslots extends React.Component {
       dates,
       numberOfDays,
       differentTimeslots,
-      activityTimeslots
+      activityTimeslots,
     } = this.state;
     const {
       activityName,
       activityLocation,
       language,
-      activityLink
+      activityLink,
     } = this.props;
     const texts = Texts[language].createActivityTimeslots;
     let header = "";
@@ -103,7 +103,7 @@ class CreateActivityTimeslots extends React.Component {
     handleSubmit(
       {
         activityTimeslots,
-        differentTimeslots
+        differentTimeslots,
       },
       validated
     );
@@ -172,5 +172,5 @@ CreateActivityTimeslots.propTypes = {
   activityTimeslots: PropTypes.array,
   differentTimeslots: PropTypes.bool,
   language: PropTypes.string,
-  activityLink: PropTypes.string
+  activityLink: PropTypes.string,
 };

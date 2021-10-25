@@ -25,13 +25,13 @@ class GroupInfo extends React.Component {
     const { group_id: groupId } = group;
     axios
       .get(`/api/groups/${groupId}/settings`)
-      .then(response => {
+      .then((response) => {
         group.settings = response.data;
         let groupAccepted = false;
         let userAccepted = false;
         let userIsAdmin = false;
         const userId = JSON.parse(localStorage.getItem("user")).id;
-        group.members.forEach(member => {
+        group.members.forEach((member) => {
           if (member.user_id === userId) {
             const { group_accepted, user_accepted, admin } = member;
             groupAccepted = group_accepted;
@@ -45,10 +45,10 @@ class GroupInfo extends React.Component {
           userIsAdmin,
           confirmIsOpen: false,
           fetchedGroupInfo: true,
-          group
+          group,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   }
@@ -60,14 +60,14 @@ class GroupInfo extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .patch(`/api/users/${userId}/groups/${groupId}`, {
-        patch: { user_accepted: true }
+        patch: { user_accepted: true },
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.setState({ userAccepted: true });
         enableNavigation();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -78,13 +78,13 @@ class GroupInfo extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .post(`/api/users/${userId}/groups`, {
-        group_id
+        group_id,
       })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.setState({ userAccepted: true });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -96,11 +96,11 @@ class GroupInfo extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .delete(`/api/users/${userId}/groups/${groupId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         history.replace("/myfamiliesshare");
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -111,16 +111,16 @@ class GroupInfo extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .delete(`/api/users/${userId}/groups/${groupId}`)
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         this.setState({ userAccepted: false });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
 
-  handleConfirmClose = choice => {
+  handleConfirmClose = (choice) => {
     if (choice === "agree") {
       this.handleLeave();
     }
@@ -131,7 +131,7 @@ class GroupInfo extends React.Component {
     const { language, enqueueSnackbar } = this.props;
     const texts = Texts[language].groupInfo;
     const {
-      group: { contact_type: contactType, contact_info: contactInfo }
+      group: { contact_type: contactType, contact_info: contactInfo },
     } = this.state;
     if (window.isNative) {
       if (contactType === "phone") {
@@ -145,7 +145,7 @@ class GroupInfo extends React.Component {
       }
     } else {
       enqueueSnackbar(texts.contactMessage, {
-        variant: "info"
+        variant: "info",
       });
     }
   };
@@ -192,14 +192,14 @@ class GroupInfo extends React.Component {
       userIsAdmin,
       groupAccepted,
       userAccepted,
-      confirmIsOpen
+      confirmIsOpen,
     } = this.state;
     const {
       name: groupName,
       group_id: groupId,
       background: groupBackground,
       description: groupInfo,
-      contact_info: contactInfo
+      contact_info: contactInfo,
     } = group;
     const texts = Texts[language].groupInfo;
     return fetchedGroupInfo ? (
@@ -222,7 +222,7 @@ class GroupInfo extends React.Component {
                 cardHeader: texts.startGuideHeader,
                 cardInfo: texts.startGuideInfo,
                 learnMore: true,
-                link: `${match.url}/start-up-guide`
+                link: `${match.url}/start-up-guide`,
               }}
             />
           )}
@@ -258,5 +258,5 @@ GroupInfo.propTypes = {
   language: PropTypes.string,
   history: PropTypes.object,
   match: PropTypes.object,
-  enqueueSnackbar: PropTypes.func
+  enqueueSnackbar: PropTypes.func,
 };

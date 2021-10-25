@@ -19,8 +19,8 @@ class TimeslotsContainer extends React.Component {
       expandedTimeslot: {
         expanded: false,
         timeslotIndex: -1,
-        data: {}
-      }
+        data: {},
+      },
     };
     handleTimeslots(timeslots, dateIndex);
   }
@@ -42,9 +42,9 @@ class TimeslotsContainer extends React.Component {
           cost: "",
           category: "other",
           location: activityLocation,
-          link: activityLink
-        }
-      }
+          link: activityLink,
+        },
+      },
     });
     const target = document.querySelector(".ReactModalPortal");
     disableBodyScroll(target);
@@ -69,7 +69,7 @@ class TimeslotsContainer extends React.Component {
     );
   };
 
-  handleTimeslotModalSave = timeslot => {
+  handleTimeslotModalSave = (timeslot) => {
     const target = document.querySelector(".ReactModalPortal");
     enableBodyScroll(target);
     const { handleTimeslots } = this.props;
@@ -83,25 +83,25 @@ class TimeslotsContainer extends React.Component {
     }
     this.setState({
       timeslots,
-      expandedTimeslot: { expanded: false, timeslotIndex: -1, data: {} }
+      expandedTimeslot: { expanded: false, timeslotIndex: -1, data: {} },
     });
     handleTimeslots(timeslots, dateIndex);
   };
 
-  handleTimeslotModalOpen = timeslotIndex => {
+  handleTimeslotModalOpen = (timeslotIndex) => {
     const { timeslots } = this.state;
     this.setState({
       expandedTimeslot: {
         expanded: true,
         timeslotIndex,
-        data: timeslots[timeslotIndex]
-      }
+        data: timeslots[timeslotIndex],
+      },
     });
   };
 
   handleTimeslotModalClose = () => {
     this.setState({
-      expandedTimeslot: { expanded: false, timeslotIndex: -1, data: {} }
+      expandedTimeslot: { expanded: false, timeslotIndex: -1, data: {} },
     });
   };
 
@@ -110,7 +110,7 @@ class TimeslotsContainer extends React.Component {
     this.setState({ showTimeslots: !showTimeslots });
   };
 
-  handleTimeslotDelete = id => {
+  handleTimeslotDelete = (id) => {
     const { timeslots, dateIndex } = this.state;
     const { handleTimeslots } = this.props;
     timeslots.splice(id, 1);
@@ -176,7 +176,7 @@ class TimeslotsContainer extends React.Component {
     return <div />;
   };
 
-  handleConfirmDialogClose = choice => {
+  handleConfirmDialogClose = (choice) => {
     const { deleteId } = this.state;
     if (choice === "agree") {
       this.handleTimeslotDelete(deleteId);
@@ -185,7 +185,7 @@ class TimeslotsContainer extends React.Component {
     this.setState({ deleteId: "", confirmDialogIsOpen: false });
   };
 
-  handleConfirmDialogOpen = id => {
+  handleConfirmDialogOpen = (id) => {
     this.setState({ deleteId: id, confirmDialogIsOpen: true });
   };
 
@@ -196,7 +196,7 @@ class TimeslotsContainer extends React.Component {
       showTimeslots,
       confirmDialogIsOpen,
       timeslots,
-      expandedTimeslot
+      expandedTimeslot,
     } = this.state;
     const showTimeslotsIcon = showTimeslots
       ? "fas fa-chevron-up"
@@ -252,5 +252,5 @@ TimeslotsContainer.propTypes = {
   activityLocation: PropTypes.string,
   activityName: PropTypes.string,
   language: PropTypes.string,
-  activityLink: PropTypes.string
+  activityLink: PropTypes.string,
 };

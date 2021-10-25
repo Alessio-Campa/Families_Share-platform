@@ -20,7 +20,7 @@ const CreateActivityScreen = ({ language, history }) => {
 
 CreateActivityScreen.propTypes = {
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withLanguage(CreateActivityScreen);

@@ -16,10 +16,10 @@ class RatingModal extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .get(`/api/users/${userId}/rating`)
-      .then(response => {
+      .then((response) => {
         this.setState({ rating: response.data.rating });
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   }
@@ -30,11 +30,11 @@ class RatingModal extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     axios
       .patch(`/api/users/${userId}/rating`, { rating })
-      .then(response => {
+      .then((response) => {
         Log.info(response);
         handleClose();
       })
-      .catch(error => {
+      .catch((error) => {
         Log.error(error);
       });
   };
@@ -51,7 +51,7 @@ class RatingModal extends React.Component {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.8)"
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
       },
       content: {
         borderRadius: "0.5rem",
@@ -63,8 +63,8 @@ class RatingModal extends React.Component {
         backgroundColor: "#ffffff",
         width: "80%",
         maxWidth: "46rem",
-        height: "32rem"
-      }
+        height: "32rem",
+      },
     };
     return (
       <Modal
@@ -79,7 +79,7 @@ class RatingModal extends React.Component {
         <div className="ratingMain">
           <Rating
             initialRating={rating}
-            onClick={newRating => {
+            onClick={(newRating) => {
               this.setState({ rating: newRating });
             }}
             emptySymbol={<i className="fas fa-star ratingStar" />}
@@ -104,7 +104,7 @@ class RatingModal extends React.Component {
 RatingModal.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 export default withLanguage(RatingModal);

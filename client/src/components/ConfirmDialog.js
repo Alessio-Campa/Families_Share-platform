@@ -6,7 +6,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import {
   withStyles,
   createMuiTheme,
-  MuiThemeProvider
+  MuiThemeProvider,
 } from "@material-ui/core/styles";
 
 import PropTypes from "prop-types";
@@ -16,22 +16,22 @@ import Texts from "../Constants/Texts";
 const styles = {
   button: {
     fontSize: "1.5rem",
-    color: "#00838F"
+    color: "#00838F",
   },
   dialogTitle: {
     fontSize: 20,
-    fontWeight: 700
-  }
+    fontWeight: 700,
+  },
 };
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true
-  }
+    useNextVariants: true,
+  },
 });
 
 class ConfirmDialog extends React.Component {
-  handleClose = choice => {
+  handleClose = (choice) => {
     const { handleClose } = this.props;
     handleClose(choice);
   };
@@ -82,5 +82,5 @@ ConfirmDialog.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
   language: PropTypes.string,
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };

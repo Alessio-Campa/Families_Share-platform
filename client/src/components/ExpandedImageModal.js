@@ -30,8 +30,8 @@ class ExpandedImageModal extends React.Component {
         padding: "0 0",
         width: "100vw",
         height: "100vh",
-        backgroundColor: "rgba(0, 0, 0, 0.9)"
-      }
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
+      },
     };
     return (
       <Modal
@@ -52,7 +52,7 @@ class ExpandedImageModal extends React.Component {
             position: "fixed",
             top: "5%",
             left: "5%",
-            zIndex: 1
+            zIndex: 1,
           }}
         />
         <img
@@ -61,7 +61,7 @@ class ExpandedImageModal extends React.Component {
           className="center"
           style={{
             maxWidth: "100%",
-            objectFit: "contain"
+            objectFit: "contain",
           }}
         />
       </Modal>
@@ -72,7 +72,7 @@ class ExpandedImageModal extends React.Component {
 ExpandedImageModal.propTypes = {
   isOpen: PropTypes.bool,
   handleClose: PropTypes.func,
-  image: PropTypes.string
+  image: PropTypes.string,
 };
 
 export default ExpandedImageModal;
