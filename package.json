@@ -15,9 +15,10 @@
     "node": "10.14.2"
   },
   "dependencies": {
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
+    "colors": "^1.4.0",
     "compression": "^1.7.4",
     "config": "^3.3.1",
     "debug": "~2.6.9",
@@ -41,7 +42,7 @@
     "objectid": "^3.2.1",
     "path": "^0.12.7",
     "pdfmake": "^0.1.65",
-    "sharp": "^0.22.1"
+    "sharp": "^0.29.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

@@ -20,7 +20,9 @@ const dbHost = config.get('dbConfig.host')
 mongoose.set('useCreateIndex', true)
 mongoose.set('useNewUrlParser', true)
 mongoose.set('useUnifiedTopology', true)
-mongoose.connect(process.env[dbHost]) // { autoIndex: false } set this to false in production to disable auto creating indexes
+mongoose.connect(process.env[dbHost]).then(() => {
+  console.log(`${chalk.bgGreen.black.bold('Connected to Database')}`)
+}) // { autoIndex: false } set this to false in production to disable auto creating indexes
 mongoose.Promise = global.Promise
 
 const app = express()
