@@ -17,6 +17,9 @@ class LanguageProvider extends React.Component {
   constructor(props) {
     super(props);
     let language = "";
+    
+    localStorage.setItem("language", 'it') // TODO: necessario per far partire l'app, da eliminare in production 
+    
     if (localStorage.getItem("language")) {
       language = localStorage.getItem("language");
     } else {
