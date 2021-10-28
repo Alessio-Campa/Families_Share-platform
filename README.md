@@ -1,4 +1,4 @@
-Per eseguire il database eseguire il comando
+Per eseguire il backend eseguire il comando
 
 ```
 npm run start
