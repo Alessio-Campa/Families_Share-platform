@@ -1,50 +1,47 @@
-<a href="https://www.families-share.eu/"><img src="https://live.comune.venezia.it/sites/live.comune.venezia.it/files/styles/tb-wall-single-style/public/field/image/FamiliesShare-1200x672.jpg?itok=rcGCGBQW" title="Families_Share" alt="Families Share Logo"></a>
-
-# Families Share Platform
-
-> Funded under the Information and Communication Technologies programme of Horizon 2020’s Industrial Leadership component, and its call for collective awareness platforms for sustainability and social innovation, the Families_Share project is developing a social networking and awareness-raising platform dedicated to encouraging childcare and work/life balance. The platform capitalises on neighbourhood networks and enables citizens to come together to share tasks, time and skills relevant to childcare and after-school education/leisure, where these have become unaffordable in times of stagnation and austerity.
-
-## Families_Share Platform Deployment instructions
-
-### Initialization
-   - If the user doesn’t have Node.js locally installed on their machine they can get and install the latest version from:  [NodeJS](https://nodejs.org/en/download)
-
-   - In addition, the user needs to have a Google account. Any Gmail account is a valid developer account. If they don’t have one, they can create one at: [Google Account](https://accounts.google.com)
-  
-  - The user needs to create a new Google project and a service account, as they will need the key from the service account in order to access the Google APIs from their Node.js client. Subsequently they need to enable the Google Calendar API that is necessary for the calendar features of the platform. All the above functionalities can be accessed from Google’s developer console. The following links can act as a guide for the above actions:  [Google Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects), [Google Service Account ](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), [Google APIs](https://support.google.com/googleapi/answer/6158841?hl=en)
-
-   - In case the user wants to enable single sign on with Google, which is supported by the platform they will need to create an OAuth client ID from their Google developer console credential’s section. During the creation of the OAuth client ID the user needs to select “Web application” as the type and authorize redirects to <http://localhost:4000> and their production server URL in order to use this functionality both in development and production.
-   
-   - An additional email account is needed, that will act as the platform’s email account which notifies the users for platform specific events.
-   
-   - In case the user wants to enable front-end error logs in production they will need a SENTRY account and a Sentry React project. These  canbe created at: [Sentry](https://sentry.io/login)
-
-   - Finally,in case the user wants to opt in for analytics in your production deployment they will need a Google Analytics account. You can create one at : [Google Analytics](https://analytics.google.com/analytics/web/provision/?authuser=0#/provision/create)
-
-### Deployment
-   - At first the user needs a clone of the Families Share repository. They may acquire one from: [Code](https://github.com/vilabs/Families_Share-platform)
-   - Alternatively, if the user has Git locally installed on their machine, they can run the following command in their terminal:
-   
-```javascript
-git clone https://github.com/vilabs/Families_Share-platform
+# Guida per eseguire families share #
+Clonata la repo e creato un database mongodb, è necessario creare per ogni file .env.sample un nuovo file .env, il quale conterrà i campi di .env.sample, ma i valori saranno personali per ogni sviluppatore. In teoria l'env file del client non è necessario, ma meglio farlo lo stesso.
+### *.env* in */* ###
 ```
-
-   - After that the user has to install package dependencies both for client and server application by running the following command in the respective folders:
-
-```javascript
-npm install
+DB_PROD_HOST= <stringa di connessione al db>
+DB_DEV_HOST= <stringa di connessione al db>
+DB_TEST_HOST= <stringa di connessione al db>
+HTTP_PORT=4000
+HTTPS_PORT=4443
+SERVER_SECRET= <stringa segreta a caso> 
+SERVER_MAIL=
+SERVER_MAIL_PASSWORD=
+GOOGLE_DEV_CLIENT_EMAIL=
+GOOGLE_DEV_PRIVATE_KEY= <chiavi api google>
+GOOGLE_PROD_CLIENT_EMAIL=
+GOOGLE_PROD_PRIVATE_KEY= <chiavi api gooogle>
+FIREBASE_PROJECT_ID=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY=
+CITYLAB= ALL
+CITYLAB_URI=
+CRONJOB=
 ```
-
-   - An .env file needs to be created both for the [server](./.env.sample) and [client](./client/.env.sample) folder (based on the corresponding .env.sample files).
-   - In order to run the application in development mode the user needs to run the following command in the projects main folder.
- 
-```javascript
-npm run dev
+### *.env* in * /client/ * ###
 ```
-
-   - In order for the application to run in production mode the user needs to execute the following commands in the client and main folder correspondingly:
-
-```javascript
-npm run build
-npm start
+REACT_APP_GOOGLE_CLIENT_ID =
+REACT_APP_GA_ID=
+REACT_APP_SENTRY_DSN =
+REACT_APP_CITYLAB_NAME=
+REACT_APP_CITYLAB_LANGUAGES = IT
+REACT_APP_CITYLAB = ALL
+REACT_APP_CITYLAB_TITLE=
+REACT_APP_COMMUNITY_MANAGER_ID=
 ```
+## eseguire backend ##
+Aprire un terminale nella root directory del progetto e dare il comando ```npm install``` per installare tutte le dipendenze, una volta che la procedura si è conclusa senza errori (ma segnalando molte vulnerabilità), dare il comando ```npm start``` per eseguire il back-end del progetto.
+Se tutto è stato configurato bene, si riceverà il seguente output:
+```
+Server started at http://localhost:4000.
+Connected to database
+```
+Da qui in poi, potremmo visualizzare tutte le richieste in arrivo sul server di backend da questo terminale.
+### supervisor ###
+È necessario aprire una parentesi su supervisor: di default node (che runna il backend) non rileva modifiche nel codice, di conseguenza sarà necessario rieseguire manualmente il programma per testare ogni modifica nel codice di backend. Supervisor (installabile con ```npm install supervisor -g```) automatizza la cosa, rilevando in automatico modifiche nel codice e restartando il server in automatico. Per eseguire il backend usando supervisor usare il comando ```npm run dev-server```.
+## eseguire frontend ##
+Dobbiamo ora startare il react-native client, apriamo un altro terminale, spostandoci sulla directory /client/, eseguiamo ```npm install``` come per il backend e ```npm start``` per farlo partire. Trattandosi di un framework, ci metterà un po' per partire, nell'attesa andatevi a prendere uno spritz, siete stati bravi ad arrivare fin qui. Se si è aperta una pagina web con la homepage di families_share siete riusciti a far partire il progetto.
+Creando un account, il server farà il primo inserimento in database e lo schema si creerà in automatico.
