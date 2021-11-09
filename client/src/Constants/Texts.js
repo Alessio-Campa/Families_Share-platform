@@ -3495,6 +3495,8 @@ const it = {
     header: "Il mio Families Share",
     homeButton: "Home page",
     myProfile: "Il mio profilo",
+    myFamily: "La mia famiglia",
+    myFamilies: "Le mie famiglie",
     myCalendar: "Il mio calendario",
     createGroup: "Crea un gruppo",
     searchGroup: "Cerca un gruppo",

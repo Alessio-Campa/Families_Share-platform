@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Drawer from "rc-drawer";
 import { Menu } from "antd";
 import PropTypes from "prop-types";
@@ -15,6 +15,8 @@ import Images from "../Constants/Images";
 import withLanguage from "./LanguageContext";
 import ConfirmDialog from "./ConfirmDialog";
 import Log from "./Log";
+
+const multiFamily = false // scoprire se l'utente ha più famiglie
 
 class MyFamiliesShareHeader extends React.Component {
   state = {
@@ -130,6 +132,13 @@ class MyFamiliesShareHeader extends React.Component {
       case "myprofile":
         const userId = JSON.parse(localStorage.getItem("user")).id;
         history.push(`/profiles/${userId}/info`);
+        break;
+        case "myFamilies":
+          if (multiFamily) {
+            history.push(`/families`);
+          } else {
+            history.push(`/family`);
+          }
         break;
       case "mycalendar":
         history.push(`/myfamiliesshare/calendar`);
@@ -280,6 +289,24 @@ class MyFamiliesShareHeader extends React.Component {
                 </div>
               </div>
             </Menu.Item>
+
+            <Menu.Item
+              style={menuItem}
+              key="myFamilies"
+              onClick={this.handleDrawerClick}
+            >
+              <div className="row no-gutters">
+                <div className="col-1-4">
+                  <i className="fas fa-users" />
+                </div>
+                <div className="col-3-4">
+                  {multiFamily ?
+                   (<h1>{texts.myFamilies}</h1>) : 
+                   (<h1>{texts.myFamily}</h1>)}                  
+                </div>
+              </div>
+            </Menu.Item>
+
             <Menu.Item
               style={menuItemWithLine}
               key="mycalendar"

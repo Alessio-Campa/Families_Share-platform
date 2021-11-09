@@ -10,6 +10,8 @@ import { SnackbarProvider } from "notistack";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
+import Families from "./components/Families";
+import Family from "./components/Family";
 
 const styles = () => ({
   info: { backgroundColor: "#202124" },
@@ -387,7 +389,14 @@ class App extends React.Component {
                 path="/groups/:groupId"
                 component={GroupMainScreen}
               />
-
+              <PrivateRoute
+                path="/families"
+                component={Families}
+              />
+              <PrivateRoute
+                path="/family"
+                component={Family}
+              />
               <Route component={NoMatchScreen} />
             </Switch>
           </div>

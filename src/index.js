@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const path = require('path')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser') --DEPRECATED--
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const chalk = require('chalk')
@@ -56,8 +56,13 @@ app.use(async (req) => {
 })
 app.use(compression())
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+// fixing the bodyparser deprecation
+app.use(express.json())
+app.use(express.urlencoded({
+  extended: true
+}))
+// app.use(bodyParser.json()) --DEPRECATED--
+// app.use(bodyParser.urlencoded({ extended: true })) --DEPRECATED--
 app.use('/images', express.static(path.join(__dirname, '../images')))
 
 // if (config.util.getEnv('NODE_ENV') === 'development') {
@@ -71,6 +76,7 @@ app.use('/api/profiles', require('./routes/profile-routes'))
 app.use('/api/children', require('./routes/child-routes'))
 app.use('/api/github', require('./routes/github-routes'))
 app.use('/api/community', require('./routes/community-routes'))
+app.use('api/family', require('./routes/family-routes'))
 
 if (config.util.getEnv('NODE_ENV') === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')))
