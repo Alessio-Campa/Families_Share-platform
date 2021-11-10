@@ -16,8 +16,6 @@ import withLanguage from "./LanguageContext";
 import ConfirmDialog from "./ConfirmDialog";
 import Log from "./Log";
 
-const multiFamily = false // scoprire se l'utente ha più famiglie
-
 class MyFamiliesShareHeader extends React.Component {
   state = {
     drawerIsOpen: false,
@@ -134,7 +132,7 @@ class MyFamiliesShareHeader extends React.Component {
         history.push(`/profiles/${userId}/info`);
         break;
         case "myFamilies":
-          if (multiFamily) {
+          if (this.getNumberOfFamilies() !== 1) {
             history.push(`/families`);
           } else {
             history.push(`/family`);
@@ -198,6 +196,12 @@ class MyFamiliesShareHeader extends React.Component {
         });
     }
     this.setState({ confirmModalIsOpen: false });
+  };
+
+  getNumberOfFamilies = () => {
+    axios.get('/api/family/user').then((res) => {
+      return console.log(res.data.length);
+    }).catch(err => console.log(err)) 
   };
 
   render() {
@@ -300,7 +304,7 @@ class MyFamiliesShareHeader extends React.Component {
                   <i className="fas fa-users" />
                 </div>
                 <div className="col-3-4">
-                  {multiFamily ?
+                  {this.getNumberOfFamilies() !== 1 ?
                    (<h1>{texts.myFamilies}</h1>) : 
                    (<h1>{texts.myFamily}</h1>)}                  
                 </div>
