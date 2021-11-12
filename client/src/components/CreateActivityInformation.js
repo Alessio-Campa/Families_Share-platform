@@ -4,6 +4,7 @@ import autosize from "autosize";
 import { CirclePicker } from "react-color";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
+import { Checkbox } from "@material-ui/core";
 
 class CreateActivityInformation extends React.Component {
   constructor(props) {
@@ -12,12 +13,13 @@ class CreateActivityInformation extends React.Component {
       handleSubmit,
       name,
       location,
+      gpNeed,
       description,
       cost,
       color,
       link,
     } = this.props;
-    this.state = { color, cost, description, link, location, name };
+    this.state = { color, cost, description, link, location, gpNeed, name };
     handleSubmit(this.state, this.validate(this.state));
     autosize(document.querySelectorAll("textarea"));
   }
@@ -48,7 +50,7 @@ class CreateActivityInformation extends React.Component {
 
   render() {
     const { language } = this.props;
-    const { name, color, description, location, link } = this.state;
+    const { name, color, description, location, gpNeed, link } = this.state;
     const texts = Texts[language].createActivityInformation;
     const rowStyle = { minHeight: "7rem" };
     return (
@@ -114,6 +116,30 @@ class CreateActivityInformation extends React.Component {
               className="center"
               onChange={this.handleChange}
             />
+          </div>
+        </div>
+        <div className="row no-gutters" style={rowStyle}>
+          <div className="col-2-10">
+            <i className="fas fa-id-card center" />
+          </div>
+          <div className="col-2-10">
+            <h1 className="verticalCenter">
+              {"GreenPass necessario"}
+            </h1>
+          </div>
+          <div className="col-2-10">
+            <div className="verticalCenter">
+              <Checkbox
+                checked={ gpNeed }
+                onClick={() =>{
+                    const state = Object.assign({}, this.state);
+                    state.gpNeed = !state.gpNeed;
+                    this.setState(state);
+                  }
+                }
+                color="primary"
+              />
+            </div>
           </div>
         </div>
         <div className="row no-gutters" style={rowStyle}>

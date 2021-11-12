@@ -20,6 +20,10 @@ const activitySchema = new mongoose.Schema({
   },
   description: String,
   location: String,
+  gp_need: {
+    type: Boolean,
+    required: true
+  },
   color: {
     type: String,
     required: true
