@@ -127,38 +127,26 @@ router.post('/', async (req, res, next) => {
  * @apiBody {memberId} new member id
  * @apiBody {role} role of the new member
  */
-router.put('/:familyId', async (req, res, next) => { // FIXME: does not update members
+router.put('/:familyId', async (req, res, next) => { // TODO: check if the new member exists, check if the new member is already in the family
   if (!req.user_id) { return res.status(401).send('Not authenticated') }
   try {
     const familyId = req.params.familyId
     const memberId = req.body.memberId
     const role = req.body.role    
     if (!role) {role = 'adult'} // adult is default role
-    
+    let new_member = {_id: memberId,role: role}
     Family.findOne({$and: [{
       'members._id': req.user_id
     },{
-      '_id': req.params.familyId
+      '_id': familyId
     }]
     }).then(family => {
-      console.log(family)
-      if (!family) {return res.status(403).send('Forbidden')}
-      let new_member = {_id: memberId,role: role}
-      if (role === 'child') {
-        Child.findOne({child_id: memberId}).then(data => {
-          family.members.push(new_member)
-        }).catch(err => {console.log(err)})      
-      } else {
-        Profile.findById(memberId).then(data => {
-          family.members.push(new_member)
-        }).catch(err => {console.log(err)}) 
-      }
+      if (!family) {return res.status(500).send('Family does not exist')}
+      family.members.push(new_member)
       family.save().then(() => {
         return res.status(200).send('Family updated correctly')
-      })
-    }).catch(err => {
-      console.log(err)
-    })
+      }).catch (err => console.log(err))
+    }).catch(err => console.log(err))
   } catch (e) {
     next(e)
   }
