@@ -16,9 +16,11 @@ const calendar = google.calendar({
   version: 'v3',
   auth: jwt
 })
-
+const Family = require('../models/family')
+const Child = require('../models/child')
+const Profile = require('../models/profile')
 /*
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({ // per inviare email
   service: 'gmail',
   auth: {
     user: process.env.SERVER_MAIL,
@@ -29,32 +31,29 @@ const transporter = nodemailer.createTransport({
   }
 }) */
 
-const Family = require('../models/family')
 
 /**
  * @api {get} /api/family/ get a family
  *    requires to be a member of the family
  * @apiName GetFamily
  * @apiGroup Family
- *
- * @apiQuery {String} familyId
- *
- * @apiSuccess {Family} the family requested.
+ * 
+ * @apiParam {familyID} the id of the family you want to get
  */
-router.get('/', async (req, res, next) => { // TODO: to test
+router.get('/:familyId', async (req, res, next) => {
   if (!req.user_id) {
     return res.status(401).send('Not authenticated')
   }
   try {
-    const family = await Family.findById(req.query.familyId)
+    const family = await Family.findById(req.params.familyId)
     if (!family) {
       return res.status(500).send('This family does not exist')
     }
-    if (!family.members.includes(req.user_id)) {
-      // a user can get a family only if he's a member
-      return res.status(403).send('Forbidden')
-    }
-    res.status(200).json(family)
+    family.members.forEach(element => {
+      if(element._id === req.user_id) {
+        return res.status(200).json(family)
+      }
+    });
   } catch (e) {
     next(e)
   }
@@ -68,16 +67,15 @@ router.get('/', async (req, res, next) => { // TODO: to test
  * @apiParam {userId} the user id
  * @apiSuccess {Families} the id's of the user's families
  */
-router.get('/user', async (req, res, next) => { // TODO: to test
-  console.log(req.user_id)
-  if (!req.user_id) {
-    return res.status(401).send('Not authenticated')
-  }
+router.get('/user/:userId', async (req, res, next) => {
+  if (!req.user_id) { return res.status(401).send('Not authenticated')}
   try {
-    const families = await Family.find({
-      members: req.user_id
-    }).select('_id')
-    res.status(200).json(families)
+    if (req.user_id !== req.params.userId) {return res.status(403).send('forbidden')}
+    Family.find({
+      'members._id': req.user_id
+    }).select('_id').then(data => {
+      res.status(200).json(data)
+    })
   } catch (err) {
     next(err)
   }
@@ -89,18 +87,20 @@ router.get('/user', async (req, res, next) => { // TODO: to test
  * @apiName CreateFamily
  * @apiGroup Family
  *
- * @apiBody {String} familyId
+ * @apiBody {familyName} the name of the family
+ * @apiBody {role} the role of the user
  *
  */
-router.post('/', async (req, res, next) => { // TODO: to test
+router.post('/', async (req, res, next) => {
   if (!req.user_id) { return res.status(401).send('Not authenticated') }
   try {
-    const members = [req.user_id]
+    if (!req.body.familyName) { return res.status(400).send('Bad request') }
+    if (!req.body.role) {req.body.role = 'adult'}
+    const members = [{_id: req.user_id, role: req.body.role}]
     const familyName = req.body.familyName
     const familyCalendar = {
       summary: familyName + '-familyCalendar'
     }
-    if (!familyName) { return res.status(400).send('Bad request') }
     const response = await calendar.calendars.insert({ resource: familyCalendar })
     const newFamily = new Family({
       name: familyName,
@@ -125,19 +125,40 @@ router.post('/', async (req, res, next) => { // TODO: to test
  * @apiParam {familyId} family id
  *
  * @apiBody {memberId} new member id
+ * @apiBody {role} role of the new member
  */
-router.put('/:id', async (req, res, next) => { // TODO: to test
+router.put('/:familyId', async (req, res, next) => { // FIXME: does not update members
   if (!req.user_id) { return res.status(401).send('Not authenticated') }
   try {
-    const familyId = req.params.id
-    const family = await Family.findById(familyId)
-    if (!family.members.includes(req.user_id)) {
-      // a user can update a family only if he's a member
-      return res.status(403).send('Forbidden')
-    }
-    family.members.push(req.body.memberId)
-    await family.save()
-    res.status(200).send('Family updated correctly')
+    const familyId = req.params.familyId
+    const memberId = req.body.memberId
+    const role = req.body.role    
+    if (!role) {role = 'adult'} // adult is default role
+    
+    Family.findOne({$and: [{
+      'members._id': req.user_id
+    },{
+      '_id': req.params.familyId
+    }]
+    }).then(family => {
+      console.log(family)
+      if (!family) {return res.status(403).send('Forbidden')}
+      let new_member = {_id: memberId,role: role}
+      if (role === 'child') {
+        Child.findOne({child_id: memberId}).then(data => {
+          family.members.push(new_member)
+        }).catch(err => {console.log(err)})      
+      } else {
+        Profile.findById(memberId).then(data => {
+          family.members.push(new_member)
+        }).catch(err => {console.log(err)}) 
+      }
+      family.save().then(() => {
+        return res.status(200).send('Family updated correctly')
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   } catch (e) {
     next(e)
   }

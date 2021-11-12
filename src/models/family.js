@@ -1,5 +1,17 @@
 const mongoose = require('mongoose')
 
+const memberSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    required: true,
+    default: 'adult'
+  }
+})
+
 const familySchema = new mongoose.Schema({ // TODO: confermare modello family
   name: { // the name is a surname
     type: String,
@@ -16,7 +28,7 @@ const familySchema = new mongoose.Schema({ // TODO: confermare modello family
     required: true
   }, */
   members: { // both parents and children
-    type: [String],
+    type: [memberSchema],
     required: true,
     default: []
   }
