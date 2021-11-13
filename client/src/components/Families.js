@@ -1,29 +1,11 @@
-/*
-import React from "react";
-import PropTypes from "prop-types";
-import * as path from "lodash.get";
-import withLanguage from "./LanguageContext";
-import Texts from "../Constants/Texts";
-
-const getFamilies = () => {
-  
-}
-
-
-export default class Families extends React.Component {
-    render() {
-      return <h1> Lista delle famiglie </h1>
-    }
-}
-*/
-
 import React from "react";
 import PropTypes from "prop-types";
 import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
-import ChildListItem from "./ChildListItem";
+import FamilyListItem from "./FamilyListItem";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
+import axios from "axios";
 
 const styles = () => ({
   add: {
@@ -44,13 +26,18 @@ class Families extends React.Component {
   constructor(props) {
     super(props);
     const userId = JSON.parse(localStorage.getItem("user")).id;
-    const { profileId, usersChildren } = this.props;
-    const myProfile = userId === profileId;
+    const { profileId, familiesIds } = this.props;
+    const myProfile = userId === profileId; //????
     this.state = {
       myProfile,
-      children: usersChildren,
       profileId,
     };
+  }
+
+  componentDidMount() {
+    let dioporco = this.getAllFamilies()
+    this.setState({families: dioporco})
+    console.log(this.state.families)
   }
 
   addFamily = () => {
@@ -59,20 +46,56 @@ class Families extends React.Component {
     history.push(`${pathname}/create`);
   };
 
+  getAllFamilies = () => { // fix: get just the ids
+    axios.get('/api/family/user').then(res => {
+      let fam = []
+      res.data.forEach(element => {
+        
+        fam.push(element['id']);
+        /*
+        axios.get('api/family', {
+          params:{familyId: element['id']}
+        }).then(res => {
+          families.push(res.data)
+        }).catch(err => {console.log(err)})
+        */
+      });
+      // console.log(families);
+      console.log(fam)
+      this.setState({families: fam})
+      // return families;
+    }).catch(err => console.log(err)) 
+  }
+
   render() {
+    // profileListChild ProfileChildren
+
     const { classes, language } = this.props;
     const { children, profileId, myProfile } = this.state;
-    const texts = Texts[language].profileChildren;
+    // const texts = Texts[language].profileChildren;
     return (
       <React.Fragment>
-        <Fab
+        {this.state.families && this.state.families.length > 0 ? (
+          <ul>
+            {this.state.families.map((family, index) => (
+              <li key={index}>
+                <FamilyListItem familyId={family} userId={profileId} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="addGroupsPrompt">{ "DioScannato" /*texts.addChildPrompt*/ }</div>
+        )}
+        {myProfile && (
+          <Fab
           color="primary"
           aria-label="Add"
           className={classes.add}
-          onClick={this.addChild}
-        >
-          <i className="fas fa-child" />
-        </Fab>
+          onClick={this.addFamily}
+          >
+          <i className="fas fa-users" />
+          </Fab>
+        )}
       </React.Fragment>
     );
   }
@@ -89,69 +112,3 @@ Families.propTypes = {
 
 export default withStyles(styles)(withLanguage(Families));
 
-
-
-/*
-const ProfileInfo = ({ language, profile }) => {
-  const texts = Texts[language].profileInfo;
-  return (
-    <div>
-      <div className="row no-gutters profileInfoContainer">
-        <div className="col-2-10">
-          <i className="fas fa-phone center" />
-        </div>
-        <div className="col-8-10">
-          <div className="verticalCenter">
-            <h1>{profile.phone}</h1>
-            <h2>{texts[profile.phone_type]}</h2>
-          </div>
-        </div>
-      </div>
-      <div className="row no-gutters  profileInfoContainer">
-        <div className="col-2-10">
-          <i className="fas fa-map-marker-alt center" />
-        </div>
-        <div className="col-8-10">
-          <div className="verticalCenter">
-            <h1>
-              {`${path(profile, ["address", "street"])} ${path(profile, [
-                "address",
-                "number",
-              ])}`}
-            </h1>
-            <h2>{texts.adress}</h2>
-          </div>
-        </div>
-      </div>
-      <div className="row no-gutters  profileInfoContainer">
-        <div className="col-2-10">
-          <i className="fas fa-envelope center" />
-        </div>
-        <div className="col-8-10">
-          <div className="verticalCenter">
-            <h1>{profile.email}</h1>
-            <h2>{texts.email}</h2>
-          </div>
-        </div>
-      </div>
-      <div className="row no-gutters  profileInfoContainer">
-        <div className="col-2-10">
-          <i className="fas fa-info-circle center" />
-        </div>
-        <div className="col-8-10">
-          <div className="verticalCenter">
-            <h1>{profile.description}</h1>
-            <h2>{texts.description}</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-ProfileInfo.propTypes = {
-  profile: PropTypes.object,
-  language: PropTypes.string,
-};
-*/
