@@ -394,7 +394,7 @@ class App extends React.Component {
                 component={Families}
               />
               <PrivateRoute
-                path="/family"
+                path="/family/:familyId"
                 component={Family}
               />
               <Route component={NoMatchScreen} />
