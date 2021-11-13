@@ -127,7 +127,7 @@ router.post('/', async (req, res, next) => {
  * @apiBody {memberId} new member id
  * @apiBody {role} role of the new member
  */
-router.put('/:familyId', async (req, res, next) => { // TODO: check if the new member exists, check if the new member is already in the family
+router.put('/:familyId', async (req, res, next) => {
   if (!req.user_id) { return res.status(401).send('Not authenticated') }
   try {
     const familyId = req.params.familyId
@@ -135,18 +135,36 @@ router.put('/:familyId', async (req, res, next) => { // TODO: check if the new m
     const role = req.body.role    
     if (!role) {role = 'adult'} // adult is default role
     let new_member = {_id: memberId,role: role}
-    Family.findOne({$and: [{
-      'members._id': req.user_id
-    },{
-      '_id': familyId
-    }]
-    }).then(family => {
-      if (!family) {return res.status(500).send('Family does not exist')}
-      family.members.push(new_member)
-      family.save().then(() => {
-        return res.status(200).send('Family updated correctly')
-      }).catch (err => console.log(err))
-    }).catch(err => console.log(err))
+    let existence = new Promise((resolve,reject) => {
+      if (role === 'child') {
+        Child.exists({child_id: memberId}, (err, result) => {
+          resolve(result)
+        })
+      }
+      else {
+        Profile.exists({user_id: memberId}, (err, result) => {
+          resolve(result)
+        })
+      }
+    })
+    existence.then((result) => {
+        if (!result) {return res.status(500).send('The user or child does not exist')}
+        Family.findOne({$and: [{
+          'members._id': req.user_id
+        },{
+          '_id': familyId
+        }]
+        }).then(family => {
+          if (!family) {return res.status(500).send('Family does not exist')}
+          if (family.members.filter(element => element._id === memberId).length > 0) {
+            return res.status(500).send('User already in the family')
+          }
+          family.members.push(new_member)
+          family.save().then(() => {
+            return res.status(200).send('Family updated correctly')
+          }).catch (err => console.log(err))
+        }).catch(err => console.log(err))
+    })
   } catch (e) {
     next(e)
   }
