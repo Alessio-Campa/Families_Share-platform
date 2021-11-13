@@ -41,6 +41,7 @@ export default class Family extends React.Component {
     const { familyId } = this.state;
     this.family = await getFamily(familyId);
 
+    this.setState({family : this.family})
     this.setState({children : this._children});
     this.setState({adults : this._adults});
   }
@@ -75,7 +76,7 @@ export default class Family extends React.Component {
     return(
       <div  className=''>
         <ul>
-          {children && children.map((child, index) => (
+          {children && children.map( child => (
             <li>
               <ChildListItem childId={child} userId={userId} />
             </li>
@@ -90,7 +91,7 @@ export default class Family extends React.Component {
     return(
       <div style={{paddingTop: "6rem"}} className=''>
         <ul>
-          {adults && adults.map((adult, index) => (
+          {adults && adults.map( adult => (
             <li>
               <FamilyMemberItem memberId={adult._id} role={adult.role} />
             </li>
@@ -102,6 +103,7 @@ export default class Family extends React.Component {
 
   render() {
     const { history } = this.props;
+    const { family } = this.state;
     return (
       <div style={{ display: 'block'}}>
         <div className="row no-gutters" id="groupMembersHeaderContainer">
@@ -114,14 +116,8 @@ export default class Family extends React.Component {
               <i className="fas fa-arrow-left" />
             </button>
           </div>
-          <div className="col-6-10 ">
-            <h1 className="verticalCenter">FRAMYLI</h1>
-          </div>
-          <div className="col-1-10 " />
-          <div className="col-1-10 ">
-            <button type="button" className="transparentButton center">
-              <i className="fas fa-ellipsis-v" />
-            </button>
+          <div className="col-8-10">
+            <h1 className="verticalCenter">Famiglia <i>{family && family.name}</i></h1>
           </div>
         </div>
 
