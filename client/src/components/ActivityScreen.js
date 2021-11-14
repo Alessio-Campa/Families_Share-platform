@@ -521,6 +521,20 @@ class ActivityScreen extends React.Component {
                 </div>
               </div>
             )}
+            {activity.gp_need && (
+              <div className="row no-gutters" style={rowStyle}>
+                <div className="col-1-10">
+                  <i
+                    className="fas fa-id-card"  
+                  />
+                </div>
+                <div className="col-9-10">
+                <div className="activityInfoDescription">
+                    Green Pass necessario
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="row no-gutters" style={rowStyle}>
               <div className="col-1-10">
                 <i className="far fa-calendar activityInfoIcon" />

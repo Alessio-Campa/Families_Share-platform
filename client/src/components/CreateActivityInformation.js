@@ -124,11 +124,11 @@ class CreateActivityInformation extends React.Component {
           </div>
           <div className="col-2-10">
             <h1 className="verticalCenter">
-              {"GreenPass necessario"}
+              GreenPass necessario
             </h1>
           </div>
-          <div className="col-2-10">
-            <div className="verticalCenter">
+          <div className="col-3-10">
+            <div className="verticalCenter text-center">
               <Checkbox
                 checked={ gpNeed }
                 onClick={() =>{
@@ -138,6 +138,7 @@ class CreateActivityInformation extends React.Component {
                   }
                 }
                 color="primary"
+                size="big"
               />
             </div>
           </div>
