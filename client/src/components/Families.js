@@ -69,7 +69,7 @@ class Families extends React.Component {
               </button>
             </div>
             <div className="col-8-10">
-              <h1 className="verticalCenter">Le tue famiglie</h1>
+              <h1 className="verticalCenter">Le mie famiglie</h1>
             </div>
           </div>
           <div style={{paddingTop: "6rem"}} className=''>

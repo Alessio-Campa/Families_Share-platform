@@ -12,6 +12,7 @@ import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Families from "./components/Families";
 import Family from "./components/Family";
+import FamilyCreate from "./components/FamilyCreate";
 
 const styles = () => ({
   info: { backgroundColor: "#202124" },
@@ -388,6 +389,10 @@ class App extends React.Component {
               <PrivateRoute
                 path="/groups/:groupId"
                 component={GroupMainScreen}
+              />
+              <PrivateRoute
+                path="/families/create"
+                component={FamilyCreate}
               />
               <PrivateRoute
                 path="/families"
