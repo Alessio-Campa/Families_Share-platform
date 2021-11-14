@@ -22,86 +22,84 @@ const styles = () => ({
   },
 });
 
+const getAllFamilies = (userId) => {
+  return axios.get('/api/family/user/' + userId).then(res => {
+    let fam = []
+    res.data.forEach(element => {
+      fam.push(element['_id']);
+    });
+    return fam;
+  }).catch(err => console.log(err)) 
+}
+
 class Families extends React.Component {
   constructor(props) {
     super(props);
     const userId = JSON.parse(localStorage.getItem("user")).id;
-    const { profileId, familiesIds } = this.props;
-    const myProfile = userId === profileId; //????
-    this.state = {
-      myProfile,
-      profileId,
-    };
+    this.state = {userId}
+    this.state.userId = userId;
   }
 
-  componentDidMount() {
-    let dioporco = this.getAllFamilies()
-    this.setState({families: dioporco})
+  async componentDidMount() { //executed after render
+    this.families = await getAllFamilies(this.state.userId)
     console.log(this.state.families)
+    this.setState({families: this.families})
   }
 
   addFamily = () => {
     const { history } = this.props;
-    const { pathname } = history.location;
-    history.push(`${pathname}/create`);
+    history.push('families/create');
   };
 
-  getAllFamilies = () => { // fix: get just the ids
-    axios.get('/api/family/user').then(res => {
-      let fam = []
-      res.data.forEach(element => {
-        
-        fam.push(element['id']);
-        /*
-        axios.get('api/family', {
-          params:{familyId: element['id']}
-        }).then(res => {
-          families.push(res.data)
-        }).catch(err => {console.log(err)})
-        */
-      });
-      // console.log(families);
-      console.log(fam)
-      this.setState({families: fam})
-      // return families;
-    }).catch(err => console.log(err)) 
-  }
-
   render() {
-    // profileListChild ProfileChildren
+    const { classes, history } = this.props;
+    const { families } = this.state;
 
-    const { classes, language } = this.props;
-    const { children, profileId, myProfile } = this.state;
-    // const texts = Texts[language].profileChildren;
     return (
       <React.Fragment>
-        {this.state.families && this.state.families.length > 0 ? (
-          <ul>
-            {this.state.families.map((family, index) => (
-              <li key={index}>
-                <FamilyListItem familyId={family} userId={profileId} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="addGroupsPrompt">{ "DioScannato" /*texts.addChildPrompt*/ }</div>
-        )}
-        {myProfile && (
-          <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.add}
-          onClick={this.addFamily}
-          >
-          <i className="fas fa-users" />
-          </Fab>
-        )}
+        <div style={{ display: 'block'}}>
+          <div className="row no-gutters" id="groupMembersHeaderContainer">
+            <div className="col-2-10">
+              <button
+                type="button"
+                className="transparentButton center"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-arrow-left" />
+              </button>
+            </div>
+            <div className="col-8-10">
+              <h1 className="verticalCenter">Le tue famiglie</h1>
+            </div>
+          </div>
+          <div style={{paddingTop: "6rem"}} className=''>
+            {families && families.length > 0 ? (
+              <ul>
+                {families.map((family, index) => (
+                  <li key={index}>
+                    <FamilyListItem familyId={family}/>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="addGroupsPrompt">{""}</div>
+            )}
+            <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.add}
+            onClick={this.addFamily}
+            >
+            <i className="fas fa-users" />
+            </Fab>
+          </div>
+        </div>
       </React.Fragment>
     );
   }
 }
-/*
 
+/*
 Families.propTypes = {
   usersChildren: PropTypes.array,
   profileId: PropTypes.string,
@@ -111,4 +109,3 @@ Families.propTypes = {
 };*/
 
 export default withStyles(styles)(withLanguage(Families));
-

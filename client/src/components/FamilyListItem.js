@@ -10,44 +10,49 @@ import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import Log from "./Log";
 
-class FamilyListItem extends React.Component {
-  state = { fetchedFamily: false, family: {} };
+const getFamily = (familyId) => {
+  return axios.get(`/api/family/${familyId}`).then( response => {
+    console.log(response.data)
+    return response.data;
+  }).catch(err => {
+    console.error(err);
+    return {}
+  })
+}
 
-  componentDidMount() {
-    const { userId, familyId } = this.props; // childID ????
-    
-    axios.get('/api/family', {
-        params:{familyId: familyId}
-      }).then((response) => {
-        const family = response.data;
-        
-        this.setState({ fetchedFamily: true, family });
-      })
-      .catch((error) => {
-        Log.error(error);
-        this.setState({
-            fetchedFamily: true,
-            family: {
-                id: familyId,
-                name: '',
-                members: []
-          },
-        });
-      });
+class FamilyListItem extends React.Component {
+  constructor (props) {
+    super(props);
+    const {familyId} = this.props;
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+    this.state = {
+      familyId: familyId,
+      userId,
+    }
+  }
+
+  async componentDidMount() {
+    const { familyId } = this.state;
+    this.family = await getFamily(familyId);
+
+    this.setState({family: this.family})
   }
 
   render() {
-    const { language, history, familyId } = this.props;
+    let family = this.state.family
+    const { history, familyId } = this.props;
     const { pathname } = history.location;
-    const { family, fetchedFamily } = this.state;
+    const familyRoute = `/family/${familyId}`
+    console.log(familyRoute)
     const route = `${pathname}/${familyId}`;
     return (
       <div
         id="childContainer"
         className="row no-gutters"
         style={{ borderBottom: "1px solid rgba(0,0,0,0.1" }}
-      >
-        {fetchedFamily ? (
+        onClick = {() => history.push(familyRoute)}>
+        
+        {family ? (
           <React.Fragment>
             <div className="col-3-10">
               <Avatar
@@ -60,11 +65,11 @@ class FamilyListItem extends React.Component {
               <div
                 role="button"
                 tabIndex={-42}
-                onClick={() => history.push(route)}
                 id="childInfoContainer"
                 className="verticalCenter"
               >
-                <h1>{`${family.name} ${family.members.length}`}</h1>
+                <h1>{family.name}</h1>
+                <h2>numero di persone: {family.members.length}</h2>
               </div>
             </div>
           </React.Fragment>
