@@ -122,13 +122,13 @@ class CreateActivityInformation extends React.Component {
           <div className="col-2-10">
             <i className="fas fa-id-card center" />
           </div>
-          <div className="col-2-10">
+          <div className="col-4-10">
             <h1 className="verticalCenter">
               GreenPass necessario
             </h1>
           </div>
-          <div className="col-3-10">
-            <div className="verticalCenter text-center">
+          <div className="col-2-10">
+            <div className="verticalCenter">
               <Checkbox
                 checked={ gpNeed }
                 onClick={() =>{
