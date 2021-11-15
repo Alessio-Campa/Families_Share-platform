@@ -170,12 +170,10 @@ class ActivityListItem extends React.Component {
                   {this.getDatesString()}
                 </h2>
                 {activity.gp_need && (
-                  <div className="activityGpNeedIcon">
-                    <i
-                      className="fas fa-id-card"  
-                      style={{ color: "#0b9906" }}
-                    />
-                  </div>
+                  <i
+                    className="fas fa-id-card"  
+                    style={{ color: "#0b9906" }}
+                  />
                 )}
               </div>
             </div>
