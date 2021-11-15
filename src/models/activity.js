@@ -1,5 +1,18 @@
 const mongoose = require('mongoose')
 
+const valutationSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+    required: true
+  },
+  rate: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  }
+})
+
 const activitySchema = new mongoose.Schema({
   activity_id: {
     type: String,
@@ -39,6 +52,11 @@ const activitySchema = new mongoose.Schema({
   status: {
     type: String,
     required: true
+  },
+  valutations: {
+    type: [valutationSchema],
+    required: true,
+    default: []
   }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
