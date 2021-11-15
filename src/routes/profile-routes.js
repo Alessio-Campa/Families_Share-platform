@@ -76,4 +76,15 @@ router.get('/', (req, res, next) => {
   }
 })
 
+router.get('/:email', async (req, res, next) => {
+  const email = req.params.email;
+  Profile.findOne({email: email}).then(user => {
+    if (user)
+      return res.status(200).json(user);
+    return res.status(404).json("User mail doesn't exist")
+  }).catch(err => {
+    return res.status(500).json(err);
+  })
+})
+
 module.exports = router

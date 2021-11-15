@@ -96,7 +96,7 @@ router.post('/', async (req, res, next) => {
   try {
     if (!req.body.familyName) { return res.status(400).send('Bad request') }
     if (!req.body.role) {req.body.role = 'adult'}
-    const members = [{_id: req.user_id, role: req.body.role}]
+    const members = [{_id: req.user_id, role: req.body.role, isAccepted: true}]
     const familyName = req.body.familyName
     const familyCalendar = {
       summary: familyName + '-familyCalendar'
@@ -126,15 +126,17 @@ router.post('/', async (req, res, next) => {
  *
  * @apiBody {memberId} new member id
  * @apiBody {role} role of the new member
+ * @apiBody {isCreator} if the user is the creator of the family and thus already accepted
  */
 router.put('/:familyId', async (req, res, next) => {
   if (!req.user_id) { return res.status(401).send('Not authenticated') }
   try {
-    const familyId = req.params.familyId
-    const memberId = req.body.memberId
-    const role = req.body.role    
-    if (!role) {role = 'adult'} // adult is default role
-    let new_member = {_id: memberId,role: role}
+    const familyId = req.params.familyId;
+    const memberId = req.body.memberId;
+    const role = req.body.role;
+
+    let new_member = {_id: memberId, role: role, isAccepted: (role === "child")}
+
     let existence = new Promise((resolve,reject) => {
       if (role === 'child') {
         Child.exists({child_id: memberId}, (err, result) => {
@@ -147,6 +149,7 @@ router.put('/:familyId', async (req, res, next) => {
         })
       }
     })
+
     existence.then((result) => {
         if (!result) {return res.status(500).send('The user or child does not exist')}
         Family.findOne({$and: [{

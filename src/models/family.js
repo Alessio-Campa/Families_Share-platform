@@ -9,6 +9,11 @@ const memberSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: 'adult'
+  },
+  isAccepted:{
+    type: Boolean,
+    required: true,
+    default: true
   }
 })
 

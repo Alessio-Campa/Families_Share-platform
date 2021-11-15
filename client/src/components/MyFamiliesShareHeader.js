@@ -199,7 +199,8 @@ class MyFamiliesShareHeader extends React.Component {
   };
 
   getNumberOfFamilies = () => {
-    axios.get('/api/family/user').then((res) => {
+    const userId = JSON.parse(localStorage.getItem("user")).id
+    axios.get(`/api/family/user/${userId}`).then((res) => {
       return console.log(res.data.length);
     }).catch(err => console.log(err)) 
   };

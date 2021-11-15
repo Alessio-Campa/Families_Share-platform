@@ -1,11 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import * as path from "lodash.get";
-import ProfileHeader from "./ProfileHeader";
-import withLanguage from "./LanguageContext";
-import Texts from "../Constants/Texts";
-import ChildProfileHeader from "./ChildProfileHeader";
-import Avatar from './Avatar'
 import axios from "axios"
 import ChildListItem from './ChildListItem'
 import FamilyMemberItem from './FamilyMemberItem'

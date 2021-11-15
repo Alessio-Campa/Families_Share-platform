@@ -48,7 +48,7 @@ class Families extends React.Component {
 
   addFamily = () => {
     const { history } = this.props;
-    history.push('families/create');
+    history.push('/family/create');
   };
 
   render() {
