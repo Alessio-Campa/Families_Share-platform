@@ -161,9 +161,7 @@
   padding: 5%;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
-#activityMainContainer i {
-  color: rgba(0, 0, 0, 0.87);
-}
+
 #activityMainContainer .row {
   padding: 0 5%;
   align-items: center;

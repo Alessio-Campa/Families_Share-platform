@@ -1895,21 +1895,21 @@ router.delete(
 )
 
 /** route per valutare un'attività, andrebbe messa in un punto migliore nel file, ma intanto la lascio qui
- * 
+ *
  * @apiParam {groupId}
  * @apiParam {activityId}
- * 
- * @apiBody {rate} rate between 1 and 5 
- * 
+ *
+ * @apiBody {rate} rate between 1 and 5
+ *
  */
 router.post('/:groupId/activities/:activityId/valutation', (req, res, next) => {
-  if (!req.user_id) {return res.status(401).send('Unauthorized')}
-  try{
-    if (!req.body.rate || req.body.rate < 1 || req.body.rate > 5) {return res.status(400).send('Bad request')}
-    Activity.findOne({activity_id: req.params.activityId}, (err, activity) => {
-      if (!activity) {return res.status(500).send('Activity does not exist')}
+  if (!req.user_id) { return res.status(401).send('Unauthorized') }
+  try {
+    if (!req.body.rate || req.body.rate < 1 || req.body.rate > 5) { return res.status(400).send('Bad request') }
+    Activity.findOne({ activity_id: req.params.activityId }, (_err, activity) => {
+      if (!activity) { return res.status(500).send('Activity does not exist') }
       let BreakException = {}
-      if (activity.valutations){
+      if (activity.valutations) {
         try {
           activity.valutations.forEach(valutation => {
             if (valutation._id === req.user_id) {
@@ -1917,7 +1917,7 @@ router.post('/:groupId/activities/:activityId/valutation', (req, res, next) => {
               throw BreakException
             }
           })
-          let newValutation = {_id: req.user_id, rate: req.body.rate}
+          let newValutation = { _id: req.user_id, rate: req.body.rate }
           activity.valutations.push(newValutation)
         } catch (e) {
           if (e !== BreakException) {
@@ -1926,15 +1926,14 @@ router.post('/:groupId/activities/:activityId/valutation', (req, res, next) => {
         }
       }
       activity.save(err => {
-        if (err) {return res.status(500).send('error while saving')}
+        if (err) { return res.status(500).send('error while saving') }
       })
-    }).then(()=> {
+    }).then(() => {
       return res.status(200).send('rate inserted correctly')
     })
-  } catch(error) {
+  } catch (error) {
     next(error)
   }
 })
-
 
 module.exports = router
