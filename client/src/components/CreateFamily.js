@@ -37,6 +37,9 @@ export default class CreateFamily extends React.Component{
       newAdultRole: '',
       newAdultError: '',
       familyName: '',
+      creatorRole: '',
+      createLoading: false,
+      createError: ''
     }
   }
 
@@ -60,10 +63,12 @@ export default class CreateFamily extends React.Component{
 
   handleAddAdult = () => {
     let {newAdult, newAdultRole, addList} = this.state;
-    console.log(addList)
     if (newAdultRole === 'child'){
       this.setState({newAdultError: "Il ruolo non può essere 'child'", newAdultRole:''})
       return;
+    }
+    if (!newAdultRole.replace(/\s/g, '').length) {
+      newAdultRole = 'adult'
     }
     axios.get(`/api/profiles/${newAdult}`).then( u =>{
       this.setState({addList: [...addList, {_id: u.data.user_id, role: newAdultRole, name:`${u.data.given_name} ${u.data.family_name}`}], newAdultError: ''})
@@ -85,15 +90,38 @@ export default class CreateFamily extends React.Component{
     );
   }
 
-  createFamily(){
+  createFamily = () => {
+    const {familyName, addList, creatorRole} = this.state;
+    let hasErrors = false;
+    //Errors
+    if (!familyName.replace(/\s/g, '').length) {
+      this.setState({createError: "Il nome della famiglia deve contenere almeno un carattere"})
+      return;
+    }
+    if (!creatorRole.replace(/\s/g, '').length) {
+      this.setState({createError: "Il tuo ruolo deve contenere almeno un carattere"})
+      return;
+    }
 
+    this.setState({createLoading: true})
+    const {history} = this.props;
+    axios.post('/api/family', {familyName: familyName, user_id: this.userId, role: creatorRole}).then(obj => {
+      const familyId = obj.data.id;
+      addList.forEach( (elem, index) => {
+        axios.put(`/api/family/${familyId}`, {memberId: elem._id, role: elem.role}).then( res => {
+          if (index === addList.length-1){
+            history.goBack();
+          }
+        })
+      })
+    })
   }
 
 
   render(){
     const {history} = this.props;
     const rowStyle = { minHeight: "7rem" };
-    let {addList, children, newAdult, newAdultRole, newAdultError, familyName} = this.state;
+    let {addList, children, newAdult, newAdultRole, newAdultError, familyName, creatorRole, createLoading, createError} = this.state;
     return(
       <div>
         <BackNavigation
@@ -109,11 +137,27 @@ export default class CreateFamily extends React.Component{
             <div className="col-8-10">
               <input
                 type="text"
-                name="location"
+                name="familyName"
                 placeholder="Nome famiglia"
                 className="center"
                 value={familyName}
                 onChange={evt => this.handleChange(evt, "familyName")}
+              />
+            </div>
+          </div>
+
+          <div className="row no-gutters" style={rowStyle}>
+            <div className="col-2-10">
+              <i className="fas fa-user-tag center" />
+            </div>
+            <div className="col-8-10">
+              <input
+                type="text"
+                name="creatorRole"
+                placeholder="Il tuo ruolo"
+                className="center"
+                value={creatorRole}
+                onChange={evt => this.handleChange(evt, "creatorRole")}
               />
             </div>
           </div>
@@ -133,7 +177,7 @@ export default class CreateFamily extends React.Component{
               <div className="row pl-4 pr-4">
                 <input
                   type="text"
-                  name="location"
+                  name="adultMail"
                   placeholder="Email"
                   className="center"
                   value={newAdult}
@@ -143,7 +187,7 @@ export default class CreateFamily extends React.Component{
               <div className="row pl-4 pr-4">
                 <input
                   type="text"
-                  name="location"
+                  name="adultRole"
                   placeholder="Ruolo"
                   className="center"
                   value={newAdultRole}
@@ -212,10 +256,21 @@ export default class CreateFamily extends React.Component{
           </div>
 
           <div className="d-flex justify-content-center">
-            <button style={styles.continueButton} className="btn text-light p-4 m-4" onClick={this.createFamily}>
-              CREA
-            </button>
+            <div>
+              <button style={styles.continueButton} className="btn text-light p-4 m-4" onClick={this.createFamily} disabled={createLoading}>
+                {!createLoading && ( 'CREA' )}
+                {createLoading && ('Attendi...')}
+              </button>
+            </div>
           </div>
+          <div className="d-flex justify-content-center">
+            <div>
+              {createError !== '' && (
+                <p className="text-danger"> {createError}</p>
+              )}
+            </div>
+          </div>
+
 
         </div>
       </div>

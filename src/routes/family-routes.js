@@ -95,7 +95,7 @@ router.post('/', async (req, res, next) => {
   if (!req.user_id) { return res.status(401).send('Not authenticated') }
   try {
     if (!req.body.familyName) { return res.status(400).send('Bad request') }
-    if (!req.body.role) {req.body.role = 'adult'}
+
     const members = [{_id: req.user_id, role: req.body.role, isAccepted: true}]
     const familyName = req.body.familyName
     const familyCalendar = {
@@ -110,7 +110,7 @@ router.post('/', async (req, res, next) => {
     await newFamily.save(err => {
       if (err) return next(err)
     })
-    res.status(200).send('Family created')
+    res.status(200).json(newFamily)
   } catch (err) {
     next(err)
   }
