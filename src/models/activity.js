@@ -22,7 +22,8 @@ const activitySchema = new mongoose.Schema({
   location: String,
   gp_need: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
   color: {
     type: String,
