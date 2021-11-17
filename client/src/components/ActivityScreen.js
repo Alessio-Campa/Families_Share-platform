@@ -191,13 +191,16 @@ class ActivityScreen extends React.Component {
     const userCanEdit = userIsAdmin || userIsCreator;
     this.setState({ activity, fetchedActivityData: true, userCanEdit });
     /* Aggiorno lo stato della valutazione (rating) */
-    const valutations = activity.valutations;
-    let sum = 0;
-    valutations.forEach( (valutation) => {  
-      sum += valutation.rate;
-    });
-    this.setState({ rating: Math.round(sum / valutations.length) });
-    this.setState({ ratingsNumber: valutations.length });
+    if(activity.valutations !== undefined) {
+      const valutations = activity.valutations;
+      let sum = 0;
+      valutations.forEach( (valutation) => {  
+        sum += valutation.rate;
+      });
+      this.setState({ rating: Math.round(sum / valutations.length) });
+      this.setState({ ratingsNumber: valutations.length });
+
+    }
   }
 
   handleRedirect = (suspended, child_id) => {
