@@ -82,7 +82,6 @@ export default class Family extends React.Component {
           </div>
           </div>
       <div id="groupMainContainer">
-        <div> {currentPath} </div>
         <Switch>
           <Route
             path={`${currentPath}/members`}

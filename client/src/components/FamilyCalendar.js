@@ -1,30 +1,44 @@
 import React from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import withLanguage from "./LanguageContext";
+import Calendar from "./Calendar";
 
-export default class FamilyCalendar extends React.Component {
-  constructor (props) {
-    super(props);
-    const {history, match, family} = this.props;
-    const {familyId} = match.params;
-    const userId = JSON.parse(localStorage.getItem('user')).id
-    let children = [];
-    let adults = [];
-    console.log(this.props.family)
-    this.family = family
-    this.state = {
-      familyId,
-      userId,
-      family: family,
-      children: this._children,
-      adults: this._adults
-    }
-  }
-
+class FamilyCalendar extends React.Component {
   render() {
+    const { family, history } = this.props;
     return (
-      <div style={{ display: 'block', paddingTop: "6rem"}}>
-        TODO: fare calendario
-      </div>
+      <React.Fragment>
+        <div style={{ display: 'block'}}>
+        <div className="row no-gutters" id="groupMembersHeaderContainer">
+          <div className="col-2-10">
+          <button
+            type="button"
+            className="transparentButton center"
+            onClick={() => history.goBack()}
+          >
+            <i className="fas fa-arrow-left" />
+          </button>
+          </div>
+          <div className="col-8-10">
+            <h1 className="verticalCenter">Famiglia <i>{family && family.name}</i></h1>
+          </div>
+        </div>
+        <div style={{ position: "relative", top: "5.6rem" }}>
+          <Calendar
+            handleChangeView={this.handleChangeView}
+            ownerType="family"
+            ownerId={family._id}
+          />
+        </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
+
+FamilyCalendar.propTypes = {
+  family: PropTypes.object,
+  history: PropTypes.object,
+};
+
+export default withLanguage(FamilyCalendar);
