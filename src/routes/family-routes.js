@@ -136,7 +136,7 @@ router.put('/:familyId', async (req, res, next) => {
     const role = req.body.role;
 
     let new_member = {_id: memberId, role: role, isAccepted: (role === "child")}
-
+    
     let existence = new Promise((resolve,reject) => {
       if (role === 'child') {
         Child.exists({child_id: memberId}, (err, result) => {
@@ -149,27 +149,62 @@ router.put('/:familyId', async (req, res, next) => {
         })
       }
     })
-
+    
     existence.then((result) => {
-        if (!result) {return res.status(500).send('The user or child does not exist')}
-        Family.findOne({$and: [{
-          'members._id': req.user_id
-        },{
-          '_id': familyId
-        }]
-        }).then(family => {
-          if (!family) {return res.status(500).send('Family does not exist')}
-          if (family.members.filter(element => element._id === memberId).length > 0) {
-            return res.status(500).send('User already in the family')
-          }
-          family.members.push(new_member)
-          family.save().then(() => {
-            return res.status(200).send('Family updated correctly')
-          }).catch (err => console.log(err))
-        }).catch(err => console.log(err))
+      if (!result) {return res.status(500).send('The user or child does not exist')}
+      Family.findOne({$and: [{
+        'members._id': req.user_id
+      },{
+        '_id': familyId
+      }]
+    }).then(family => {
+      if (!family) {return res.status(500).send('Family does not exist')}
+      if (family.members.filter(element => element._id === memberId).length > 0) {
+        return res.status(500).send('User already in the family')
+      }
+      family.members.push(new_member)
+      family.save().then(() => {
+        return res.status(200).send('Family updated correctly')
+      }).catch (err => console.log(err))
+    }).catch(err => console.log(err))
     })
   } catch (e) {
     next(e)
+  }
+})
+
+/**
+ * @api {delete} /api/family/:familyId/members/:memberId delete a family member
+ * 
+ * @apiName DeleteFamilyMember
+ * @apiGroup Family
+ * 
+ * @apiParam {familyId} id of the family
+ * @apiParam {membersId} id of the member to delete
+ *
+ */
+router.delete('/:familyId/member/:memberId', async (req, res, next) => {
+  if (!req.user_id) { return res.status(401).send('Not authenticated') }
+  try {
+    const familyId = req.params.familyId;
+    const memberId = req.params.memberId;
+    if (req.user_id === memberId) {return res.status(400).send('You cannot delete yourself')}
+    
+    Family.findOne({$and: [{
+      'members._id': req.user_id
+    },{
+      '_id': familyId
+    }]
+  }).then(family => {
+    if (!family) {return res.status(500).send('Family does not exist')}    
+    let newMembers = family.members.filter(element => element._id !== memberId)
+    family.members = newMembers
+    family.save().then(() => {
+      return res.status(200).send('Family updated correctly')
+    })
+  }).catch(err => console.log(err))
+  } catch (err) {
+    next(err)
   }
 })
 
