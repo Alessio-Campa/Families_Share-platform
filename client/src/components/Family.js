@@ -1,7 +1,20 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Loadable from "react-loadable";
 import axios from "axios"
+import PropTypes from "prop-types";
+import LoadingSpinner from "./LoadingSpinner"
 import ChildListItem from './ChildListItem'
-import FamilyMemberItem from './FamilyMemberItem'
+import FamilyNavbar from "./FamilyNavbar";
+
+const FamilyMembers = Loadable({
+  loader: () => import("./FamilyMembers"),
+  loading: () => <div />,
+});
+const FamilyCalendar = Loadable({
+  loader: () => import("./FamilyCalendar"),
+  loading: () => <div />,
+});
 
 const getFamily = (familyId) => {
   return axios.get(`/api/family/${familyId}`).then( response => {
@@ -23,101 +36,79 @@ export default class Family extends React.Component {
     const userId = JSON.parse(localStorage.getItem('user')).id
     let children = [];
     let adults = [];
-
+    
     this.state = {
       familyId,
       userId,
+      fetchedFamily: false
     }
   }
-
+  
   async componentDidMount(){
     const { familyId } = this.state;
     this.family = await getFamily(familyId);
-
-    this.setState({family : this.family})
-    this.setState({children : this._children});
-    this.setState({adults : this._adults});
+    
+    this.setState({family : this.family,
+      children : this._children,
+      adults : this._adults,
+      fetchedFamily: true
+    })
   }
-
+  
   get familyId(){
     let {familyId} = this.state;
     return familyId;
   }
 
-  get _children(){
-    let childrenIdList = []
-    this.family.members.forEach(i => {
-      if (i.role === "child"){
-        childrenIdList.push(i._id)
-      }
-    })
-    return childrenIdList;
-  }
-
-  get _adults(){
-    let adultsList = [];
-    this.family.members.forEach(i => {
-      if (i.role !== "child")
-        adultsList.push(i);
-    })
-    return adultsList
-  }
-
-  renderChildren(){
-    const {userId} = this.state;
-    const {children} = this.state;
-    return(
-      <div  className=''>
-        <ul>
-          {children && children.map( child => (
-            <li>
-              <ChildListItem childId={child} userId={userId} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
-  renderAdults(){
-    const {adults} = this.state;
-    return(
-      <div style={{paddingTop: "6rem"}} className=''>
-        <ul>
-          {adults && adults.map( adult => (
-            <li>
-              <FamilyMemberItem memberId={adult._id} role={adult.role} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
   render() {
-    const { history } = this.props;
-    const { family } = this.state;
-    return (
+    const { fetchedFamily, family, userIsAdmin} = this.state;
+    const { match, history } = this.props;
+    const { url: currentPath } = match;
+    
+    return fetchedFamily ? (  
       <div style={{ display: 'block'}}>
-        <div className="row no-gutters" id="groupMembersHeaderContainer">
+      <div className="row no-gutters" id="groupMembersHeaderContainer">
           <div className="col-2-10">
-            <button
-              type="button"
+          <button
+          type="button"
               className="transparentButton center"
               onClick={() => history.goBack()}
-            >
+              >
               <i className="fas fa-arrow-left" />
-            </button>
+              </button>
+              </div>
+              <div className="col-8-10">
+              <h1 className="verticalCenter">Famiglia <i>{family && family.name}</i></h1>
           </div>
-          <div className="col-8-10">
-            <h1 className="verticalCenter">Famiglia <i>{family && family.name}</i></h1>
           </div>
-        </div>
-
-        {this.renderAdults()}
-        {this.renderChildren()}
-
+      <div id="groupMainContainer">
+        <div> {currentPath} </div>
+        <Switch>
+          <Route
+            path={`${currentPath}/members`}
+            render={(props) => (
+              <FamilyMembers
+                {...props}
+                family={this.state.family}
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${currentPath}/calendar`}
+            render={(props) => (
+              <FamilyCalendar
+                {...props}
+                family={family}
+              />
+            )}
+          />
+        </Switch>
+        <FamilyNavbar />
       </div>
+      </div>
+    ) : (
+      <LoadingSpinner />
     );
   }
 }

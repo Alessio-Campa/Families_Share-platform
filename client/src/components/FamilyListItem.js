@@ -42,7 +42,7 @@ class FamilyListItem extends React.Component {
     let family = this.state.family
     const { history, familyId } = this.props;
     const { pathname } = history.location;
-    const familyRoute = `/family/${familyId}`
+    const familyRoute = `/family/${familyId}/calendar`
     console.log(familyRoute)
     const route = `${pathname}/${familyId}`;
     return (
