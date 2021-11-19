@@ -4,6 +4,7 @@ const router = new express.Router()
 const { google } = require('googleapis')
 const googleEmail = config.get('google.email')
 const googleKey = config.get('google.key')
+const uh = require('../helper-functions/user-helpers')
 const scopes = 'https://www.googleapis.com/auth/calendar'
 const jwt = new google.auth.JWT(
   process.env[googleEmail],
@@ -76,6 +77,25 @@ router.get('/user/:userId', async (req, res, next) => {
     }).select('_id').then(data => {
       res.status(200).json(data)
     })
+  } catch (err) {
+    next(err)
+  }
+})
+
+/**
+ * @api {get} /api/family/:familyId/events get all the events of a family
+ * @apiName GetUserFamilies
+ * @apiGroup Family
+ *
+ * @apiParam {familyId} the id of the family
+ */
+router.get('/:familyId/events', async (req, res, next) => {
+  if (!req.user_id) { return res.status(401).send('Not authenticated')}
+  try {
+    // TODO
+    // gli eventi di una famiglia sono gli eventi di tutti i membri
+    // dare la possibilità di creare eventi familiari?
+    // line 723 user-routes
   } catch (err) {
     next(err)
   }
@@ -196,7 +216,10 @@ router.delete('/:familyId/member/:memberId', async (req, res, next) => {
       '_id': familyId
     }]
   }).then(family => {
-    if (!family) {return res.status(500).send('Family does not exist')}    
+    if (!family) {return res.status(500).send('Family does not exist')}
+    if (family.members.filter(element => element.role !== 'child').length === 1) {
+      return res.status(500).send('You are deleting the only adult in this family, you cannot do it')
+    }
     let newMembers = family.members.filter(element => element._id !== memberId)
     family.members = newMembers
     family.save().then(() => {
