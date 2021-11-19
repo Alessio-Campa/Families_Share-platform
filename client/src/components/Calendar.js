@@ -36,6 +36,18 @@ const getUserEvents = (userId) => {
     });
 };
 
+const getFamilyEvents = (familyId) => {
+  return axios.get(`/api/family/${familyId}/events`).then((response) => {
+      console.log(response)
+      console.log(response.data)
+      return response.data;
+    }).catch((error) => {
+      Log.error(error);
+      return [];
+    }
+  );
+}
+
 const MyAgenda = ({ events: ev, date }) => {
   const getCurrentMonthEvents = () => {
     const events = JSON.parse(JSON.stringify(ev));
@@ -279,6 +291,24 @@ class Calendar extends React.Component {
           filteredEvents: filteredGroupEvents,
         });
         break;
+      case 'family':
+        const familyEvents = await getFamilyEvents(ownerId);
+        familyEvents.forEach(event => {
+          event.title = event.summary;
+          event.start = new Date(event.start.dateTime);
+          event.end = new Date(event.end.dateTime);
+        })
+        const filteredFamilyEvents =
+          filter === "all"
+            ? familyEvents
+            : familyEvents.filter(
+                (event) => event.extendedProperties.shared === "ongoing"
+              );
+        this.setState({
+          events: familyEvents,
+          filteredEvents: filteredFamilyEvents,
+        });
+        break;
       default:
         this.setState({ events: [] });
         Log.error("error");
@@ -354,8 +384,18 @@ class Calendar extends React.Component {
     const { language, ownerType } = this.props;
     const { swipe, activeView, filteredEvents, filter } = this.state;
     const texts = Texts[language].calendar;
-    const calendarTitle =
-      ownerType === "user" ? texts.userCalendar : texts.groupCalendar;
+    let calendarTitle;
+    switch (ownerType) {
+      case 'user':
+        calendarTitle = texts.userCalendar;
+        break;
+      case 'family':
+        calendarTitle = 'Calendario familiare'
+        break;
+      default:
+        calendarTitle = texts.groupCalendar
+        break;
+    }
     const localizer = BigCalendar.momentLocalizer(moment);
     const components = {
       month: {
