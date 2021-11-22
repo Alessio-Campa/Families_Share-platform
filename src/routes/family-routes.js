@@ -116,7 +116,7 @@ router.post('/', async (req, res, next) => {
   try {
     if (!req.body.familyName) { return res.status(400).send('Bad request') }
 
-    const members = [{_id: req.user_id, role: req.body.role, isAccepted: true}]
+    const members = [{_id: req.user_id, role: req.body.role}]
     const familyName = req.body.familyName
     const familyCalendar = {
       summary: familyName + '-familyCalendar'
@@ -155,7 +155,7 @@ router.put('/:familyId', async (req, res, next) => {
     const memberId = req.body.memberId;
     const role = req.body.role;
 
-    let new_member = {_id: memberId, role: role, isAccepted: (role === "child")}
+    let new_member = {_id: memberId, role: role}
     
     let existence = new Promise((resolve,reject) => {
       if (role === 'child') {

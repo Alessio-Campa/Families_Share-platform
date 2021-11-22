@@ -204,7 +204,7 @@ async function editGroupNotification (group_id, user_id, changes) {
     await Notification.create(notifications)
     console.log('Edit Group Notification created')
   }
-};
+}
 
 async function removeMemberNotification (member_id, group_id) {
   const subject = await Profile.findOne({ user_id: member_id })

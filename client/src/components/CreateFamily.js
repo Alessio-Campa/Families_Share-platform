@@ -71,6 +71,10 @@ export default class CreateFamily extends React.Component{
       newAdultRole = 'adult'
     }
     axios.get(`/api/profiles/${newAdult}`).then( u =>{
+      if (u.data.user_id === this.userId || addList.filter(i => u.data.user_id === i._id).length > 0){
+        this.setState({newAdultError: "Non puoi inserire lo stesso utente più volte"})
+        return;
+      }
       this.setState({addList: [...addList, {_id: u.data.user_id, role: newAdultRole, name:`${u.data.given_name} ${u.data.family_name}`}], newAdultError: ''})
     }).catch(err =>{
       let test = err.toString().split(' ')
