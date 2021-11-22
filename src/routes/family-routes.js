@@ -20,6 +20,10 @@ const calendar = google.calendar({
 const Family = require('../models/family')
 const Child = require('../models/child')
 const Profile = require('../models/profile')
+const Member = require('../models/member')
+const Group = require('../models/group')
+const Parent = require('../models/parent')
+
 /*
 const transporter = nodemailer.createTransport({ // per inviare email
   service: 'gmail',
@@ -92,10 +96,35 @@ router.get('/user/:userId', async (req, res, next) => {
 router.get('/:familyId/events', async (req, res, next) => {
   if (!req.user_id) { return res.status(401).send('Not authenticated')}
   try {
-    // TODO
-    // gli eventi di una famiglia sono gli eventi di tutti i membri
-    // dare la possibilità di creare eventi familiari?
-    // line 723 user-routes
+    Family.findOne({$and: [{
+      'members._id': req.user_id
+    },{
+      '_id': req.params.familyId
+    }]
+  }).then(family => {
+    if (!family) return res.status(404).send('family does not exist');
+    async function getUserEvents(user_id) {
+      const usersGroups = await Member.find({ user_id, user_accepted: true, group_accepted: true })
+      const groups = await Group.find({ group_id: { $in: usersGroups.map(group => group.group_id) } })
+      const children = await Parent.find({ parent_id: user_id })
+      const childIds = children.map(parent => parent.child_id)
+      const responses = await Promise.all(groups.map(group => uh.getUsersGroupEvents(group.calendar_id, user_id, childIds)))
+      const events = [].concat(...responses)
+      return events
+    }
+    async function getAllUsersEvents(users) {
+      let allEvents = []
+      for (let user of users) {
+        events = await getUserEvents(user._id)
+        allEvents = allEvents.concat(events)
+      }
+      return allEvents
+    }
+    getAllUsersEvents(family.members).then(familyEvents => {
+      console.log(familyEvents)
+      return res.status(200).json(familyEvents)
+    })
+  }).catch(err => console.log(err))
   } catch (err) {
     next(err)
   }
@@ -178,7 +207,7 @@ router.put('/:familyId', async (req, res, next) => {
         '_id': familyId
       }]
     }).then(family => {
-      if (!family) {return res.status(500).send('Family does not exist')}
+      if (!family) {return res.status(404).send('Family does not exist')}
       if (family.members.filter(element => element._id === memberId).length > 0) {
         return res.status(500).send('User already in the family')
       }
