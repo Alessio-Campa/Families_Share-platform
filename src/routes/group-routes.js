@@ -296,16 +296,16 @@ router.delete('/:id', async (req, res, next) => {
     return res.status(401).send('Not authenticated')
   }
   const { id } = req.params
-  const edittingUser = await Member.findOne({
+  const editingUser = await Member.findOne({
     group_id: req.params.id,
     user_id: req.user_id,
     group_accepted: true,
     user_accepted: true
   })
-  if (!edittingUser) {
+  if (!editingUser) {
     return res.status(401).send('Unauthorized')
   }
-  if (!edittingUser.admin) {
+  if (!editingUser.admin) {
     return res.status(401).send('Unauthorized')
   }
   try {
@@ -344,16 +344,16 @@ router.patch('/:id', groupUpload.single('photo'), async (req, res, next) => {
     groupPatch.contact_info = contact_info
   }
   try {
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id: req.params.id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Unauthorized')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Unauthorized')
     }
     await nh.editGroupNotification(id, req.user_id, {
@@ -395,16 +395,16 @@ router.patch('/:id/settings', async (req, res, next) => {
   const { id } = req.params
   const settingsPatch = req.body
   try {
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id: req.params.id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Unauthorized')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Unauthorized')
     }
     await Group_Settings.updateOne({ group_id: id }, settingsPatch)
@@ -456,16 +456,16 @@ router.patch('/:id/members', async (req, res, next) => {
     const group_id = req.params.id
     const patch = req.body.patch
     const user_id = req.body.id
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Unauthorized')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Unauthorized')
     }
     if (!(patch.group_accepted !== undefined || patch.admin !== undefined)) {
@@ -503,16 +503,16 @@ router.delete('/:groupId/members/:memberId', async (req, res, next) => {
   const group_id = req.params.groupId
   const user_id = req.user_id
   const member_id = req.params.memberId
-  const edittingUser = await Member.findOne({
+  const editingUser = await Member.findOne({
     group_id,
     user_id,
     group_accepted: true,
     user_accepted: true
   })
-  if (!edittingUser) {
+  if (!editingUser) {
     return res.status(401).send('Unauthorized')
   }
-  if (!edittingUser.admin) {
+  if (!editingUser.admin) {
     return res.status(401).send('Unauthorized')
   }
   try {
@@ -572,16 +572,16 @@ router.post('/:id/members', async (req, res, next) => {
   const group_id = req.params.id
   const userIds = req.body.inviteIds
   try {
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Not authenticated')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Not authenticated')
     }
     if (!userIds) {

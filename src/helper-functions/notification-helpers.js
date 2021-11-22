@@ -550,6 +550,12 @@ function getNotificationDescription (notification, language) {
         default:
           return ''
       }
+    case 'positivity':
+      switch (code){
+        case 0:
+          return `${subject} ${description}`
+        default: return ''
+      }
     default:
       return ''
   }
@@ -582,6 +588,23 @@ async function sendPushNotifications (messages) {
   }
 }
 
+async function newPositivityNotification(sender, receiver){
+  await Profile.findOne({user_id: sender}).then( async u =>{
+    const notification = {
+      owner_type: 'user',
+      owner_id: receiver,
+      type: 'positivity',
+      read: false,
+      code: 0,
+      subject: `${u.given_name} ${u.family_name}`,
+      object: null,
+      user_id: sender
+    }
+    await Notification.create(notification)
+  });
+
+}
+
 module.exports = {
   newMemberNotification,
   timeslotRequirementsNotification,
@@ -597,5 +620,6 @@ module.exports = {
   deleteTimeslotNotification,
   timeslotAdminChangesNotification,
   newRequestNotification,
-  newReplyNotification
+  newReplyNotification,
+  newPositivityNotification
 }
