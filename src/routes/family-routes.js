@@ -208,17 +208,16 @@ router.delete('/:familyId/member/:memberId', async (req, res, next) => {
   try {
     const familyId = req.params.familyId;
     const memberId = req.params.memberId;
-    if (req.user_id === memberId) {return res.status(400).send('You cannot delete yourself')}
-    
     Family.findOne({$and: [{
       'members._id': req.user_id
     },{
       '_id': familyId
     }]
   }).then(family => {
-    if (!family) {return res.status(500).send('Family does not exist')}
+    if (!family) {return res.status(404).send('Family does not exist')}
     if (family.members.filter(element => element.role !== 'child').length === 1) {
-      return res.status(500).send('You are deleting the only adult in this family, you cannot do it')
+      Family.deleteOne({'_id': familyId})
+      return res.status(200).send('the entire family has been deleted')
     }
     let newMembers = family.members.filter(element => element._id !== memberId)
     family.members = newMembers
