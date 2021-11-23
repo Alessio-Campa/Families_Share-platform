@@ -102,6 +102,7 @@ const Child = require('../models/child')
 const Profile = require('../models/profile')
 const Community = require('../models/community')
 const User = require('../models/user')
+const { now } = require('moment')
 
 router.get('/', (req, res, next) => {
   if (!req.user_id) return res.status(401).send('Not authenticated')
@@ -1915,20 +1916,21 @@ router.put('/:groupId/members/:memberId/report', async (req, res, next) => {
       if (!member) {return res.status(404).send('Member does not exist')}
       if (!req.body.message) {return res.status(400).send('Bad request')}
       if (req.user_id === member_id) {return res.status(500).send('You cannot report yourself')}
-      let updated = false
+      let insertAllowed = true;
+      const one_day_ms = 1000*60*60*24;
       member.reports.forEach(report => {
-        if (report._id == req.user_id) {
-          updated = true
-          report.message = req.body.message
+        if (report._id === req.user_id) {
+          const report_date = new Date(report.createdAt);
+          if(now() - report_date.getTime() < one_day_ms)
+            insertAllowed = false;
         }
-      })
-      if (!updated) {
-        let newReport = {
-          _id: req.user_id,
-          message: req.body.message,
-        }
-        member.reports.push(newReport)
+      });
+      if (!insertAllowed) {return res.status(400).send('Bad request')}
+      let newReport = {
+        _id: req.user_id,
+        message: req.body.message,
       }
+      member.reports.push(newReport)
       member.save().then((updatedMember) => {
         return res.status(200).json(updatedMember)
       })

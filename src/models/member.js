@@ -9,7 +9,7 @@ const reportSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-})
+}, { timestamps: true })
 
 const memberSchema = new mongoose.Schema({
   user_id: {
