@@ -359,7 +359,7 @@ class MemberContact extends React.Component {
             )}
           </div>
         </div>
-        {this.state.memberReports.length > 0 && (
+        {this.state.memberReports.length > 0 && userIsAdmin && profile.user_id !== currentUser && (
           <div className="row-no-gutters" 
             style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <Button onClick={() => this.setState({ segnalationListOpen: !this.state.segnalationListOpen })}>
