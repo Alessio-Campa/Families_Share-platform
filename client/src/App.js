@@ -157,6 +157,10 @@ const SignUpScreen = Loadable({
   loader: () => import("./components/SignUpScreen"),
   loading: () => Loading,
 });
+const TracedMembers = Loadable({
+  loader: () => import("./components/TracedMembers"),
+  loading: () => Loading,
+});
 
 axios.interceptors.request.use(
   (config) => {
@@ -382,6 +386,11 @@ class App extends React.Component {
                 exact
                 path="/groups/search"
                 component={SearchGroupScreen}
+              />
+              <PrivateRoute
+                exact
+                path="/groups/:groupId/trace/:memberId"
+                component={TracedMembers}
               />
               <PrivateRoute
                 path="/groups/:groupId"

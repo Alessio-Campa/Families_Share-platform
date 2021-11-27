@@ -154,6 +154,12 @@ class MemberContact extends React.Component {
     return "fas fa-envelope";
   };
 
+  handleContactTracing = () => {
+    const { groupId, member, history } = this.props;
+    history.push(`/groups/${groupId}/trace/${member.user_id}`)
+
+  }
+
   render() {
     const { language, member: profile, userIsAdmin } = this.props;
     const { top, right, modalIsOpen } = this.state;
@@ -175,6 +181,11 @@ class MemberContact extends React.Component {
         label: texts.removeUser,
         style: "optionsModalButton",
         handle: this.handleRemoveUser,
+      },
+      {
+        label: texts.trace,
+        style: "optionsModalButton",
+        handle: this.handleContactTracing,
       },
     ];
     return (

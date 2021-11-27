@@ -893,6 +893,7 @@ const en = {
     addAdmin: "Add admin",
     removeAdmin: "Remove admin",
     removeUser: "Remove User",
+    trace: "Contact tracing"
   },
   startUpGuide: {
     backNavTitle: "Start up guide",
@@ -2200,6 +2201,8 @@ const nl = {
     addAdmin: "Admin toevoegen",
     removeAdmin: "Admin verwijderen",
     removeUser: "Verwijder gebruiker",
+    trace: "Contact tracing"
+
   },
   startUpGuide: {
     backNavTitle: "Opstart gids",
@@ -3473,6 +3476,7 @@ const it = {
     addAdmin: "Aggiungi amministratore",
     removeAdmin: "Rimuovi amministratore",
     removeUser: "Rimuovi utente",
+    trace: "Traccia contatti"
   },
   startUpGuide: {
     backNavTitle: "Come iniziare",
@@ -4776,6 +4780,7 @@ const el = {
     addAdmin: "Προσθήκη διαχειριστή",
     removeAdmin: "Κατάργηση διαχειριστή",
     removeUser: "Κατάργηση χρήστη",
+    trace: "Contact tracing"
   },
   startUpGuide: {
     backNavTitle: "Οδηγός εκκίνησης",
@@ -6081,6 +6086,7 @@ const hu = {
     addAdmin: "Adminisztrátor hozzáadása",
     removeAdmin: "Adminisztrátor eltávolítása",
     removeUser: "Felhasználó eltávolítása",
+    trace: "Contact tracing"
   },
   startUpGuide: {
     backNavTitle: "Kezdő felhasználóknak szóló útmutató",
@@ -7418,6 +7424,7 @@ const fr = {
     addAdmin: "Ajouter un administrateur",
     removeAdmin: "Supprimer un administrateur",
     removeUser: "Supprimer l'utilisateur",
+    trace: "Contact tracing"
   },
   startUpGuide: {
     backNavTitle: "Guide de démarrage",

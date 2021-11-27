@@ -24,6 +24,7 @@ const groupContacts = require('../helper-functions/group-contacts')
 const nh = require('../helper-functions/notification-helpers')
 const ah = require('../helper-functions/activity-helpers')
 const ph = require('../helper-functions/plan-helpers')
+const uh = require('../helper-functions/user-helpers')
 const schedule = require('node-schedule')
 
 if (process.env.NODE_APP_INSTANCE === 0) {
@@ -1893,5 +1894,51 @@ router.delete(
     }
   }
 )
+
+router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
+  let group;
+  if (!req.user_id){
+    return res.status(401).send('Not authenticated')
+  }
+  Member.findOne({group_id: req.params.groupId, user_id: req.user_id}).then( u => {
+    if (u === null || u === undefined || !u.admin)
+      return res.status(403).send('Unauthorized');
+    Notification.findOne({owner_id: req.user_id, object: req.params.memberId, type:'positivity', code: 0 }).then( n =>{
+      if (!n)
+        return res.status(403).send('Notification not received for this user')
+      Group.findOne({group_id: req.params.groupId}).then(g => {
+        uh.getUsersGroupEvents(g.calendar_id, req.params.memberId, []).then(e =>{
+          e = e.filter( i => {
+            let notifDate = new Date(n.createdAt)
+            let eventDate = new Date(i.start.dateTime)
+            return eventDate.getTime() > notifDate.getTime() - 1000*60*60*24*7;
+          })
+          let people = e.map(i => {
+            let p = i.extendedProperties.shared.parents;
+            if (p !== "[]")
+              p = p.slice(1, p.length - 1).split(',').map( s => s.slice(1, s.length-1));
+            else p = []
+            let c = i.extendedProperties.shared.children;
+            if (c !== "[]")
+              c = c.slice(1, c.length - 1).split(',').map( s => s.slice(1, s.length-1));
+            else c = []
+            return [...p, ...c];
+          })
+          let out = new Set();
+          people.forEach( i=> {
+            i.forEach(j => {
+              out.add(j)
+            })
+          })
+          let outDict = []
+          out.forEach(i => outDict.push({user_id: i}))
+          return res.status(200).send(Array.from(outDict))
+        })
+      })
+    })
+  })
+
+
+})
 
 module.exports = router

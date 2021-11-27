@@ -597,8 +597,7 @@ async function newPositivityNotification(sender, receiver){
       read: false,
       code: 0,
       subject: `${u.given_name} ${u.family_name}`,
-      object: null,
-      user_id: sender
+      object: sender
     }
     await Notification.create(notification)
   });
