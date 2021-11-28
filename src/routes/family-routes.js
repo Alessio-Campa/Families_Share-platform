@@ -108,6 +108,7 @@ router.get('/:familyId/events', async (req, res, next) => {
       const groups = await Group.find({ group_id: { $in: usersGroups.map(group => group.group_id) } })
       const children = await Parent.find({ parent_id: user_id })
       const childIds = children.map(parent => parent.child_id)
+      // const test = (family.members.filter(member => member.role === 'child')).map(member => member.id)
       const responses = await Promise.all(groups.map(group => uh.getUsersGroupEvents(group.calendar_id, user_id, childIds)))
       const events = [].concat(...responses)
       return events
@@ -121,8 +122,15 @@ router.get('/:familyId/events', async (req, res, next) => {
       return allEvents
     }
     getAllUsersEvents(family.members).then(familyEvents => {
-      console.log(familyEvents)
-      return res.status(200).json(familyEvents)
+      let uniqueEventsIds = [];
+      let uniqueEvents = [];
+      familyEvents.forEach((event) => {
+        if (!uniqueEventsIds.includes(event.id)) {
+          uniqueEventsIds.push(event.id);
+          uniqueEvents.push(event);
+        }
+      });
+      return res.status(200).json(uniqueEvents)
     })
   }).catch(err => console.log(err))
   } catch (err) {

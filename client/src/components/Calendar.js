@@ -38,8 +38,6 @@ const getUserEvents = (userId) => {
 
 const getFamilyEvents = (familyId) => {
   return axios.get(`/api/family/${familyId}/events`).then((response) => {
-      console.log(response)
-      console.log(response.data)
       return response.data;
     }).catch((error) => {
       Log.error(error);

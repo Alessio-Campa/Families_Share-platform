@@ -10,7 +10,7 @@ import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import Log from "./Log";
 
-class FamliyMemberItem extends React.Component {
+class FamilyMemberItem extends React.Component {
   state = { fetchedChild: false, child: {} };
 
   componentDidMount() {
@@ -79,9 +79,9 @@ class FamliyMemberItem extends React.Component {
   }
 }
 
-export default withRouter(withLanguage(FamliyMemberItem));
+export default withRouter(withLanguage(FamilyMemberItem));
 
-FamliyMemberItem.propTypes = {
+FamilyMemberItem.propTypes = {
   userId: PropTypes.string,
   language: PropTypes.string,
   history: PropTypes.object,
