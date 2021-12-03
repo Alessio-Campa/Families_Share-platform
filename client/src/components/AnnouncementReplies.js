@@ -17,10 +17,8 @@ class AnnouncementReplies extends React.Component {
   }
 
   componentDidMount() {
-    const { groupId } = this.props;
-    const { announcementId } = this.props;
     axios
-      .get(`/api/groups/${groupId}/announcements/${announcementId}/replies`)
+      .get(this.getRepliesUrl())
       .then((response) => {
         const replies = response.data;
         this.setState({ fetchedReplies: true, replies });
@@ -31,11 +29,14 @@ class AnnouncementReplies extends React.Component {
       });
   }
 
+  getRepliesUrl() {
+    const { announcementsUrl, announcementId } = this.props;
+    return `${announcementsUrl}/${announcementId}/replies`;
+  }
+
   refresh = () => {
-    const { groupId } = this.props;
-    const { announcementId } = this.props;
     axios
-      .get(`/api/groups/${groupId}/announcements/${announcementId}/replies`)
+      .get(this.getRepliesUrl())
       .then((response) => {
         const replies = response.data;
         this.setState({ replies });
@@ -46,10 +47,9 @@ class AnnouncementReplies extends React.Component {
   };
 
   handleSend = () => {
-    const { groupId, announcementId } = this.props;
     const { newReply } = this.state;
     axios
-      .post(`/api/groups/${groupId}/announcements/${announcementId}/replies`, {
+      .post(this.getRepliesUrl(), {
         user_id: JSON.parse(localStorage.getItem("user")).id,
         message: newReply,
       })
@@ -74,7 +74,7 @@ class AnnouncementReplies extends React.Component {
 
   renderReplies = () => {
     const { replies } = this.state;
-    const { groupId, userIsAdmin } = this.props;
+    const { announcementsUrl, userIsAdmin } = this.props;
     return (
       <ul>
         {replies.map((reply, index) => (
@@ -82,7 +82,7 @@ class AnnouncementReplies extends React.Component {
             <Reply
               reply={reply}
               handleRefresh={this.refresh}
-              groupId={groupId}
+              announcementsUrl={announcementsUrl}
               userIsAdmin={userIsAdmin}
             />
           </li>
@@ -147,7 +147,7 @@ class AnnouncementReplies extends React.Component {
 
 AnnouncementReplies.propTypes = {
   announcementId: PropTypes.string,
-  groupId: PropTypes.string,
+  announcementsUrl: PropTypes.string,
   userIsAdmin: PropTypes.bool,
   language: PropTypes.string,
 };

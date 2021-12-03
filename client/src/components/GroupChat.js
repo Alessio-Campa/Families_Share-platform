@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BackNavigation from "./BackNavigation";
-import GroupMessages from "./GroupMessages";
+import { GroupMessages } from "./GroupMessages";
 
 const GroupChat = (props) => {
   const { history, userIsAdmin, group } = props;

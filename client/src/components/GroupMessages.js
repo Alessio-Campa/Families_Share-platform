@@ -9,13 +9,12 @@ import AnnouncementReplies from "./AnnouncementReplies";
 import LoadingSpinner from "./LoadingSpinner";
 import Log from "./Log";
 
-class GroupMessages extends React.Component {
+class AbstractMessages extends React.Component {
   state = { fetchedAnnouncements: false };
 
   componentDidMount() {
-    const { groupId } = this.props;
     axios
-      .get(`/api/groups/${groupId}/announcements`)
+      .get(this.getAnnouncementsUrl())
       .then((response) => {
         const announcements = response.data;
         this.setState({
@@ -29,10 +28,14 @@ class GroupMessages extends React.Component {
       });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  getAnnouncementsUrl() {
+    throw new Error("Method not implemented.");
+  }
+
   refresh = () => {
-    const { groupId } = this.props;
     axios
-      .get(`/api/groups/${groupId}/announcements`)
+      .get(this.getAnnouncementsUrl())
       .then(async (response) => {
         const announcements = response.data;
         await this.setState({
@@ -77,12 +80,12 @@ class GroupMessages extends React.Component {
                 >
                   <div id="announcementContainer" className="horizontalCenter">
                     <AnnouncementHeader
+                      announcementsUrl={this.getAnnouncementsUrl()}
                       userId={announcements[index].user_id}
                       createdAt={announcements[index].createdAt}
                       userIsAdmin={userIsAdmin}
                       handleRefresh={this.refresh}
                       announcementId={announcements[index].announcement_id}
-                      groupId={announcements[index].group_id}
                     />
                     <AnnouncementMain
                       message={announcements[index].body}
@@ -90,8 +93,8 @@ class GroupMessages extends React.Component {
                     />
                     <AnnouncementReplies
                       announcementId={announcements[index].announcement_id}
-                      groupId={announcements[index].group_id}
                       userIsAdmin={userIsAdmin}
+                      announcementsUrl={this.getAnnouncementsUrl()}
                     />
                   </div>
                 </li>
@@ -105,18 +108,45 @@ class GroupMessages extends React.Component {
 
   render() {
     const { fetchedAnnouncements } = this.state;
-    const { groupId } = this.props;
     return (
       <div id="announcementsContainer">
         {fetchedAnnouncements ? this.renderAnnouncements() : <LoadingSpinner />}
-        <AnnouncementBar groupId={groupId} handleRefresh={this.refresh} />
+        <AnnouncementBar
+          announcementsUrl={this.getAnnouncementsUrl()}
+          handleRefresh={this.refresh}
+        />
       </div>
     );
   }
 }
-export default GroupMessages;
+
+class GroupMessages extends AbstractMessages {
+  getAnnouncementsUrl() {
+    const { groupId } = this.props;
+    return `/api/groups/${groupId}/announcements`;
+  }
+}
+
+class EventMessages extends AbstractMessages {
+  getAnnouncementsUrl() {
+    const { groupId, eventId } = this.props;
+    return `/api/groups/${groupId}/events/${eventId}/announcements`;
+  }
+}
+
+export { GroupMessages, EventMessages };
+
+AbstractMessages.propTypes = {
+  userIsAdmin: PropTypes.bool,
+};
 
 GroupMessages.propTypes = {
   groupId: PropTypes.string,
+  userIsAdmin: PropTypes.bool,
+};
+
+EventMessages.propTypes = {
+  groupId: PropTypes.string,
+  eventId: PropTypes.string,
   userIsAdmin: PropTypes.bool,
 };
