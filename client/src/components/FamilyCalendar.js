@@ -8,26 +8,107 @@ import EventListItem from "./EventListItem";
 import "../styles/AllStyles.css"
 import "../styles/stylesheet.css"
 
-const getTodayFamilyEvents = (familyId) => {
-  return axios.get(`/api/family/${familyId}/events`).then((response) => {
-      let todayEvents = [];
-      let now = new Date;
-      response.data.forEach(event => {
-        let startDate = new Date(event.start.dateTime)
-        if (now.getDate() === startDate.getDate() &&
-            now.getMonth() === startDate.getMonth() &&
-            now.getFullYear() === startDate.getFullYear()) {
-          console.log(event.extendedProperties.children);
-          console.log(event.extendedProperties.parents);
-          todayEvents.push(event)
+const getChild = childId => {
+  return new Promise( (resolve, reject) => {
+    axios.get('/api/children/', {params: {ids: [childId]}}).then(response => {
+      resolve(response.data);
+    }).catch(error => {
+      console.log(error);
+      reject();
+    })
+  });
+}
+
+const getAdult = adultId => {
+  return new Promise((resolve, reject) => {
+    axios.get('/api/profiles/', {params: {searchBy: 'ids', ids: [adultId]}}).then(response => {
+      resolve(response.data);
+    }).catch(error => {
+      console.log(error);
+      reject();
+    })
+  })
+}
+
+const populateEventMembers = event => {
+  return new Promise( (resolve, reject) => {
+    let numberOfMembers = event.members.length;
+    for (const member of event.members) {
+      if (member.role === 'child') {
+        getChild(member._id).then(child => {
+        member.given_name = child[0].given_name;
+        member.family_name = child[0].family_name;
+        if (--numberOfMembers == 0) {
+          resolve(event)
         }
-      })
-      return todayEvents;
-    }).catch((error) => {
-      Log.error(error);
-      return [];
+        }).catch(err => {
+          console.log(err);
+        })
+      }
+      else {
+        getAdult(member._id).then(adult => {
+          member.given_name = adult[0].given_name;
+          member.family_name = adult[0].family_name;
+          if (--numberOfMembers == 0) {
+            resolve(event)
+          }
+        }).catch(err => {
+          console.log(err);
+        })
+      }
     }
-  );
+  })
+}
+
+
+function getTodayFamilyEvents(family) {
+  return new Promise((resolve, reject) => {
+    axios.get(`/api/family/${family.id}/events`).then((response) => {
+        let todayEvents = [];
+        let now = new Date;
+        response.data.forEach(event => {
+          let startDate = new Date(event.start.dateTime)
+          if (now.getDate() === startDate.getDate() &&
+              now.getMonth() === startDate.getMonth() &&
+              now.getFullYear() === startDate.getFullYear()) {
+    
+            let parents = event.extendedProperties.shared.parents;
+            if (parents !== "[]")
+              parents = parents.slice(1, parents.length - 1).split(',').map( s => s.slice(1, s.length-1));
+            else parents = []
+            let children = event.extendedProperties.shared.children;
+            if (children !== "[]")
+              children = children.slice(1, children.length - 1).split(',').map( s => s.slice(1, s.length-1));
+            else children = []
+    
+            let people = parents.concat(children)
+            let membersInEvent = []
+            
+            family.members.forEach((member) => {
+              if (people.includes(member._id)) {
+                let innerMember = {
+                  _id : member._id,
+                  role: member.role,
+                  given_name: undefined,
+                  family_name: undefined
+                }
+                membersInEvent.push(innerMember);
+              }
+            })
+    
+            event.members = membersInEvent
+            populateEventMembers(event).then((defEvent) => {
+              todayEvents.push(defEvent)
+              resolve(todayEvents)
+            })
+          }
+        })
+      })
+      }).catch((error) => {
+        Log.error(error);
+        return [];
+      }
+  )
 }
 
 class FamilyCalendar extends React.Component {
@@ -39,15 +120,13 @@ class FamilyCalendar extends React.Component {
   }
 
   async componentDidMount() {
-    getTodayFamilyEvents(this.props.family.id).then(data => {
-      this.setState({familyTodayEvents:data})
-    });
+    let familyTodayEvents = await getTodayFamilyEvents(this.props.family);
+    this.setState({familyTodayEvents})
   }
 
   render() {
     const { family, history } = this.props;
     const { familyTodayEvents } = this.state;
-    console.log(familyTodayEvents)
     return (
       <React.Fragment>
         <div style={{ display: 'block'}}>
