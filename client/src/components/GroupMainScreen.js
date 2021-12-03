@@ -24,7 +24,7 @@ const GroupCalendar = Loadable({
   loading: () => <div />,
 });
 const GroupChat = Loadable({
-  loader: () => import("./GroupChat"),
+  loader: () => import("./Chat"),
   loading: () => <div />,
 });
 
