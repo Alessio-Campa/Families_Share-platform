@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import LoadingSpinner from "./LoadingSpinner"
 import ChildListItem from './ChildListItem'
 import FamilyNavbar from "./FamilyNavbar";
+import MemberOptionsModal from './OptionsModal'
 
 const FamilyMembers = Loadable({
   loader: () => import("./FamilyMembers"),
@@ -36,75 +37,108 @@ export default class Family extends React.Component {
     const userId = JSON.parse(localStorage.getItem('user')).id
     let children = [];
     let adults = [];
-    
+
     this.state = {
       familyId,
       userId,
-      fetchedFamily: false
+      fetchedFamily: false,
+      top: "",
+      right: "",
+      isModalOpen: false,
     }
   }
-  
+
   async componentDidMount(){
     const { familyId } = this.state;
     this.family = await getFamily(familyId);
-    
+
     this.setState({family : this.family,
       children : this._children,
       adults : this._adults,
-      fetchedFamily: true
+      fetchedFamily: true,
     })
   }
-  
+
   get familyId(){
     let {familyId} = this.state;
     return familyId;
   }
 
+  handleModalOpen = (event) => {
+    this.setState({ isModalOpen: true, right: "5%", top: event.clientY });
+  };
+  handleModalClose = () => {
+    this.setState({ isModalOpen: false, top: "", right: "" });
+  };
+
+  handleEdit = () => {
+    const {history} =  this.props;
+    const {familyId} = this.state;
+    history.push(`/family/${familyId}/edit`);
+  }
+
   render() {
-    const { fetchedFamily, family, userIsAdmin} = this.state;
+    const { fetchedFamily, family, isModalOpen, top, right} = this.state;
     const { match, history } = this.props;
     const { url: currentPath } = match;
-    
-    return fetchedFamily ? (  
+
+    const options = [
+      {
+        label: "Modifica membri",
+        style: "optionsModalButton",
+        handle: this.handleEdit,
+      },
+    ];
+
+    return fetchedFamily ? (
       <div style={{ display: 'block'}}>
-      <div className="row no-gutters" id="groupMembersHeaderContainer">
+        <div className="row no-gutters" id="groupMembersHeaderContainer">
           <div className="col-2-10">
-          <button
-          type="button"
-              className="transparentButton center"
-              onClick={() => history.goBack()}
-              >
+            <button type="button" className="transparentButton center" onClick={() => history.goBack()}>
               <i className="fas fa-arrow-left" />
-              </button>
-              </div>
-              <div className="col-8-10">
-              <h1 className="verticalCenter">Famiglia <i>{family && family.name}</i></h1>
+            </button>
           </div>
+          <div className="col-7-10">
+            <h1 className="verticalCenter">Famiglia <i>{family && family.name}</i></h1>
           </div>
-      <div id="groupMainContainer">
-        <Switch>
-          <Route
-            path={`${currentPath}/members`}
-            render={(props) => (
-              <FamilyMembers
-                {...props}
-                family={this.state.family}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={`${currentPath}/calendar`}
-            render={(props) => (
-              <FamilyCalendar
-                {...props}
-                family={family}
-              />
-            )}
-          />
-        </Switch>
-        <FamilyNavbar />
-      </div>
+          <div className="col-1-10">
+            <button type="button" className="transparentButton center" onClick={this.handleModalOpen}>
+              <i className="fas fa-ellipsis-v" />
+            </button>
+          </div>
+        </div>
+
+        <MemberOptionsModal
+          position={{ top, right }}
+          options={options}
+          isOpen={isModalOpen}
+          handleClose={this.handleModalClose}
+        />
+
+        <div id="groupMainContainer">
+          <Switch>
+            <Route
+              path={`${currentPath}/members`}
+              render={(props) => (
+                <FamilyMembers
+                  {...props}
+                  family={this.state.family}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={`${currentPath}/calendar`}
+              render={(props) => (
+                <FamilyCalendar
+                  {...props}
+                  family={family}
+                />
+              )}
+            />
+          </Switch>
+          <FamilyNavbar />
+        </div>
       </div>
     ) : (
       <LoadingSpinner />

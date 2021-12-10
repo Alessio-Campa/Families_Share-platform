@@ -230,8 +230,37 @@ router.put('/:familyId', async (req, res, next) => {
   }
 })
 
+router.patch('/:familyId', async (req, res, next) => {
+  if (!req.user_id) { return res.status(401).send('Not authenticated') }
+  let updatedMembers = req.body.members;
+
+  Family.findOne({_id: req.params.familyId}).then(family =>{
+    let is_member = false;
+    family.members.forEach(m =>{
+      if (m._id === req.user_id)
+        is_member = true;
+    })
+    if(!is_member)
+      return res.status(403).send("Unauthorized")
+
+    family.members = []
+    updatedMembers.forEach(m => {
+      family.members.push({_id: m._id, role: m.role})
+    })
+    family.save().then(()=>{
+      return res.status(200).send("Family updated correctly")
+    }).catch(err => {
+      return res.status(500).send(err)
+    })
+
+  }).catch(err => {
+    return res.status(404).send(err)
+  })
+
+})
+
 /**
- * @api {delete} /api/family/:familyId/members/:memberId delete a family member
+ * @api {delete} /api/family/:familyId/member/:memberId delete a family member
  * 
  * @apiName DeleteFamilyMember
  * @apiGroup Family
