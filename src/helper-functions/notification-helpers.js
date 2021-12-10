@@ -73,7 +73,7 @@ async function newActivityNotification (group_id, user_id) {
   }
 };
 
-async function newAnnouncementNotification (group_id, user_id) {
+async function newAnnouncementNotification (group_id, user_id, activity_id = null) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -93,6 +93,7 @@ async function newAnnouncementNotification (group_id, user_id) {
       })
     })
     await Notification.create(notifications)
+    const url = activity_id ? `${process.env.CITYLAB_URI}/groups/${group_id}/activities/${activity_id}/chat` : `${process.env.CITYLAB_URI}/groups/${group_id}/chat`
     const messages = []
     devices.forEach(device => {
       const language = users.filter(user => user.user_id === device.user_id)[0].language
@@ -101,14 +102,14 @@ async function newAnnouncementNotification (group_id, user_id) {
         sound: 'default',
         title: texts[language]['announcements'][0]['header'],
         body: `${subject.given_name} ${subject.family_name} ${texts[language]['announcements'][0]['description']} ${object.name}`,
-        data: { url: `${process.env.CITYLAB_URI}/groups/${group_id}/chat` }
+        data: { url: url }
       })
     })
     await sendPushNotifications(messages)
   }
 };
 
-async function newReplyNotification (group_id, user_id) {
+async function newReplyNotification (group_id, user_id, activity_id = null) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
   const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
@@ -128,6 +129,7 @@ async function newReplyNotification (group_id, user_id) {
       })
     })
     await Notification.create(notifications)
+    const url = activity_id ? `${process.env.CITYLAB_URI}/groups/${group_id}/activities/${activity_id}/chat` : `${process.env.CITYLAB_URI}/groups/${group_id}/chat`
     const messages = []
     devices.forEach(device => {
       const language = users.filter(user => user.user_id === device.user_id)[0].language
@@ -136,7 +138,7 @@ async function newReplyNotification (group_id, user_id) {
         sound: 'default',
         title: texts[language]['announcements'][1]['header'],
         body: `${subject.given_name} ${subject.family_name} ${texts[language]['announcements'][1]['description']} ${object.name}`,
-        data: { url: `${process.env.CITYLAB_URI}/groups/${group_id}/chat` }
+        data: { url: url }
       })
     })
     await sendPushNotifications(messages)
