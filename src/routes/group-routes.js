@@ -1671,7 +1671,7 @@ function getAnnouncements (type) {
       return res.status(401).send('Not authenticated')
     }
     const group_id = req.params.groupId
-    const activity_id = type === AnnouncementType.ACTIVITY ? req.params.activity_id : null
+    const activity_id = type === AnnouncementType.ACTIVITY ? req.params.activityId : null
     const user_id = req.user_id
     Member.findOne({
       group_id,
@@ -1683,7 +1683,7 @@ function getAnnouncements (type) {
         if (!member) {
           return res.status(401).send('Unauthorized')
         }
-        let find = type === AnnouncementType.GROUP ? { group_id: group_id } : { activity_id: activity_id }
+        let find = type === AnnouncementType.GROUP ? { group_id: group_id, activity_id: null } : { activity_id: activity_id }
         return Announcement.find(find)
           .populate('images')
           .sort({ createdAt: -1 })
@@ -1706,7 +1706,7 @@ function postAnnouncement (type) {
       return res.status(401).send('Not authenticated')
     }
     const group_id = req.params.groupId
-    const activity_id = type === AnnouncementType.ACTIVITY ? req.params.activity_id : null
+    const activity_id = type === AnnouncementType.ACTIVITY ? req.params.activityId : null
     const user_id = req.user_id
     const { message } = req.body
     const announcement_id = objectid()

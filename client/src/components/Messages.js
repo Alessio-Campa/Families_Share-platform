@@ -130,7 +130,7 @@ class GroupMessages extends AbstractMessages {
 class EventMessages extends AbstractMessages {
   getAnnouncementsUrl() {
     const { groupId, eventId } = this.props;
-    return `/api/groups/${groupId}/events/${eventId}/announcements`;
+    return `/api/groups/${groupId}/activities/${eventId}/announcements`;
   }
 }
 

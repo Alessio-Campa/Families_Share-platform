@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BackNavigation from "./BackNavigation";
-import { GroupMessages } from "./Messages";
+import { EventMessages, GroupMessages } from "./Messages";
 
 const AbstractChat = (props, messages, title) => {
   const { history } = props;
@@ -29,25 +29,33 @@ const GroupChat = (props) => {
 };
 
 const EventChat = (props) => {
-  const { group, userIsAdmin } = props;
+  const { group_id, event_id, userIsAdmin, title } = props;
   const messages = (
-    <EventChat groupId={group.group_id} userIsAdmin={userIsAdmin} />
+    <EventMessages
+      groupId={group_id}
+      eventId={event_id}
+      userIsAdmin={userIsAdmin}
+    />
   );
-  AbstractChat(props, messages, group.name);
+  return AbstractChat(props, messages, title);
 };
 
-export default GroupChat;
+export { GroupChat, EventChat };
 
 AbstractChat.propTypes = {
-  // eslint-disable-next-line react/no-unused-prop-types
-  group: PropTypes.object,
-  // eslint-disable-next-line react/no-unused-prop-types
-  userIsAdmin: PropTypes.bool,
   history: PropTypes.object,
 };
 
 GroupChat.propTypes = {
-  group: PropTypes.object,
+  group: PropTypes.string,
+  userIsAdmin: PropTypes.bool,
+  history: PropTypes.object,
+};
+
+EventChat.propTypes = {
+  group_id: PropTypes.string,
+  event_id: PropTypes.string,
+  title: PropTypes.string,
   userIsAdmin: PropTypes.bool,
   history: PropTypes.object,
 };
