@@ -9,6 +9,10 @@ import Log from "./Log";
 export default class GroupMembersList extends React.Component {
   state = { fetchedResources: false };
 
+  constructor (props) {
+    super(props)
+  }
+
   componentDidMount() {
     const { members, list } = this.props;
     if (list === "parents") {

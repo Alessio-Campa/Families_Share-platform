@@ -23,7 +23,6 @@ export default class TracedMembers extends React.Component {
   }
 
   getTraced = ()=>{
-    console.log("getting")
     axios.get(`/api/groups/${this.groupId}/trace/${this.memberId}`).then(contacts =>{
       this.setState({contacts:  contacts.data});
     }).catch(err => {
@@ -72,9 +71,8 @@ export default class TracedMembers extends React.Component {
           {contacts && (
             <GroupMembersList
               key="parents"
-              {...props}
               members={contacts}
-              groupId={this.group_id}
+              groupId={this.groupId}
               userIsAdmin={true}
               list="parents"
             />

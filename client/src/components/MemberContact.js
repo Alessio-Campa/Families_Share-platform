@@ -110,7 +110,7 @@ class MemberContact extends React.Component {
   };
 
   handleConfirmDialogClose = (choice) => {
-    const { member, groupId } = this.props; 
+    const { member, groupId } = this.props;
     const userId = member.user_id;
     const currentUser = JSON.parse(localStorage.getItem("user")).id;
     if(choice === "disagree")
@@ -143,7 +143,7 @@ class MemberContact extends React.Component {
       }
     }
   };
-  
+
   handlePhoneCall = (number) => {
     const { enqueueSnackbar } = this.props;
     if (window.isNative) {
@@ -273,18 +273,18 @@ class MemberContact extends React.Component {
         style: "optionsModalButton",
         handle: this.handleRemoveUser,
       },
-      profile.user_id !== currentUser && (
-      {
-        label: "Seganala utente",
-        style: "optionsModalButton",
-        handle: this.handleSegnalation,
-      }),
       {
         label: texts.trace,
         style: "optionsModalButton",
         handle: this.handleContactTracing,
       },
     ];
+    if(profile.user_id !== currentUser)
+      options.push({
+        label: "Seganala utente",
+        style: "optionsModalButton",
+        handle: this.handleSegnalation,
+      });
     return (
       <React.Fragment>
         <MemberOptionsModal
@@ -371,7 +371,7 @@ class MemberContact extends React.Component {
           </div>
         </div>
         {this.state.memberReports.length > 0 && userIsAdmin && profile.user_id !== currentUser && (
-          <div className="row-no-gutters" 
+          <div className="row-no-gutters"
             style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <Button onClick={() => this.setState({ segnalationListOpen: !this.state.segnalationListOpen })}>
                 <h5>
