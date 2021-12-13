@@ -10,9 +10,15 @@ import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import MemberOptionsModal from "./OptionsModal";
 import Log from "./Log";
+import SegnalationDialog from "./SegnalationDialog";
+import ConfirmSegnalationDialog from "./ConfirmSegnalationDialog";
+import { Button } from "@material-ui/core";
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ErrorDialog from "./ErrorDialog";
+import { now } from "moment";
 
 class MemberContact extends React.Component {
-  state = { modalIsOpen: false, top: "", right: "" };
+  state = { modalIsOpen: false, top: "", right: "", segnalationDialogIsOpen: false, confirmDialogIsOpen: false, segnalationText: "", memberReports: [], segnalationListOpen: false, errorDialogIsOpen: false};
 
   handleRedirect = (suspended, user_id) => {
     const { history } = this.props;
@@ -86,6 +92,58 @@ class MemberContact extends React.Component {
     });
   };
 
+  handleSegnalation = () => {
+    this.handleSegnalationDialogOpen()
+  };
+
+  handleSegnalationDialogOpen = () => {
+    this.setState({ segnalationDialogIsOpen: true, modalIsOpen: false });
+  };
+
+  handleSegnalationDialogClose = (choice, text) => {
+    if(choice === "agree"){
+      this.setState({ segnalationDialogIsOpen: false, confirmDialogIsOpen: true });
+      this.setState({ segnalationText: text});
+    }
+    else
+      this.setState({ segnalationDialogIsOpen: false });
+  };
+
+  handleConfirmDialogClose = (choice) => {
+    const { member, groupId } = this.props; 
+    const userId = member.user_id;
+    const currentUser = JSON.parse(localStorage.getItem("user")).id;
+    if(choice === "disagree")
+      this.setState({ confirmDialogIsOpen: false, segnalationDialogIsOpen: true });
+    else{
+      let insert_accepted = true;
+      const one_day_ms = 1000*60*60*24;
+      const current_user_id = JSON.parse(localStorage.getItem("user")).id;
+      this.state.memberReports.forEach(report => {
+        if (report._id === current_user_id) {
+          const report_date = new Date(report.createdAt);
+          if(now() - report_date.getTime() < one_day_ms)
+            insert_accepted = false;
+        }
+      });
+      if(insert_accepted){
+        axios
+          .put(`/api/groups/${groupId}/members/${userId}/report`, {user_id: currentUser, message: this.state.segnalationText})
+          .then((response) => {
+            Log.info(response);
+          })
+          .catch((error) => {
+            Log.error(error);
+          });
+        this.setState({ confirmDialogIsOpen: false });
+      }
+      else{
+        console.log("here we go")
+        this.setState({ errorDialogIsOpen: true, confirmDialogIsOpen: false });
+      }
+    }
+  };
+  
   handlePhoneCall = (number) => {
     const { enqueueSnackbar } = this.props;
     if (window.isNative) {
@@ -154,11 +212,44 @@ class MemberContact extends React.Component {
     return "fas fa-envelope";
   };
 
+  getMemberReports = () => {
+    const { member: profile, groupId } = this.props;
+    return axios
+      .get(`/api/groups/${groupId}/members`)
+      .then((response => {
+        const member = response.data.find((_m) => _m.user_id === profile.user_id);
+        return member.reports;
+      }))
+      .catch((error) => {
+        Log.error(error);
+        return [];
+    })
+  }
+
+  createDateString = (_date) => {
+    const date = new Date(_date);
+    const hours = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+    const minutes = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+    return (
+      date.getDate()+
+        "/"+(date.getMonth()+1)+
+        "/"+date.getFullYear()+
+        " "+hours+
+        ":"+minutes
+    );
+  }
+
+  async componentDidMount() {
+    const _memberReports = await this.getMemberReports();
+    this.setState({ memberReports :_memberReports });
+  }
+
   render() {
     const { language, member: profile, userIsAdmin } = this.props;
     const { top, right, modalIsOpen } = this.state;
     const texts = Texts[language].memberContact;
     const { contact_option: contact } = profile;
+    const currentUser = JSON.parse(localStorage.getItem("user")).id;
     const options = [
       profile.admin
         ? {
@@ -176,6 +267,12 @@ class MemberContact extends React.Component {
         style: "optionsModalButton",
         handle: this.handleRemoveUser,
       },
+      profile.user_id !== currentUser && (
+      {
+        label: "Seganala utente",
+        style: "optionsModalButton",
+        handle: this.handleSegnalation,
+      }),
     ];
     return (
       <React.Fragment>
@@ -185,6 +282,21 @@ class MemberContact extends React.Component {
           isOpen={modalIsOpen}
           handleClose={this.handleModalClose}
         />
+        <SegnalationDialog
+          isOpen={this.state.segnalationDialogIsOpen}
+          handleClose={(choice, text) => this.handleSegnalationDialogClose(choice, text)}
+        />
+        <ConfirmSegnalationDialog
+          isOpen={this.state.confirmDialogIsOpen}
+          handleClose={(choice) => this.handleConfirmDialogClose(choice)}
+        >
+        </ConfirmSegnalationDialog>
+        <ErrorDialog
+          isOpen={this.state.errorDialogIsOpen}
+          title={"ERRORE: Non puoi segnalare una persona più di una volta nell'arco di 24 ore!"}
+          handleClose={() => this.setState({errorDialogIsOpen: false})}
+        >
+        </ErrorDialog>
         <div id="contactContainer" className="row no-gutters">
           <div className="col-2-10">
             <Avatar
@@ -247,6 +359,31 @@ class MemberContact extends React.Component {
             )}
           </div>
         </div>
+        {this.state.memberReports.length > 0 && userIsAdmin && profile.user_id !== currentUser && (
+          <div className="row-no-gutters" 
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Button onClick={() => this.setState({ segnalationListOpen: !this.state.segnalationListOpen })}>
+                <h5>
+                  SEGNALAZIONI
+                </h5>
+                <ArrowDropDownIcon style={{marginBottom: 7}}/>
+              </Button>
+          </div>
+        )}
+        {this.state.segnalationListOpen && (
+          <ul>
+            {this.state.memberReports.map((report) => (
+              <li style={{ marginLeft: 15, marginRight: 15}}>
+                <h5>
+                  {this.createDateString(report.createdAt)}
+                </h5>
+                <p>
+                  {report.message}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
       </React.Fragment>
     );
   }

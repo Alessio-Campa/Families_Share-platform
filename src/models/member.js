@@ -1,5 +1,16 @@
 const mongoose = require('mongoose')
 
+const reportSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+    required: true
+  },
+  message: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true })
+
 const memberSchema = new mongoose.Schema({
   user_id: {
     type: String,
@@ -20,6 +31,11 @@ const memberSchema = new mongoose.Schema({
   user_accepted: {
     type: Boolean,
     required: true
+  },
+  reports: {
+    type: [reportSchema],
+    required: false,
+    default: []
   }
 }, { timestamps: true })
 
