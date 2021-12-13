@@ -212,6 +212,12 @@ class MemberContact extends React.Component {
     return "fas fa-envelope";
   };
 
+  handleContactTracing = () => {
+    const { groupId, member, history } = this.props;
+    history.push(`/groups/${groupId}/trace/${member.user_id}`)
+
+  }
+
   getMemberReports = () => {
     const { member: profile, groupId } = this.props;
     return axios
@@ -273,6 +279,11 @@ class MemberContact extends React.Component {
         style: "optionsModalButton",
         handle: this.handleSegnalation,
       }),
+      {
+        label: texts.trace,
+        style: "optionsModalButton",
+        handle: this.handleContactTracing,
+      },
     ];
     return (
       <React.Fragment>

@@ -3,9 +3,25 @@ import PropTypes from "prop-types";
 import * as path from "lodash.get";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
+import axios from "axios";
+
+let userId = ''
+function handlePositivity() {
+  axios.get(`/api/users/${userId}/groups`).then(groups => {
+    groups.data.forEach(group => {
+      axios.get(`/api/groups/${group.group_id}/members`).then(members => {
+        members.data.forEach( m => {
+          if (m.admin)
+            axios.post(`/api/users/${m.user_id}/positivityNotification/${userId}`)
+        })
+      })
+    })
+  })
+}
 
 const ProfileInfo = ({ language, profile }) => {
   const texts = Texts[language].profileInfo;
+  userId = profile.user_id;
   return (
     <div>
       <div className="row no-gutters profileInfoContainer">
@@ -57,6 +73,12 @@ const ProfileInfo = ({ language, profile }) => {
           </div>
         </div>
       </div>
+      { profile.user_id === JSON.parse(localStorage.getItem("user")).id &&
+        <div className="d-flex justify-content-center align-items-end" style={{height: "100px"}}>
+          <button className="btn btn-danger rounded p-3 mb-2" onClick={handlePositivity}><h2 className="text-light m-0">Segnala positività</h2></button>
+        </div>
+      }
+
     </div>
   );
 };

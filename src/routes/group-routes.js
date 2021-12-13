@@ -24,6 +24,7 @@ const groupContacts = require('../helper-functions/group-contacts')
 const nh = require('../helper-functions/notification-helpers')
 const ah = require('../helper-functions/activity-helpers')
 const ph = require('../helper-functions/plan-helpers')
+const uh = require('../helper-functions/user-helpers')
 const schedule = require('node-schedule')
 
 if (process.env.NODE_APP_INSTANCE === 0) {
@@ -297,16 +298,16 @@ router.delete('/:id', async (req, res, next) => {
     return res.status(401).send('Not authenticated')
   }
   const { id } = req.params
-  const edittingUser = await Member.findOne({
+  const editingUser = await Member.findOne({
     group_id: req.params.id,
     user_id: req.user_id,
     group_accepted: true,
     user_accepted: true
   })
-  if (!edittingUser) {
+  if (!editingUser) {
     return res.status(401).send('Unauthorized')
   }
-  if (!edittingUser.admin) {
+  if (!editingUser.admin) {
     return res.status(401).send('Unauthorized')
   }
   try {
@@ -345,16 +346,16 @@ router.patch('/:id', groupUpload.single('photo'), async (req, res, next) => {
     groupPatch.contact_info = contact_info
   }
   try {
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id: req.params.id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Unauthorized')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Unauthorized')
     }
     await nh.editGroupNotification(id, req.user_id, {
@@ -396,16 +397,16 @@ router.patch('/:id/settings', async (req, res, next) => {
   const { id } = req.params
   const settingsPatch = req.body
   try {
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id: req.params.id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Unauthorized')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Unauthorized')
     }
     await Group_Settings.updateOne({ group_id: id }, settingsPatch)
@@ -457,16 +458,16 @@ router.patch('/:id/members', async (req, res, next) => {
     const group_id = req.params.id
     const patch = req.body.patch
     const user_id = req.body.id
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Unauthorized')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Unauthorized')
     }
     if (!(patch.group_accepted !== undefined || patch.admin !== undefined)) {
@@ -504,16 +505,16 @@ router.delete('/:groupId/members/:memberId', async (req, res, next) => {
   const group_id = req.params.groupId
   const user_id = req.user_id
   const member_id = req.params.memberId
-  const edittingUser = await Member.findOne({
+  const editingUser = await Member.findOne({
     group_id,
     user_id,
     group_accepted: true,
     user_accepted: true
   })
-  if (!edittingUser) {
+  if (!editingUser) {
     return res.status(401).send('Unauthorized')
   }
-  if (!edittingUser.admin) {
+  if (!editingUser.admin) {
     return res.status(401).send('Unauthorized')
   }
   try {
@@ -573,16 +574,16 @@ router.post('/:id/members', async (req, res, next) => {
   const group_id = req.params.id
   const userIds = req.body.inviteIds
   try {
-    const edittingUser = await Member.findOne({
+    const editingUser = await Member.findOne({
       group_id,
       user_id: req.user_id,
       group_accepted: true,
       user_accepted: true
     })
-    if (!edittingUser) {
+    if (!editingUser) {
       return res.status(401).send('Not authenticated')
     }
-    if (!edittingUser.admin) {
+    if (!editingUser.admin) {
       return res.status(401).send('Not authenticated')
     }
     if (!userIds) {
@@ -1984,6 +1985,52 @@ router.post('/:groupId/activities/:activityId/valutation', (req, res, next) => {
   } catch (error) {
     next(error)
   }
+})
+
+router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
+  let group;
+  if (!req.user_id){
+    return res.status(401).send('Not authenticated')
+  }
+  Member.findOne({group_id: req.params.groupId, user_id: req.user_id}).then( u => {
+    if (u === null || u === undefined || !u.admin)
+      return res.status(403).send('Unauthorized');
+    Notification.findOne({owner_id: req.user_id, object: req.params.memberId, type:'positivity', code: 0 }).then( n =>{
+      if (!n)
+        return res.status(403).send('Notification not received for this user')
+      Group.findOne({group_id: req.params.groupId}).then(g => {
+        uh.getUsersGroupEvents(g.calendar_id, req.params.memberId, []).then(e =>{
+          e = e.filter( i => {
+            let notifDate = new Date(n.createdAt)
+            let eventDate = new Date(i.start.dateTime)
+            return eventDate.getTime() > notifDate.getTime() - 1000*60*60*24*7;
+          })
+          let people = e.map(i => {
+            let p = i.extendedProperties.shared.parents;
+            if (p !== "[]")
+              p = p.slice(1, p.length - 1).split(',').map( s => s.slice(1, s.length-1));
+            else p = []
+            let c = i.extendedProperties.shared.children;
+            if (c !== "[]")
+              c = c.slice(1, c.length - 1).split(',').map( s => s.slice(1, s.length-1));
+            else c = []
+            return [...p, ...c];
+          })
+          let out = new Set();
+          people.forEach( i=> {
+            i.forEach(j => {
+              out.add(j)
+            })
+          })
+          let outDict = []
+          out.forEach(i => outDict.push({user_id: i}))
+          return res.status(200).send(Array.from(outDict))
+        })
+      })
+    })
+  })
+
+
 })
 
 module.exports = router
