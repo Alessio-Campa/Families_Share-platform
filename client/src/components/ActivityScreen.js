@@ -17,6 +17,7 @@ import Images from "../Constants/Images";
 import Log from "./Log";
 import Avatar from "./Avatar";
 import { EventChat } from "./Chat";
+import { Rate } from "antd";
 import ActivityNavbar from "./ActivityNavbar";
 
 const styles = {
@@ -133,6 +134,10 @@ class ActivityScreen extends React.Component {
       showChildren: false,
       groupId,
       activityId,
+      rating: 0,
+      ratingsNumber: 0,
+      popupMessage: "",
+      ratingAlreadyUpdated: false,
     };
   }
 
@@ -199,6 +204,17 @@ class ActivityScreen extends React.Component {
       userIsAdmin,
       allowNavigation,
     });
+    /* Aggiorno lo stato della valutazione (rating) */
+    if(activity.valutations !== undefined) {
+      const valutations = activity.valutations;
+      let sum = 0;
+      valutations.forEach( (valutation) => {  
+        sum += valutation.rate;
+      });
+      this.setState({ rating: Math.round(sum / valutations.length) });
+      this.setState({ ratingsNumber: valutations.length });
+
+    }
   }
 
   handleRedirect = (suspended, child_id) => {
@@ -206,6 +222,14 @@ class ActivityScreen extends React.Component {
     if (!suspended) {
       history.push(`/profiles/groupmember/children/${child_id}`);
     }
+  };
+
+  componentDidUpdate(){
+    this.hideTimeout = setTimeout(() => this.setState({ popupMessage: ''}), 5000);
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.hideTimeout)
   };
 
   renderList = (list, type) => {
@@ -411,6 +435,48 @@ class ActivityScreen extends React.Component {
       });
   };
 
+  handleRateUpdate = (value, isAnUpdate) => {
+    const { activity } = this.state;
+    const valutations = activity.valutations;
+    let sum = 0;
+    valutations.forEach( (valutation) => {  
+      sum += valutation.rate;
+    });
+    sum += value;
+    this.setState({ rating: Math.round(sum / (valutations.length+1)) });
+    if(isAnUpdate)
+      this.setState({ popupMessage: "Hai aggiornato la tua valutazione!" });
+    else
+      this.setState({ ratingsNumber: valutations.length+1 });
+    this.setState({ ratingAlreadyUpdated: true });
+  };
+
+  handleRate = (val) => {
+    const { activity } = this.state;
+    const { match } = this.props;
+    const { activityId, groupId } = match.params;
+    const valutations = activity.valutations;
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+    let isAnUpdate = false;
+    valutations.forEach( (valutation) => {  
+      if(valutation._id === userId || this.state.ratingAlreadyUpdated)
+        isAnUpdate = true;
+    });
+    axios
+      .post(`/api/groups/${groupId}/activities/${activityId}/valutation`, {
+        _id: userId, 
+        rate: val,
+      })
+      .then((response) => {
+        Log.info(response);
+        this.setState({ ratingAlreadyUpdated: true });
+        this.handleRateUpdate(val, isAnUpdate);
+      })
+      .catch((error) => {
+        Log.error(error);
+      });
+  };
+
   render() {
     const { history, language, match, classes } = this.props;
     const { groupId, activityId, allowNavigation, userIsAdmin } = this.state;
@@ -532,6 +598,22 @@ class ActivityScreen extends React.Component {
                           {texts.infoHeader}
                         </div>
                       </div>
+                      {activity.valutations && (
+                        <>
+                          <div className="row no-gutters">
+                            <div className="col-6-10">
+                              <h4>{ this.state.popupMessage }</h4>
+                            </div>
+                            <div className="col-6-10">
+                              <Rate value={this.state.rating} onChange={(value) => this.handleRate(value)} />
+                            </div>
+                          </div><div className="row no-gutters">
+                            <div className="col-6-10">
+                              <h4>({this.state.ratingsNumber})</h4>
+                            </div>
+                          </div>
+                        </>
+                      )}
                       {activity.description && (
                         <div className="row no-gutters" style={rowStyle}>
                           <div className="col-1-10">
@@ -627,4 +709,8 @@ ActivityScreen.propTypes = {
   match: PropTypes.object,
   classes: PropTypes.object,
   enqueueSnackbar: PropTypes.func,
+  popupMessage: PropTypes.string,
+  ratingsNumber: PropTypes.number,
+  rating: PropTypes.number,
+  ratingAlreadyUpdated: PropTypes.bool,
 };
