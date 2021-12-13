@@ -3282,3 +3282,30 @@ a:active {
   height: 20;
   padding: 0;
 }
+
+/*FAMILIES*/
+
+#familyMemberContainer {
+  width: 94%;
+  top: 6rem;
+  padding-bottom: 1rem;
+}
+#familyMemberContainer h1 {
+  font-size: 1.6rem;
+  color: rgba(0, 0, 0, 0.9);
+  line-height: 1.5;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#familyMemberContainer h2 {
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.54);
+  display: inline-block;
+}
+#familyMemberContainer button {
+  width: 4rem;
+  height: 4rem;
+}
+

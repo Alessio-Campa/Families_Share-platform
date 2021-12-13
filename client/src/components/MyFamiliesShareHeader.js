@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Drawer from "rc-drawer";
 import { Menu } from "antd";
 import PropTypes from "prop-types";
@@ -131,6 +131,13 @@ class MyFamiliesShareHeader extends React.Component {
         const userId = JSON.parse(localStorage.getItem("user")).id;
         history.push(`/profiles/${userId}/info`);
         break;
+        case "myFamilies":
+          if (this.getNumberOfFamilies() !== 1) {
+            history.push(`/families`);
+          } else {
+            history.push(`/family`);
+          }
+        break;
       case "mycalendar":
         history.push(`/myfamiliesshare/calendar`);
         break;
@@ -189,6 +196,13 @@ class MyFamiliesShareHeader extends React.Component {
         });
     }
     this.setState({ confirmModalIsOpen: false });
+  };
+
+  getNumberOfFamilies = () => {
+    const userId = JSON.parse(localStorage.getItem("user")).id
+    axios.get(`/api/family/user/${userId}`).then((res) => {
+      return console.log(res.data.length);
+    }).catch(err => console.log(err)) 
   };
 
   render() {
@@ -280,6 +294,24 @@ class MyFamiliesShareHeader extends React.Component {
                 </div>
               </div>
             </Menu.Item>
+
+            <Menu.Item
+              style={menuItem}
+              key="myFamilies"
+              onClick={this.handleDrawerClick}
+            >
+              <div className="row no-gutters">
+                <div className="col-1-4">
+                  <i className="fas fa-users" />
+                </div>
+                <div className="col-3-4">
+                  {this.getNumberOfFamilies() !== 1 ?
+                   (<h1>{texts.myFamilies}</h1>) : 
+                   (<h1>{texts.myFamily}</h1>)}                  
+                </div>
+              </div>
+            </Menu.Item>
+
             <Menu.Item
               style={menuItemWithLine}
               key="mycalendar"

@@ -10,25 +10,24 @@ import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import Log from "./Log";
 
-class ChildListItem extends React.Component {
+class FamilyMemberItem extends React.Component {
   state = { fetchedChild: false, child: {} };
 
   componentDidMount() {
-    const { userId, childId } = this.props;
+    const { memberId, role } = this.props;
     axios
-      .get(`/api/users/${userId}/children/${childId}`)
+      .get(`/api/users/${memberId}/profile`)
       .then((response) => {
-        const child = response.data;
-        this.setState({ fetchedChild: true, child });
+        const member = response.data;
+        this.setState({ fetchedMember: true, member });
       })
       .catch((error) => {
         Log.error(error);
         this.setState({
-          fetchedChild: true,
-          child: {
+          fetchedMember: true,
+          member: {
             image: { path: "" },
-            birthdate: new Date(),
-            gender: "unspecified",
+            role: "unspecified",
             given_name: "",
             family_name: "",
             child_id: "",
@@ -38,22 +37,23 @@ class ChildListItem extends React.Component {
   }
 
   render() {
-    const { language, history, childId, userId } = this.props;
+    const { language, history, memberId, role } = this.props;
     const { pathname } = history.location;
-    const { child, fetchedChild } = this.state;
+    const { member, fetchedMember } = this.state;
     const texts = Texts[language].childListItem;
-    const route = `/profiles/${userId}/children/${childId}`;
+    const route = `/profiles/${memberId}/info`;
+    console.log(role)
     return (
       <div
         id="childContainer"
         className="row no-gutters"
-        style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }}
+        style={{ borderBottom: "1px solid rgba(0,0,0,0.1" }}
       >
-        {fetchedChild ? (
+        {fetchedMember ? (
           <React.Fragment>
             <div className="col-3-10">
               <Avatar
-                thumbnail={path(child, ["image", "path"])}
+                thumbnail={path(member, ["image", "path"])}
                 route={route}
                 className="center"
               />
@@ -66,11 +66,8 @@ class ChildListItem extends React.Component {
                 id="childInfoContainer"
                 className="verticalCenter"
               >
-                <h1>{`${child.given_name} ${child.family_name}`}</h1>
-                <h1>
-                  {`${moment().diff(child.birthdate, "years")} ${texts.age}`}
-                </h1>
-                <h2>{texts[child.gender]}</h2>
+                <h1>{`${member.given_name} ${member.family_name}`}</h1>
+                <h2>{role}</h2>
               </div>
             </div>
           </React.Fragment>
@@ -82,10 +79,9 @@ class ChildListItem extends React.Component {
   }
 }
 
-export default withRouter(withLanguage(ChildListItem));
+export default withRouter(withLanguage(FamilyMemberItem));
 
-ChildListItem.propTypes = {
-  childId: PropTypes.string,
+FamilyMemberItem.propTypes = {
   userId: PropTypes.string,
   language: PropTypes.string,
   history: PropTypes.object,
