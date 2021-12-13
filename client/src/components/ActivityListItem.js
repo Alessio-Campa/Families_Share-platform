@@ -164,7 +164,17 @@ class ActivityListItem extends React.Component {
                   className="far fa-calendar-alt"
                   style={{ marginRight: "1rem" }}
                 />
-                <h2>{this.getDatesString()}</h2>
+                <h2
+                  style={{ marginRight: "1rem" }}
+                >
+                  {this.getDatesString()}
+                </h2>
+                {activity.gp_need && (
+                  <i
+                    className="fas fa-id-card"  
+                    style={{ color: "#0b9906" }}
+                  />
+                )}
               </div>
             </div>
           </div>
