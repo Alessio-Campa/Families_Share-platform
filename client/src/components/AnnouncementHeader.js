@@ -34,7 +34,8 @@ class AnnouncementHeader extends React.Component {
       });
   }
 
-  componentWillReceiveProps(props) {
+  // eslint-disable-next-line no-unused-vars
+  componentWillReceiveProps(props, nextContext) {
     const { userId } = this.props;
     if (userId !== props.userId) {
       this.setState({ fetchedProfile: false });
@@ -54,10 +55,10 @@ class AnnouncementHeader extends React.Component {
   }
 
   handleDelete = () => {
-    const { groupId, handleRefresh } = this.props;
+    const { announcementsUrl, handleRefresh } = this.props;
     const { deleteId } = this.state;
     axios
-      .delete(`/api/groups/${groupId}/announcements/${deleteId}`)
+      .delete(`${announcementsUrl}/${deleteId}`)
       .then((response) => {
         Log.info(response);
         handleRefresh();
@@ -129,7 +130,7 @@ class AnnouncementHeader extends React.Component {
 }
 
 AnnouncementHeader.propTypes = {
-  groupId: PropTypes.string,
+  announcementsUrl: PropTypes.string,
   announcementId: PropTypes.string,
   userId: PropTypes.string,
   createdAt: PropTypes.string,

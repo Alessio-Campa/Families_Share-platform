@@ -24,7 +24,7 @@ const GroupCalendar = Loadable({
   loading: () => <div />,
 });
 const GroupChat = Loadable({
-  loader: () => import("./GroupChat"),
+  loader: () => import("./Chat").then((m) => m.GroupChat),
   loading: () => <div />,
 });
 
@@ -146,7 +146,7 @@ export default class GroupMainScreen extends React.Component {
           />
           <Route
             exact
-            path={`${currentPath}/calendar`}
+            path={`${currentPath}/chat`}
             render={(props) => (
               <GroupCalendar
                 {...props}

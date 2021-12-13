@@ -42,12 +42,10 @@ class Reply extends React.Component {
   handleDelete = () => {
     const { reply, deleteId } = this.state;
     const announcementId = reply.announcement_id;
-    const { groupId, handleRefresh } = this.props;
+    const { announcementsUrl, handleRefresh } = this.props;
     const replyId = deleteId;
     axios
-      .delete(
-        `/api/groups/${groupId}/announcements/${announcementId}/replies/${replyId}`
-      )
+      .delete(`${announcementsUrl}/${announcementId}/replies/${replyId}`)
       .then((response) => {
         Log.info(response);
         handleRefresh();
@@ -128,7 +126,7 @@ export default withLanguage(Reply);
 
 Reply.propTypes = {
   handleRefresh: PropTypes.func,
-  groupId: PropTypes.string,
+  announcementsUrl: PropTypes.string,
   reply: PropTypes.object,
   language: PropTypes.string,
   userIsAdmin: PropTypes.bool,

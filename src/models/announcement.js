@@ -14,10 +14,14 @@ const announcementSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  body: String
+  body: String,
+  activity_id: {
+    type: String,
+    required: false
+  }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
-announcementSchema.index({ group_id: 1, createdAt: -1 })
+announcementSchema.index({ group_id: 1, activity_id: 1, createdAt: -1 })
 
 announcementSchema.virtual('images', {
   ref: 'Image',

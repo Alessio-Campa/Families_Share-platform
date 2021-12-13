@@ -1302,420 +1302,412 @@ router.get('/:groupId/activities/:activityId', (req, res, next) => {
     .catch(next)
 })
 
-router.post(
-  '/:groupId/activities/:activityId/export',
-  async (req, res, next) => {
-    if (!req.user_id) {
-      return res.status(401).send('Not authenticated')
-    }
-    const { format } = req.body
-    const group_id = req.params.groupId
-    const user_id = req.user_id
-    const activity_id = req.params.activityId
-    try {
-      const member = await Member.findOne({
-        group_id,
-        user_id,
-        group_accepted: true,
-        user_accepted: true
-      })
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      const activity = await Activity.findOne({ activity_id })
-      if (!(member.admin || user_id === activity.creator_id)) {
-        return res.status(401).send('Unauthorized')
-      }
-      const group = await Group.findOne({ group_id })
-      const resp = await calendar.events.list({
-        calendarId: group.calendar_id,
-        sharedExtendedProperty: `activityId=${activity_id}`
-      })
-      const activityTimeslots = resp.data.items
-      if (format === 'pdf') {
-        exportActivity.createPdf(activity, activityTimeslots, () => {
-          const mailOptions = {
-            from: process.env.SERVER_MAIL,
-            to: req.email,
-            subject: `Activity: ${activity.name} `,
-            html: exportActivity.newExportEmail(activity.name),
-            attachments: [
-              {
-                filename: `activity.pdf`,
-                path: path.join(
-                  __dirname,
-                  `../../activity.pdf`
-                )
-              }
-            ]
-          }
-          transporter.sendMail(mailOptions, (err, info) => {
-            if (err) next(err)
-            if (format === 'excel') {
-              fr('../', { files: `activity.xlsx` })
-            } else {
-              fr('../../', { files: `activity.pdf` })
-            }
-          })
-          res.status(200).send('Exported activity successfully')
-        })
-      } else if (format === 'excel') {
-        exportActivity.createExcel(activity, activityTimeslots, () => {
-          const mailOptions = {
-            from: process.env.SERVER_MAIL,
-            to: req.email,
-            subject: `Activity: ${activity.name} `,
-            html: exportActivity.newExportEmail(activity.name),
-            attachments: [
-              {
-                filename: `activity.xlsx`,
-                path: path.join(
-                  __dirname,
-                  `../../activity.xlsx`
-                )
-              }
-            ]
-          }
-          transporter.sendMail(mailOptions, (err, info) => {
-            if (err) next(err)
-            fr('../', { files: `activity.xlsx` })
-          })
-          res.status(200).send('Exported activity successfully')
-        })
-      }
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
-router.get(
-  '/:groupId/activities/:activityId/timeslots',
-  async (req, res, next) => {
-    if (!req.user_id) {
-      return res.status(401).send('Not authenticated')
-    }
-    const group_id = req.params.groupId
-    const activity_id = req.params.activityId
-    const user_id = req.user_id
-    try {
-      const member = await Member.findOne({
-        group_id,
-        user_id,
-        group_accepted: true,
-        user_accepted: true
-      })
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      const group = await Group.findOne({ group_id })
-      const resp = await calendar.events.list({
-        calendarId: group.calendar_id,
-        sharedExtendedProperty: `activityId=${activity_id}`
-      })
-      const activityTimeslots = resp.data.items
-      res.json(activityTimeslots)
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
-router.get(
-  '/:groupId/activities/:activityId/timeslots/:timeslotId',
-  async (req, res, next) => {
-    if (!req.user_id) {
-      return res.status(401).send('Not authenticated')
-    }
-    const group_id = req.params.groupId
-    const user_id = req.user_id
-    const activity_id = req.params.activityId
-    try {
-      const member = await Member.findOne({
-        group_id,
-        user_id,
-        group_accepted: true,
-        user_accepted: true
-      })
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      const activity = await Activity.findOne({ activity_id })
-      const group = await Group.findOne({ group_id })
-      const response = await calendar.events.get({
-        calendarId: group.calendar_id,
-        eventId: req.params.timeslotId
-      })
-      response.data.userCanEdit = false
-      if (member.admin || user_id === activity.creator_id) {
-        response.data.userCanEdit = true
-      }
-      res.json(response.data)
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
-router.patch(
-  '/:groupId/activities/:activityId/timeslots/:timeslotId',
-  async (req, res, next) => {
-    if (!req.user_id) {
-      return res.status(401).send('Not authenticated')
-    }
-    const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
-    const user_id = req.user_id
-    try {
-      const member = await Member.findOne({
-        group_id,
-        user_id,
-        group_accepted: true,
-        user_accepted: true
-      })
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      const {
-        adminChanges,
-        summary,
-        description,
-        location,
-        start,
-        end,
-        extendedProperties,
-        notifyUsers
-      } = req.body
-      if (
-        !(
-          summary ||
-          description ||
-          location ||
-          start ||
-          end ||
-          extendedProperties
-        )
-      ) {
-        return res.status(400).send('Bad Request')
-      }
-      const group = await Group.findOne({ group_id })
-      const myChildren = await Parent.distinct('child_id', { parent_id: req.user_id })
-      const event = await calendar.events.get({
-        calendarId: group.calendar_id,
-        eventId: req.params.timeslotId
-      })
-      const oldParents = JSON.parse(event.data.extendedProperties.shared.parents)
-      const oldChildren = JSON.parse(event.data.extendedProperties.shared.children)
-      const parents = JSON.parse(extendedProperties.shared.parents)
-      const children = JSON.parse(extendedProperties.shared.children)
-      if (!member.admin) {
-        if (parents.includes(req.user_id)) {
-          extendedProperties.shared.parents = JSON.stringify([...new Set([...oldParents, req.user_id])])
-        } else {
-          extendedProperties.shared.parents = JSON.stringify(oldParents.filter(u => u !== req.user_id))
-        }
-        myChildren.forEach(c => {
-          if (children.includes(c) && !oldChildren.includes(c)) {
-            oldChildren.push(c)
-          } else if (!children.includes(c) && oldChildren.includes(c)) {
-            oldChildren.splice(oldChildren.indexOf(c), 1)
-          }
-        })
-        extendedProperties.shared.children = JSON.stringify(oldChildren)
-      } else {
-        if (adminChanges) {
-          if (Object.keys(adminChanges).length > 0) {
-            Object.keys(adminChanges).forEach(id => {
-              if (adminChanges[id] > 0) {
-                adminChanges[id] = 'add'
-              } else if (adminChanges[id] < 0) {
-                adminChanges[id] = 'remove'
-              } else {
-                delete adminChanges[id]
-              }
-            })
-            nh.timeslotAdminChangesNotification(summary, adminChanges, req.user_id, group_id, activity_id, timeslot_id)
-          }
-        }
-      }
-      const externals = JSON.parse(extendedProperties.shared.externals || '[]')
-      const volunteersReq =
-        (parents.length + externals.length) >= extendedProperties.shared.requiredParents
-      const childrenReq =
-        children.length >= extendedProperties.shared.requiredChildren
-      if (event.data.extendedProperties.shared.status !== extendedProperties.shared.status) {
-        nh.timeslotStatusChangeNotification(summary, extendedProperties.shared.status, oldParents, group_id, activity_id, timeslot_id)
-      }
-      if (notifyUsers) {
-        extendedProperties.shared.parents = JSON.stringify([])
-        extendedProperties.shared.children = JSON.stringify([])
-        extendedProperties.shared.externals = JSON.stringify([])
-        await nh.timeslotMajorChangeNotification(summary, oldParents, group_id, activity_id, timeslot_id)
-      } else if (volunteersReq && childrenReq) {
-        await nh.timeslotRequirementsNotification(summary, parents, group_id, activity_id, timeslot_id)
-      }
-      if (JSON.parse(extendedProperties.shared.children).length > 37) {
-        extendedProperties.shared.children = JSON.stringify(JSON.parse(extendedProperties.shared.children).slice(0, 36))
-      }
-      if (JSON.parse(extendedProperties.shared.parents).length > 37) {
-        extendedProperties.shared.parents = JSON.stringify(JSON.parse(extendedProperties.shared.parents).slice(0, 36))
-      }
-      const timeslotPatch = {
-        summary,
-        description,
-        location,
-        start,
-        end,
-        extendedProperties
-      }
-      await calendar.events.patch({
-        calendarId: group.calendar_id,
-        eventId: req.params.timeslotId,
-        resource: timeslotPatch
-      })
-      res.status(200).send('Timeslot was updated')
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
-router.post(
-  '/:groupId/activities/:activityId/timeslots/add',
-  async (req, res, next) => {
-    if (!req.user_id) {
-      return res.status(401).send('Not authenticated')
-    }
-    const { groupId: group_id, activityId: activity_id } = req.params
-    const user_id = req.user_id
-    try {
-      const member = await Member.findOne({
-        group_id,
-        user_id,
-        group_accepted: true,
-        user_accepted: true
-      })
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      const {
-        summary,
-        description,
-        location,
-        start,
-        end,
-        extendedProperties
-      } = req.body
-      if (
-        !(
-          summary ||
-          description ||
-          location ||
-          start ||
-          end ||
-          extendedProperties
-        )
-      ) {
-        return res.status(400).send('Bad Request')
-      }
-      const event = {
-        summary,
-        description,
-        location,
-        start,
-        end,
-        extendedProperties
-      }
-      event.extendedProperties.shared.activityId = activity_id
-      event.extendedProperties.shared.groupId = group_id
-      const group = await Group.findOne({ group_id })
-      await calendar.events.insert({
-        calendarId: group.calendar_id,
-        resource: event
-      })
-      res.status(200).send('Timeslot was created')
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
-router.delete(
-  '/:groupId/activities/:activityId/timeslots/:timeslotId',
-  async (req, res, next) => {
-    if (!req.user_id) {
-      return res.status(401).send('Not authenticated')
-    }
-    const { groupId: group_id, activityId: activity_id } = req.params
-    const user_id = req.user_id
-    const { summary, parents } = req.query
-    try {
-      const member = await Member.findOne({
-        group_id,
-        user_id,
-        group_accepted: true,
-        user_accepted: true
-      })
-      const activity = await Activity.findOne({ activity_id })
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      if (!(member.admin || user_id === activity.creator_id)) {
-        return res.status(401).send('Unauthorized')
-      }
-      if (!(summary && parents)) {
-        return res.status(400).send('Bad Request')
-      }
-      const group = await Group.findOne({ group_id })
-      await calendar.events.delete({
-        calendarId: group.calendar_id,
-        eventId: req.params.timeslotId
-      })
-      nh.deleteTimeslotNotification(user_id, { summary, parents: JSON.parse(parents) })
-      res.status(200).send('Timeslot was deleted')
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-router.get('/:id/announcements', (req, res, next) => {
+router.post('/:groupId/activities/:activityId/export', async (req, res, next) => {
   if (!req.user_id) {
     return res.status(401).send('Not authenticated')
   }
-  const group_id = req.params.id
+  const { format } = req.body
+  const group_id = req.params.groupId
   const user_id = req.user_id
-  Member.findOne({
-    group_id,
-    user_id,
-    group_accepted: true,
-    user_accepted: true
-  })
-    .then(member => {
-      if (!member) {
-        return res.status(401).send('Unauthorized')
-      }
-      return Announcement.find({ group_id })
-        .populate('images')
-        .sort({ createdAt: -1 })
-        .lean()
-        .exec()
-        .then(announcements => {
-          if (announcements.length === 0) {
-            return res.status(404).send('Group has no announcements')
-          }
-          res.json(announcements)
-        })
+  const activity_id = req.params.activityId
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
     })
-    .catch(next)
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const activity = await Activity.findOne({ activity_id })
+    if (!(member.admin || user_id === activity.creator_id)) {
+      return res.status(401).send('Unauthorized')
+    }
+    const group = await Group.findOne({ group_id })
+    const resp = await calendar.events.list({
+      calendarId: group.calendar_id,
+      sharedExtendedProperty: `activityId=${activity_id}`
+    })
+    const activityTimeslots = resp.data.items
+    if (format === 'pdf') {
+      exportActivity.createPdf(activity, activityTimeslots, () => {
+        const mailOptions = {
+          from: process.env.SERVER_MAIL,
+          to: req.email,
+          subject: `Activity: ${activity.name} `,
+          html: exportActivity.newExportEmail(activity.name),
+          attachments: [
+            {
+              filename: `activity.pdf`,
+              path: path.join(
+                __dirname,
+                `../../activity.pdf`
+              )
+            }
+          ]
+        }
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) next(err)
+          if (format === 'excel') {
+            fr('../', { files: `activity.xlsx` })
+          } else {
+            fr('../../', { files: `activity.pdf` })
+          }
+        })
+        res.status(200).send('Exported activity successfully')
+      })
+    } else if (format === 'excel') {
+      exportActivity.createExcel(activity, activityTimeslots, () => {
+        const mailOptions = {
+          from: process.env.SERVER_MAIL,
+          to: req.email,
+          subject: `Activity: ${activity.name} `,
+          html: exportActivity.newExportEmail(activity.name),
+          attachments: [
+            {
+              filename: `activity.xlsx`,
+              path: path.join(
+                __dirname,
+                `../../activity.xlsx`
+              )
+            }
+          ]
+        }
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) next(err)
+          fr('../', { files: `activity.xlsx` })
+        })
+        res.status(200).send('Exported activity successfully')
+      })
+    }
+  } catch (error) {
+    next(error)
+  }
 })
 
-router.post(
-  '/:id/announcements',
-  announcementUpload.array('photo', 3),
-  async (req, res, next) => {
+router.get('/:groupId/activities/:activityId/timeslots', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const group_id = req.params.groupId
+  const activity_id = req.params.activityId
+  const user_id = req.user_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const group = await Group.findOne({ group_id })
+    const resp = await calendar.events.list({
+      calendarId: group.calendar_id,
+      sharedExtendedProperty: `activityId=${activity_id}`
+    })
+    const activityTimeslots = resp.data.items
+    res.json(activityTimeslots)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:groupId/activities/:activityId/timeslots/:timeslotId', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const group_id = req.params.groupId
+  const user_id = req.user_id
+  const activity_id = req.params.activityId
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const activity = await Activity.findOne({ activity_id })
+    const group = await Group.findOne({ group_id })
+    const response = await calendar.events.get({
+      calendarId: group.calendar_id,
+      eventId: req.params.timeslotId
+    })
+    response.data.userCanEdit = false
+    if (member.admin || user_id === activity.creator_id) {
+      response.data.userCanEdit = true
+    }
+    res.json(response.data)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
+  const user_id = req.user_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const {
+      adminChanges,
+      summary,
+      description,
+      location,
+      start,
+      end,
+      extendedProperties,
+      notifyUsers
+    } = req.body
+    if (
+      !(
+        summary ||
+          description ||
+          location ||
+          start ||
+          end ||
+          extendedProperties
+      )
+    ) {
+      return res.status(400).send('Bad Request')
+    }
+    const group = await Group.findOne({ group_id })
+    const myChildren = await Parent.distinct('child_id', { parent_id: req.user_id })
+    const event = await calendar.events.get({
+      calendarId: group.calendar_id,
+      eventId: req.params.timeslotId
+    })
+    const oldParents = JSON.parse(event.data.extendedProperties.shared.parents)
+    const oldChildren = JSON.parse(event.data.extendedProperties.shared.children)
+    const parents = JSON.parse(extendedProperties.shared.parents)
+    const children = JSON.parse(extendedProperties.shared.children)
+    if (!member.admin) {
+      if (parents.includes(req.user_id)) {
+        extendedProperties.shared.parents = JSON.stringify([...new Set([...oldParents, req.user_id])])
+      } else {
+        extendedProperties.shared.parents = JSON.stringify(oldParents.filter(u => u !== req.user_id))
+      }
+      myChildren.forEach(c => {
+        if (children.includes(c) && !oldChildren.includes(c)) {
+          oldChildren.push(c)
+        } else if (!children.includes(c) && oldChildren.includes(c)) {
+          oldChildren.splice(oldChildren.indexOf(c), 1)
+        }
+      })
+      extendedProperties.shared.children = JSON.stringify(oldChildren)
+    } else {
+      if (adminChanges) {
+        if (Object.keys(adminChanges).length > 0) {
+          Object.keys(adminChanges).forEach(id => {
+            if (adminChanges[id] > 0) {
+              adminChanges[id] = 'add'
+            } else if (adminChanges[id] < 0) {
+              adminChanges[id] = 'remove'
+            } else {
+              delete adminChanges[id]
+            }
+          })
+          nh.timeslotAdminChangesNotification(summary, adminChanges, req.user_id, group_id, activity_id, timeslot_id)
+        }
+      }
+    }
+    const externals = JSON.parse(extendedProperties.shared.externals || '[]')
+    const volunteersReq =
+        (parents.length + externals.length) >= extendedProperties.shared.requiredParents
+    const childrenReq =
+        children.length >= extendedProperties.shared.requiredChildren
+    if (event.data.extendedProperties.shared.status !== extendedProperties.shared.status) {
+      nh.timeslotStatusChangeNotification(summary, extendedProperties.shared.status, oldParents, group_id, activity_id, timeslot_id)
+    }
+    if (notifyUsers) {
+      extendedProperties.shared.parents = JSON.stringify([])
+      extendedProperties.shared.children = JSON.stringify([])
+      extendedProperties.shared.externals = JSON.stringify([])
+      await nh.timeslotMajorChangeNotification(summary, oldParents, group_id, activity_id, timeslot_id)
+    } else if (volunteersReq && childrenReq) {
+      await nh.timeslotRequirementsNotification(summary, parents, group_id, activity_id, timeslot_id)
+    }
+    if (JSON.parse(extendedProperties.shared.children).length > 37) {
+      extendedProperties.shared.children = JSON.stringify(JSON.parse(extendedProperties.shared.children).slice(0, 36))
+    }
+    if (JSON.parse(extendedProperties.shared.parents).length > 37) {
+      extendedProperties.shared.parents = JSON.stringify(JSON.parse(extendedProperties.shared.parents).slice(0, 36))
+    }
+    const timeslotPatch = {
+      summary,
+      description,
+      location,
+      start,
+      end,
+      extendedProperties
+    }
+    await calendar.events.patch({
+      calendarId: group.calendar_id,
+      eventId: req.params.timeslotId,
+      resource: timeslotPatch
+    })
+    res.status(200).send('Timeslot was updated')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/:groupId/activities/:activityId/timeslots/add', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const { groupId: group_id, activityId: activity_id } = req.params
+  const user_id = req.user_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const {
+      summary,
+      description,
+      location,
+      start,
+      end,
+      extendedProperties
+    } = req.body
+    if (
+      !(
+        summary ||
+          description ||
+          location ||
+          start ||
+          end ||
+          extendedProperties
+      )
+    ) {
+      return res.status(400).send('Bad Request')
+    }
+    const event = {
+      summary,
+      description,
+      location,
+      start,
+      end,
+      extendedProperties
+    }
+    event.extendedProperties.shared.activityId = activity_id
+    event.extendedProperties.shared.groupId = group_id
+    const group = await Group.findOne({ group_id })
+    await calendar.events.insert({
+      calendarId: group.calendar_id,
+      resource: event
+    })
+    res.status(200).send('Timeslot was created')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:groupId/activities/:activityId/timeslots/:timeslotId', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const { groupId: group_id, activityId: activity_id } = req.params
+  const user_id = req.user_id
+  const { summary, parents } = req.query
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    const activity = await Activity.findOne({ activity_id })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    if (!(member.admin || user_id === activity.creator_id)) {
+      return res.status(401).send('Unauthorized')
+    }
+    if (!(summary && parents)) {
+      return res.status(400).send('Bad Request')
+    }
+    const group = await Group.findOne({ group_id })
+    await calendar.events.delete({
+      calendarId: group.calendar_id,
+      eventId: req.params.timeslotId
+    })
+    nh.deleteTimeslotNotification(user_id, { summary, parents: JSON.parse(parents) })
+    res.status(200).send('Timeslot was deleted')
+  } catch (error) {
+    next(error)
+  }
+})
+
+/** Announcements **/
+const AnnouncementType = {
+  GROUP: 'group',
+  ACTIVITY: 'activity'
+}
+
+function getAnnouncements (type) {
+  return (req, res, next) => {
     if (!req.user_id) {
       return res.status(401).send('Not authenticated')
     }
-    const group_id = req.params.id
+    const group_id = req.params.groupId
+    const activity_id = type === AnnouncementType.ACTIVITY ? req.params.activityId : null
+    const user_id = req.user_id
+    Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+      .then(member => {
+        if (!member) {
+          return res.status(401).send('Unauthorized')
+        }
+        let find = type === AnnouncementType.GROUP ? { group_id: group_id, activity_id: null } : { activity_id: activity_id }
+        return Announcement.find(find)
+          .populate('images')
+          .sort({ createdAt: -1 })
+          .lean()
+          .exec()
+          .then(announcements => {
+            if (announcements.length === 0) {
+              return res.status(404).send('Group has no announcements')
+            }
+            res.json(announcements)
+          })
+      })
+      .catch(next)
+  }
+}
+
+function postAnnouncement (type) {
+  return async (req, res, next) => {
+    if (!req.user_id) {
+      return res.status(401).send('Not authenticated')
+    }
+    const group_id = req.params.groupId
+    const activity_id = type === AnnouncementType.ACTIVITY ? req.params.activityId : null
     const user_id = req.user_id
     const { message } = req.body
     const announcement_id = objectid()
@@ -1734,10 +1726,11 @@ router.post(
         return res.status(400).send('Bad Request')
       }
       const announcement = {
-        announcement_id,
-        user_id,
-        group_id,
-        body: message
+        announcement_id: announcement_id,
+        user_id: user_id,
+        group_id: group_id,
+        body: message,
+        activity_id: activity_id
       }
       if (files) {
         const images = []
@@ -1758,11 +1751,10 @@ router.post(
       next(err)
     }
   }
-)
+}
 
-router.delete(
-  '/:groupId/announcements/:announcementId',
-  async (req, res, next) => {
+function deleteAnnouncement (type) {
+  return async (req, res, next) => {
     if (!req.user_id) {
       return res.status(401).send('Not authenticated')
     }
@@ -1789,7 +1781,7 @@ router.delete(
         owner_id: announcement_id
       })
       await Reply.deleteMany({ announcement_id })
-      await fr('../images/announcements/', {
+      fr('../images/announcements/', {
         prefix: req.params.announcementId
       })
       res.status(200).send('announcement was deleted')
@@ -1797,11 +1789,10 @@ router.delete(
       next(error)
     }
   }
-)
+}
 
-router.post(
-  '/:groupId/announcements/:announcementId/replies',
-  async (req, res, next) => {
+function postAnnouncementReply (type) {
+  return async (req, res, next) => {
     if (!req.user_id) {
       return res.status(401).send('Not authenticated')
     }
@@ -1832,11 +1823,11 @@ router.post(
     } catch (error) {
       next(error)
     }
-  })
+  }
+}
 
-router.get(
-  '/:groupId/announcements/:announcementId/replies',
-  (req, res, next) => {
+function getAnnouncementReplies (type) {
+  return (req, res, next) => {
     if (!req.user_id) {
       return res.status(401).send('Not authenticated')
     }
@@ -1862,11 +1853,10 @@ router.get(
       })
       .catch(next)
   }
-)
+}
 
-router.delete(
-  '/:groupId/announcements/:announcementId/replies/:replyId',
-  async (req, res, next) => {
+function deleteAnnouncementReply (type) {
+  return async (req, res, next) => {
     if (!req.user_id) {
       return res.status(401).send('Not authenticated')
     }
@@ -1893,7 +1883,21 @@ router.delete(
       next(error)
     }
   }
-)
+}
+
+router.get('/:groupId/announcements', getAnnouncements(AnnouncementType.GROUP))
+router.post('/:groupId/announcements', announcementUpload.array('photo', 3), postAnnouncement(AnnouncementType.GROUP))
+router.delete('/:groupId/announcements/:announcementId', deleteAnnouncement(AnnouncementType.GROUP))
+router.post('/:groupId/announcements/:announcementId/replies', postAnnouncementReply(AnnouncementType.GROUP))
+router.get('/:groupId/announcements/:announcementId/replies', getAnnouncementReplies(AnnouncementType.GROUP))
+router.delete('/:groupId/announcements/:announcementId/replies/:replyId', deleteAnnouncementReply(AnnouncementType.GROUP))
+
+router.get('/:groupId/activities/:activityId/announcements', getAnnouncements(AnnouncementType.ACTIVITY))
+router.post('/:groupId/activities/:activityId/announcements', announcementUpload.array('photo', 3), postAnnouncement(AnnouncementType.ACTIVITY))
+router.delete('/:groupId/activities/:activityId/announcements/:announcementId', deleteAnnouncement(AnnouncementType.ACTIVITY))
+router.post('/:groupId/activities/:activityId/announcements/:announcementId/replies', postAnnouncementReply(AnnouncementType.ACTIVITY))
+router.get('/:groupId/activities/:activityId/announcements/:announcementId/replies', getAnnouncementReplies(AnnouncementType.ACTIVITY))
+router.delete('/:groupId/activities/:activityId/announcements/:announcementId/replies/:replyId', deleteAnnouncementReply(AnnouncementType.ACTIVITY))
 
 /**
  * @apiName report a user
