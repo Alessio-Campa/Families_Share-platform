@@ -13,7 +13,7 @@ SERVER_MAIL_PASSWORD=
 GOOGLE_DEV_CLIENT_EMAIL=
 GOOGLE_DEV_PRIVATE_KEY= <chiavi api google>
 GOOGLE_PROD_CLIENT_EMAIL=
-GOOGLE_PROD_PRIVATE_KEY= <chiavi api gooogle>
+GOOGLE_PROD_PRIVATE_KEY= <chiavi api google>
 FIREBASE_PROJECT_ID=
 FIREBASE_CLIENT_EMAIL=
 FIREBASE_PRIVATE_KEY=
@@ -21,7 +21,7 @@ CITYLAB= ALL
 CITYLAB_URI=
 CRONJOB=
 ```
-### *.env* in * /client/ * ###
+### *.env* in */client/* ###
 ```
 REACT_APP_GOOGLE_CLIENT_ID =
 REACT_APP_GA_ID=
@@ -39,9 +39,9 @@ Se tutto è stato configurato bene, si riceverà il seguente output:
 Server started at http://localhost:4000.
 Connected to database
 ```
-Da qui in poi, potremmo visualizzare tutte le richieste in arrivo sul server di backend da questo terminale.
+Da qui in poi, potremo visualizzare tutte le richieste in arrivo sul server di backend da questo terminale.
 ### supervisor ###
 È necessario aprire una parentesi su supervisor: di default node (che runna il backend) non rileva modifiche nel codice, di conseguenza sarà necessario rieseguire manualmente il programma per testare ogni modifica nel codice di backend. Supervisor (installabile con ```npm install supervisor -g```) automatizza la cosa, rilevando in automatico modifiche nel codice e restartando il server in automatico. Per eseguire il backend usando supervisor usare il comando ```npm run dev-server```.
 ## eseguire frontend ##
-Dobbiamo ora startare il react-native client, apriamo un altro terminale, spostandoci sulla directory /client/, eseguiamo ```npm install``` come per il backend e ```npm start``` per farlo partire. Trattandosi di un framework, ci metterà un po' per partire, nell'attesa andatevi a prendere uno spritz, siete stati bravi ad arrivare fin qui. Se si è aperta una pagina web con la homepage di families_share siete riusciti a far partire il progetto.
+Dobbiamo ora startare il react client, apriamo un altro terminale, spostandoci sulla directory /client/, eseguiamo ```npm install``` come per il backend e ```npm start``` per farlo partire. Trattandosi di un framework, ci metterà un po' per partire, nell'attesa andatevi a prendere uno spritz, siete stati bravi ad arrivare fin qui. Se si è aperta una pagina web con la homepage di families_share siete riusciti a far partire il progetto.
 Creando un account, il server farà il primo inserimento in database e lo schema si creerà in automatico.
