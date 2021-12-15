@@ -146,7 +146,7 @@ export default class GroupMainScreen extends React.Component {
           />
           <Route
             exact
-            path={`${currentPath}/chat`}
+            path={`${currentPath}/calendar`}
             render={(props) => (
               <GroupCalendar
                 {...props}
