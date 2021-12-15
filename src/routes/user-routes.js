@@ -891,7 +891,7 @@ router.get('/:id/children', (req, res, next) => {
   const { id } = req.params
   Parent.find({ parent_id: id }).then(children => {
     if (children.length === 0) {
-      return res.status(404).send('User has no children')
+      children = []
     }
     res.json(children)
   }).catch(next)
