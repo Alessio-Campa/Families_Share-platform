@@ -190,6 +190,12 @@ const it = {
       header: 'Avvisi del gruppo',
       description: 'ha pubblicato una nuova risposta '
     }
+  ],
+  positivity: [
+    {
+      header: 'Positività utente',
+      description: 'è risultato positivo al Covid-19'
+    }
   ]
 }
 const nl = {

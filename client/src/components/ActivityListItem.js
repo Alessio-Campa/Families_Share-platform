@@ -7,6 +7,7 @@ import moment from "moment";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
+import { Rate } from 'antd';
 
 const getUsersChildren = (userId) => {
   return axios
@@ -124,6 +125,16 @@ class ActivityListItem extends React.Component {
     return datesString;
   };
 
+  calculateRating = () => {
+    const { activity } = this.state;
+    const valutations = activity.valutations
+    let sum = 0;
+    valutations.forEach( (valutation) => {  
+      sum += valutation.rate;
+    });
+    return Math.round(sum / valutations.length);
+  };
+
   render() {
     const { activity, fetchedTimeslots } = this.state;
     return fetchedTimeslots ? (
@@ -159,12 +170,27 @@ class ActivityListItem extends React.Component {
               <div className="row no-gutters">
                 <h1>{activity.name}</h1>
               </div>
+              {activity.valutations && (
+                <div className="row no-gutters verticalCenter" >
+                  <Rate disabled value={ this.calculateRating() } /> 
+                </div>
+              )}
               <div className="row no-gutters">
                 <i
                   className="far fa-calendar-alt"
                   style={{ marginRight: "1rem" }}
                 />
-                <h2>{this.getDatesString()}</h2>
+                <h2
+                  style={{ marginRight: "1rem" }}
+                >
+                  {this.getDatesString()}
+                </h2>
+                {activity.gp_need && (
+                  <i
+                    className="fas fa-id-card"  
+                    style={{ color: "#0b9906" }}
+                  />
+                )}
               </div>
             </div>
           </div>

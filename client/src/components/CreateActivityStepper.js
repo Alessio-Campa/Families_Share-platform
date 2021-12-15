@@ -144,6 +144,7 @@ class CreateActivityStepper extends React.Component {
         color: colors[Math.floor(Math.random() * colors.length)],
         description: "",
         location: "",
+        gpNeed: false,
         link: "",
       },
       dates: {
@@ -227,6 +228,7 @@ class CreateActivityStepper extends React.Component {
       color: information.color,
       description: information.description,
       location: information.location,
+      gp_need: information.gpNeed,
       repetition: dates.repetition,
       repetition_type: dates.repetitionType,
       different_timeslots: timeslots.differentTimeslots,

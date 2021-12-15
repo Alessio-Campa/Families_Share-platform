@@ -1100,3 +1100,8 @@ router.post('/:userId/sendmenotification', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/:receiverId/positivityNotification/:senderId', async (req, res, next) => {
+  await nh.newPositivityNotification(req.params.senderId, req.params.receiverId);
+  return res.status(200).json("notification sent successfully")
+})

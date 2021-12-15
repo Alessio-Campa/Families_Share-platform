@@ -50,7 +50,7 @@ class AnnouncementBar extends React.Component {
   };
 
   handleSend = () => {
-    const { groupId, handleRefresh } = this.props;
+    const { announcementsUrl, handleRefresh } = this.props;
     const { message, photos } = this.state;
     if (message || photos.length > 0) {
       const user_id = JSON.parse(localStorage.getItem("user")).id;
@@ -63,7 +63,7 @@ class AnnouncementBar extends React.Component {
       bodyFormData.append("message", message);
       bodyFormData.append("user_id", user_id);
       axios
-        .post(`/api/groups/${groupId}/announcements`, bodyFormData)
+        .post(announcementsUrl, bodyFormData)
         .then((response) => {
           Log.info(response);
           handleRefresh();
@@ -188,7 +188,7 @@ class AnnouncementBar extends React.Component {
 
 AnnouncementBar.propTypes = {
   handleRefresh: PropTypes.func,
-  groupId: PropTypes.string,
+  announcementsUrl: PropTypes.string,
   language: PropTypes.string,
   enqueueSnackbar: PropTypes.func,
 };

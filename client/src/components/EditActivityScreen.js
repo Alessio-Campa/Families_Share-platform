@@ -7,6 +7,7 @@ import Texts from "../Constants/Texts";
 import LoadingSpinner from "./LoadingSpinner";
 import withLanguage from "./LanguageContext";
 import Log from "./Log";
+import { Checkbox } from "antd";
 
 class EditActivityScreen extends React.Component {
   state = {
@@ -19,13 +20,14 @@ class EditActivityScreen extends React.Component {
     axios
       .get(`/api/groups/${groupId}/activities/${activityId}`)
       .then((response) => {
-        const { name, description, color, location } = response.data;
+        const { name, description, color, location, gp_need } = response.data;
         this.setState({
           fetchedActivity: true,
           name,
           color,
           description,
           location,
+          gp_need,
           validated: true,
         });
       })
@@ -62,7 +64,7 @@ class EditActivityScreen extends React.Component {
   handleSave = () => {
     const { match, history } = this.props;
     const { activityId, groupId } = match.params;
-    const { validated, name, color, location, description } = this.state;
+    const { validated, name, color, location, description, gp_need } = this.state;
     if (validated) {
       this.setState({ fetchedActivity: false });
       const patch = {
@@ -70,6 +72,7 @@ class EditActivityScreen extends React.Component {
         color,
         location: location.trim(),
         description: description.trim(),
+        gp_need
       };
       axios
         .patch(`/api/groups/${groupId}/activities/${activityId}`, patch)
@@ -92,6 +95,7 @@ class EditActivityScreen extends React.Component {
       description,
       location,
       color,
+      gp_need
     } = this.state;
     const { language, history } = this.props;
     const texts = Texts[language].editActivityScreen;
@@ -173,6 +177,31 @@ class EditActivityScreen extends React.Component {
               />
             </div>
           </div>
+          <div className="row no-gutters">
+          <div className="col-2-10">
+            <i className="fas fa-id-card center" />
+          </div>
+          <div className="col-2-10">
+            <h1 className="verticalCenter">
+              GreenPass necessario
+            </h1>
+          </div>
+          <div className="col-3-10">
+            <div className="verticalCenter text-center">
+              <Checkbox
+                checked={ gp_need }
+                onClick={() =>{
+                    const state = Object.assign({}, this.state);
+                    state.gp_need = !state.gp_need;
+                    this.setState(state);
+                  }
+                }
+                color="primary"
+                size="big"
+              />
+            </div>
+          </div>
+        </div>
           <div className="row no-gutters">
             <div className="col-2-10">
               <i

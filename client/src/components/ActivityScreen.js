@@ -6,6 +6,7 @@ import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import * as path from "lodash.get";
 import { withSnackbar } from "notistack";
+import { Route, Switch } from "react-router-dom";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import TimeslotsList from "./TimeslotsList";
@@ -15,6 +16,9 @@ import LoadingSpinner from "./LoadingSpinner";
 import Images from "../Constants/Images";
 import Log from "./Log";
 import Avatar from "./Avatar";
+import { EventChat } from "./Chat";
+import { Rate } from "antd";
+import ActivityNavbar from "./ActivityNavbar";
 
 const styles = {
   add: {
@@ -66,6 +70,7 @@ const getActivity = (activityId, groupId) => {
       };
     });
 };
+
 const getGroupMembers = (groupId) => {
   return axios
     .get(`/api/groups/${groupId}/members`)
@@ -129,10 +134,15 @@ class ActivityScreen extends React.Component {
       showChildren: false,
       groupId,
       activityId,
+      rating: 0,
+      ratingsNumber: 0,
+      popupMessage: "",
+      ratingAlreadyUpdated: false,
     };
   }
 
   async componentDidMount() {
+    const { history } = this.props;
     const { groupId, activityId } = this.state;
     const userId = JSON.parse(localStorage.getItem("user")).id;
     const activity = await getActivity(activityId, groupId);
@@ -176,15 +186,35 @@ class ActivityScreen extends React.Component {
     });
     activity.dates = uniqueDates;
     const groupMembers = await getGroupMembers(groupId);
-    const userIsAdmin = groupMembers.filter(
+    const user = groupMembers.filter(
       (member) =>
         member.user_id === userId &&
         member.group_accepted &&
         member.user_accepted
-    )[0].admin;
+    );
+    const allowNavigation = user.length > 0;
+    if (!allowNavigation) history.replace(`/groups/${groupId}/info`);
+    const userIsAdmin = user.length > 0 ? user[0].admin : false;
     const userIsCreator = userId === activity.creator_id;
     const userCanEdit = userIsAdmin || userIsCreator;
-    this.setState({ activity, fetchedActivityData: true, userCanEdit });
+    this.setState({
+      activity,
+      fetchedActivityData: true,
+      userCanEdit,
+      userIsAdmin,
+      allowNavigation,
+    });
+    /* Aggiorno lo stato della valutazione (rating) */
+    if(activity.valutations !== undefined) {
+      const valutations = activity.valutations;
+      let sum = 0;
+      valutations.forEach( (valutation) => {  
+        sum += valutation.rate;
+      });
+      this.setState({ rating: Math.round(sum / valutations.length) });
+      this.setState({ ratingsNumber: valutations.length });
+
+    }
   }
 
   handleRedirect = (suspended, child_id) => {
@@ -192,6 +222,14 @@ class ActivityScreen extends React.Component {
     if (!suspended) {
       history.push(`/profiles/groupmember/children/${child_id}`);
     }
+  };
+
+  componentDidUpdate(){
+    this.hideTimeout = setTimeout(() => this.setState({ popupMessage: ''}), 5000);
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.hideTimeout)
   };
 
   renderList = (list, type) => {
@@ -397,8 +435,52 @@ class ActivityScreen extends React.Component {
       });
   };
 
+  handleRateUpdate = (value, isAnUpdate) => {
+    const { activity } = this.state;
+    const valutations = activity.valutations;
+    let sum = 0;
+    valutations.forEach( (valutation) => {  
+      sum += valutation.rate;
+    });
+    sum += value;
+    this.setState({ rating: Math.round(sum / (valutations.length+1)) });
+    if(isAnUpdate)
+      this.setState({ popupMessage: "Hai aggiornato la tua valutazione!" });
+    else
+      this.setState({ ratingsNumber: valutations.length+1 });
+    this.setState({ ratingAlreadyUpdated: true });
+  };
+
+  handleRate = (val) => {
+    const { activity } = this.state;
+    const { match } = this.props;
+    const { activityId, groupId } = match.params;
+    const valutations = activity.valutations;
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+    let isAnUpdate = false;
+    valutations.forEach( (valutation) => {  
+      if(valutation._id === userId || this.state.ratingAlreadyUpdated)
+        isAnUpdate = true;
+    });
+    axios
+      .post(`/api/groups/${groupId}/activities/${activityId}/valutation`, {
+        _id: userId, 
+        rate: val,
+      })
+      .then((response) => {
+        Log.info(response);
+        this.setState({ ratingAlreadyUpdated: true });
+        this.handleRateUpdate(val, isAnUpdate);
+      })
+      .catch((error) => {
+        Log.error(error);
+      });
+  };
+
   render() {
-    const { history, language, classes } = this.props;
+    const { history, language, match, classes } = this.props;
+    const { groupId, activityId, allowNavigation, userIsAdmin } = this.state;
+    const { url: currentPath } = match;
     const {
       activity,
       fetchedActivityData,
@@ -436,115 +518,183 @@ class ActivityScreen extends React.Component {
       action === "delete" ? texts.deleteDialogTitle : texts.exportDialogTitle;
     const rowStyle = { minHeight: "5rem" };
     return fetchedActivityData ? (
-      <React.Fragment>
-        {pendingRequest && <LoadingSpinner />}
-        <div id="activityContainer">
-          <ConfirmDialog
-            title={confirmDialogTitle}
-            isOpen={confirmDialogIsOpen}
-            handleClose={this.handleConfirmDialogClose}
-          />
-          <OptionsModal
-            isOpen={optionsModalIsOpen}
-            handleClose={this.handleOptionsClose}
-            options={options}
-          />
-          <div id="activityHeaderContainer" className="row no-gutters">
-            <div className="col-2-10">
-              <button
-                type="button"
-                className="transparentButton center"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-arrow-left" />
-              </button>
-            </div>
-            <div className="col-6-10">
-              <h1 className="center">{activity.name}</h1>
-            </div>
-            <div className="col-1-10">
-              {userCanEdit ? (
-                <button
-                  type="button"
-                  className="transparentButton center"
-                  onClick={this.handleEdit}
-                >
-                  <i className="fas fa-pencil-alt" />
-                </button>
-              ) : (
-                <div />
-              )}
-            </div>
-            <div className="col-1-10">
-              {userCanEdit ? (
-                <button
-                  type="button"
-                  className="transparentButton center"
-                  onClick={this.handleOptions}
-                >
-                  <i className="fas fa-ellipsis-v" />
-                </button>
-              ) : (
-                <div />
-              )}
-            </div>
-          </div>
-          <div id="activityMainContainer">
-            <div className="row no-gutters" style={rowStyle}>
-              <div className="activityInfoHeader">{texts.infoHeader}</div>
-            </div>
-            {activity.description && (
-              <div className="row no-gutters" style={rowStyle}>
-                <div className="col-1-10">
-                  <i className="far fa-file-alt activityInfoIcon" />
-                </div>
-                <div className="col-9-10">
-                  <div className="activityInfoDescription">
-                    {activity.description}
-                  </div>
-                </div>
-              </div>
+      <div>
+        <Switch>
+          <Route
+            path={`${currentPath}/chat`}
+            render={(props) => (
+              <EventChat
+                {...props}
+                group_id={groupId}
+                event_id={activityId}
+                title={activity.title}
+                userIsAdmin={userIsAdmin}
+              />
             )}
-            {activity.location && (
-              <div className="row no-gutters" style={rowStyle}>
-                <div className="col-1-10">
-                  <img
-                    src={Images.mapMarkerAltRegular}
-                    alt="map marker icon"
-                    className="activityInfoImage"
+          />
+          <Route
+            path={`${currentPath}/`}
+            render={() => (
+              <React.Fragment>
+                {pendingRequest && <LoadingSpinner />}
+                <div style={{ paddingBottom: "6rem" }}>
+                  <div id="activityContainer">
+                    <ConfirmDialog
+                      title={confirmDialogTitle}
+                      isOpen={confirmDialogIsOpen}
+                      handleClose={this.handleConfirmDialogClose}
+                    />
+                    <OptionsModal
+                      isOpen={optionsModalIsOpen}
+                      handleClose={this.handleOptionsClose}
+                      options={options}
+                    />
+                    <div
+                      id="activityHeaderContainer"
+                      className="row no-gutters"
+                    >
+                      <div className="col-2-10">
+                        <button
+                          type="button"
+                          className="transparentButton center"
+                          onClick={() => history.goBack()}
+                        >
+                          <i className="fas fa-arrow-left" />
+                        </button>
+                      </div>
+                      <div className="col-6-10">
+                        <h1 className="center">{activity.name}</h1>
+                      </div>
+                      <div className="col-1-10">
+                        {userCanEdit ? (
+                          <button
+                            type="button"
+                            className="transparentButton center"
+                            onClick={this.handleEdit}
+                          >
+                            <i className="fas fa-pencil-alt" />
+                          </button>
+                        ) : (
+                          <div />
+                        )}
+                      </div>
+                      <div className="col-1-10">
+                        {userCanEdit ? (
+                          <button
+                            type="button"
+                            className="transparentButton center"
+                            onClick={this.handleOptions}
+                          >
+                            <i className="fas fa-ellipsis-v" />
+                          </button>
+                        ) : (
+                          <div />
+                        )}
+                      </div>
+                    </div>
+                    <div id="activityMainContainer">
+                      <div className="row no-gutters" style={rowStyle}>
+                        <div className="activityInfoHeader">
+                          {texts.infoHeader}
+                        </div>
+                      </div>
+                      {activity.valutations && (
+                        <>
+                          <div className="row no-gutters">
+                            <div className="col-6-10">
+                              <h4>{ this.state.popupMessage }</h4>
+                            </div>
+                            <div className="col-6-10">
+                              <Rate value={this.state.rating} onChange={(value) => this.handleRate(value)} />
+                            </div>
+                          </div><div className="row no-gutters">
+                            <div className="col-6-10">
+                              <h4>({this.state.ratingsNumber})</h4>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {activity.description && (
+                        <div className="row no-gutters" style={rowStyle}>
+                          <div className="col-1-10">
+                            <i className="far fa-file-alt activityInfoIcon" />
+                          </div>
+                          <div className="col-9-10">
+                            <div className="activityInfoDescription">
+                              {activity.description}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {activity.location && (
+                        <div className="row no-gutters" style={rowStyle}>
+                          <div className="col-1-10">
+                            <img
+                              src={Images.mapMarkerAltRegular}
+                              alt="map marker icon"
+                              className="activityInfoImage"
+                            />
+                          </div>
+                          <div className="col-9-10">
+                            <div className="activityInfoDescription">
+                              {activity.location}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {activity.gp_need && (
+                        <div className="row no-gutters" style={rowStyle}>
+                          <div className="col-1-10">
+                            <i
+                              className="fas fa-id-card"  
+                            />
+                          </div>
+                          <div className="col-9-10">
+                          <div className="activityInfoDescription">
+                              Green Pass necessario
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      <div className="row no-gutters" style={rowStyle}>
+                        <div className="col-1-10">
+                          <i className="far fa-calendar activityInfoIcon" />
+                        </div>
+                        <div className="col-9-10">
+                          <div className="activityInfoDescription">
+                            {this.getDatesString()}
+                          </div>
+                        </div>
+                      </div>
+                      {this.renderParticipants("volunteers")}
+                      {this.renderParticipants("children")}
+                    </div>
+                  </div>
+                  <Fab
+                    style={{
+                      bottom: "8rem",
+                      right: "7%",
+                      zIndex: 100,
+                      position: "fixed",
+                    }}
+                    color="primary"
+                    aria-label="Add"
+                    className={classes.add}
+                    onClick={this.addActivity}
+                  >
+                    <i className="fas fa-plus" />
+                  </Fab>
+                  <TimeslotsList
+                    dates={activity.dates}
+                    timeslots={activity.timeslots}
                   />
                 </div>
-                <div className="col-9-10">
-                  <div className="activityInfoDescription">
-                    {activity.location}
-                  </div>
-                </div>
-              </div>
+              </React.Fragment>
             )}
-            <div className="row no-gutters" style={rowStyle}>
-              <div className="col-1-10">
-                <i className="far fa-calendar activityInfoIcon" />
-              </div>
-              <div className="col-9-10">
-                <div className="activityInfoDescription">
-                  {this.getDatesString()}
-                </div>
-              </div>
-            </div>
-            {this.renderParticipants("volunteers")}
-            {this.renderParticipants("children")}
-          </div>
-        </div>
-        <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.add}
-          onClick={this.addActivity}
-        >
-          <i className="fas fa-plus" />
-        </Fab>
-        <TimeslotsList dates={activity.dates} timeslots={activity.timeslots} />
-      </React.Fragment>
+          />
+        </Switch>
+        <ActivityNavbar allowNavigation={allowNavigation} />
+      </div>
     ) : (
       <LoadingSpinner />
     );
@@ -559,4 +709,8 @@ ActivityScreen.propTypes = {
   match: PropTypes.object,
   classes: PropTypes.object,
   enqueueSnackbar: PropTypes.func,
+  popupMessage: PropTypes.string,
+  ratingsNumber: PropTypes.number,
+  rating: PropTypes.number,
+  ratingAlreadyUpdated: PropTypes.bool,
 };
