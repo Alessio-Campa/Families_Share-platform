@@ -2005,7 +2005,8 @@ router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
             let eventDate = new Date(i.start.dateTime)
             return eventDate.getTime() > notifDate.getTime() - 1000*60*60*24*7;
           })
-          let people = e.map(i => {
+          let contacts = {parents:[], children:[]}
+          e.map(i => {
             let p = i.extendedProperties.shared.parents;
             if (p !== "[]")
               p = p.slice(1, p.length - 1).split(',').map( s => s.slice(1, s.length-1));
@@ -2014,17 +2015,15 @@ router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
             if (c !== "[]")
               c = c.slice(1, c.length - 1).split(',').map( s => s.slice(1, s.length-1));
             else c = []
-            return [...p, ...c];
+
+            contacts.parents.push(...p);
+            contacts.children.push(...c);
           })
-          let out = new Set();
-          people.forEach( i=> {
-            i.forEach(j => {
-              out.add(j)
-            })
-          })
-          let outDict = []
-          out.forEach(i => outDict.push({user_id: i}))
-          return res.status(200).send(Array.from(outDict))
+          contacts.parents = [...new Set(contacts.parents)]
+          contacts.children = [...new Set(contacts.children)]
+
+          contacts.parents = contacts.parents.map(e => {return {user_id: e}})
+          return res.status(200).send(contacts)
         })
       })
     })

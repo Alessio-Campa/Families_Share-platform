@@ -60,23 +60,37 @@ export default class TracedMembers extends React.Component {
             <h1 className="verticalCenter">Contatti con l'utente </h1>
           </div>
         </div>
-        <div id="groupMainContainer" cl>
+        <div id="groupMainContainer">
           {tracingError !== '' && (
             <h2 className="text-center text-danger" style={{paddingTop: "6rem"}}>
                 {tracingError}
             </h2>
 
           )}
-
+          <h3 style={{paddingTop: "6rem", marginLeft:"2rem"}}>Genitori</h3>
           {contacts && (
             <GroupMembersList
               key="parents"
-              members={contacts}
+              members={contacts.parents}
               groupId={this.groupId}
-              userIsAdmin={true}
+              userIsAdmin={false}
               list="parents"
+              hasShortTop={true}
             />
           )}
+
+          <h3 style={{marginLeft:"2rem"}}>Bambini</h3>
+          {contacts && (
+            <GroupMembersList
+              key="parents"
+              members={contacts.children}
+              groupId={this.groupId}
+              userIsAdmin={true}
+              list="children"
+              hasShortTop={true}
+            />
+          )}
+
         </div>
       </div>
 
