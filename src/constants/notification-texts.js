@@ -196,6 +196,12 @@ const it = {
       header: 'Positività utente',
       description: 'è risultato positivo al Covid-19'
     }
+  ],
+  removedSeat: [
+    {
+      header: 'Il tuo passaggio è stato rimosso',
+      description: 'non ha più posto per te nella sua auto'
+    }
   ]
 }
 const nl = {

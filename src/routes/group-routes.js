@@ -103,6 +103,7 @@ const Child = require('../models/child')
 const Profile = require('../models/profile')
 const Community = require('../models/community')
 const User = require('../models/user')
+const TimeslotCarRides = require('../models/timeslotCarRides')
 const { now } = require('moment')
 
 router.get('/', (req, res, next) => {
@@ -2029,8 +2030,238 @@ router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
       })
     })
   })
+})
 
+/**
+ * get all cars status for a timeslot
+ * 
+ * @apiParam {groupId}
+ * @apiParam {activityId}
+ * @apiParam {timeslotId}
+ */
+router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => { // return all the avaiables places
+  if (!req.user_id){ return res.status(401).send('Not authenticated') }
+  const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
+  const user_id = req.user_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
+    if (!rides) {
+      return res.status(200).json([])
+    }
+    return res.status(200).json(rides);
+  } catch (error) {
+    next(error)
+  }
+})
 
+/**
+ * give a seat on your car
+ * 
+ * @apiParam {groupId}
+ * @apiParam {activityId}
+ * @apiParam {timeslotId}
+ */
+router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+  if (!req.user_id){ return res.status(401).send('Not authenticated') }
+  const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
+  const user_id = req.user_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
+    if (rides) {
+      let cars = rides.cars
+      let flag = true;
+      cars.forEach(car => {
+        if (car._id === user_id) {
+          car.seats++;
+          flag = false;
+        }
+      })
+      if (flag) {
+        cars.push({
+          _id: user_id,
+          seats: 1,
+          passengers: []
+        })
+      }
+      rides.save().then(() => {
+        return res.status(200).json(rides)
+      }).catch(err => console.log(err))
+    } else {
+      const newRides = new TimeslotCarRides({
+        timeslot_id: timeslot_id,
+        activity_id: activity_id,
+        cars: [{
+          _id: user_id,
+          seats: 1,
+          passengers: []
+        }]
+      })
+      await newRides.save(err => {
+        if (err) return next(err)
+      })
+      return res.status(200).json(newRides)
+    }
+  } catch (error) {
+    return next(error)
+  }
+})
+
+/**
+ * book a seat on a car
+ * 
+ * @apiParam {groupId}
+ * @apiParam {activityId}
+ * @apiParam {timeslotId}
+ * 
+ * @apiBody {driver_id}
+ */
+router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+  if (!req.user_id){ return res.status(401).send('Not authenticated') }
+  const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
+  const user_id = req.user_id
+  const driver_id = req.body.driver_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
+    if (rides) {
+      let cars = rides.cars
+      cars.forEach(car => {
+        if (car._id === driver_id) {
+          if (car.seats > car.passengers.length) {
+            car.passengers.push(user_id)
+          }
+        }
+      })
+      rides.save().then(() => {
+        return res.status(200).json(rides)
+      }).catch(err => console.log(err))
+    } else {
+      return res.status(200).json('wrong timeslot?')
+    }
+  } catch (error) {
+    return next(error)
+  }
+})
+
+/**
+ * release a seat previously booked
+ * 
+ * @apiParam {groupId}
+ * @apiParam {activityId}
+ * @apiParam {timeslotId}
+ * 
+ * @apiBody {driver_id}
+ */
+router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+  if (!req.user_id){ return res.status(401).send('Not authenticated') }
+  const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
+  const user_id = req.user_id
+  const driver_id = req.body.driver_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
+    if (rides) {
+      let cars = rides.cars
+      cars.forEach(car => {
+        if (car._id === driver_id) {
+          let index = car.passengers.indexOf(user_id)
+          if (index > -1) {
+            car.passengers.splice(index,1);
+          }
+        }
+      })
+      rides.save().then(() => {
+        return res.status(200).json(rides)
+      }).catch(err => console.log(err))
+    } else {
+      return res.status(200).json('wrong timeslot?')
+    }
+  } catch (error) {
+    return next(error)
+  }
+})
+
+/**
+ * remove a seat on your car
+ * 
+ * @apiParam {groupId}
+ * @apiParam {activityId}
+ * @apiParam {timeslotId}
+ */
+router.delete('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+  if (!req.user_id){ return res.status(401).send('Not authenticated') }
+  const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
+  const user_id = req.user_id
+  try {
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const group = await Group.findOne({ group_id })
+    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
+    if (rides) {
+      let cars = rides.cars
+      cars.forEach(car => {
+        if (car._id === user_id) {
+          car.seats--;
+          if (car.seats < car.passengers.length) {
+            let removedPassenger = car.passengers.pop();
+            nh.newRemovedSeatNotification(user_id, removedPassenger)
+          }
+          if (car.seats === 0){
+            let index = rides.cars.indexOf(car)
+            rides.cars.splice(index,1)
+          }
+        }
+      })
+      rides.save().then(() => {
+        return res.status(200).json(rides)
+      }).catch(err => console.log(err))
+    } else {
+      return res.status(200).json('wrong timeslot?')
+    }
+  } catch (error) {
+    return next(error)
+  }
 })
 
 module.exports = router
