@@ -252,6 +252,13 @@ class TimeslotScreen extends React.Component {
     history.push(route);
   };
 
+  handleCarRide = () => {
+    const { history } = this.props;
+    const { pathname } = history.location;
+    const route = `${pathname}/carRides`;
+    history.push(route);
+  }
+
   handleEmergency = () => {
     const { history } = this.props;
     const { pathname } = history.location;
@@ -749,8 +756,19 @@ class TimeslotScreen extends React.Component {
               <i className="fas fa-arrow-left" />
             </button>
           </div>
-          <div className="col-6-10">
+          <div className="col-5-10">
             <h1 className="center">{this.getBackNavTitle()}</h1>
+          </div>
+          <div className="col-1-10">
+            {timeslot.extendedProperties.shared.status !== "completed" && (
+                <button
+                  type="button"
+                  className="transparentButton center"
+                  onClick={this.handleCarRide}
+                >
+                  <i class="fas fa-car fa-lg"></i>
+                </button>
+              )}
           </div>
           <div className="col-1-10">
             {timeslot.userCanEdit &&

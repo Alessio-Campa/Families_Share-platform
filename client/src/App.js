@@ -157,6 +157,10 @@ const EditTimeslotScreen = Loadable({
   loader: () => import("./components/EditTimeslotScreen"),
   loading: () => Loading,
 });
+const TimeslotCarRideScreen = Loadable({
+  loader: () => import("./components/TimeslotCarRideScreen"),
+  loading: () => Loading,
+})
 const SignUpScreen = Loadable({
   loader: () => import("./components/SignUpScreen"),
   loading: () => Loading,
@@ -352,6 +356,10 @@ class App extends React.Component {
                 path="/groups/:groupId/activities/:activityId/timeslots/:timeslotId/edit"
                 component={EditTimeslotScreen}
                 extraProps={{ action: "edit" }}
+              />
+              <PrivateRoute
+                path="/groups/:groupId/activities/:activityId/timeslots/:timeslotId/carRides"
+                component={TimeslotCarRideScreen}
               />
               <PrivateRoute
                 exact
