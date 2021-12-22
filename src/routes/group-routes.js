@@ -2039,7 +2039,7 @@ router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
  * @apiParam {activityId}
  * @apiParam {timeslotId}
  */
-router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => { // return all the avaiables places
+router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
   if (!req.user_id){ return res.status(401).send('Not authenticated') }
   const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
   const user_id = req.user_id
@@ -2088,6 +2088,15 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
     if (rides) {
       let cars = rides.cars
       let flag = true;
+      let error = false;
+      cars.forEach(car => {
+        if (car.passengers.includes(user_id)) {
+          error = true;
+        }
+      })
+      if (error) {
+        return res.status(400).send('you cannot drive if you are already a passenger')
+      }
       cars.forEach(car => {
         if (car._id === user_id) {
           car.seats++;
@@ -2151,6 +2160,15 @@ router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
     let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
     if (rides) {
       let cars = rides.cars
+      let error = false;
+      cars.forEach(car => {
+        if (car._id === user_id) {
+          error = true;
+        }
+      })
+      if (error) {
+        return res.status(400).send('you cannot be a passenger if you already drive')
+      }
       cars.forEach(car => {
         if (car._id === driver_id) {
           if (car.seats > car.passengers.length) {
