@@ -23,10 +23,6 @@ const timeslotCarRidesSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  activity_id: {
-    type: String,
-    required: true
-  },
   cars: {
     type: [carSchema],
     required: true,

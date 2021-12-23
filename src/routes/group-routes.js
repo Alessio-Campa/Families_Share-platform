@@ -2116,7 +2116,6 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
     } else {
       const newRides = new TimeslotCarRides({
         timeslot_id: timeslot_id,
-        activity_id: activity_id,
         cars: [{
           _id: user_id,
           seats: 1,
