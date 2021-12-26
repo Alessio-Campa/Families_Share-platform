@@ -2087,7 +2087,7 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
     let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
     if (rides) {
       let cars = rides.cars
-      let flag = true;
+      let has_car = false;
       let error = false;
       cars.forEach(car => {
         if (car.passengers.includes(user_id)) {
@@ -2095,15 +2095,15 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
         }
       })
       if (error) {
-        return res.status(400).send('you cannot drive if you are already a passenger')
+        return res.status(400).send('You cannot drive if you are already a passenger')
       }
       cars.forEach(car => {
         if (car._id === user_id) {
           car.seats++;
-          flag = false;
+          has_car = true;
         }
       })
-      if (flag) {
+      if (!has_car) {
         cars.push({
           _id: user_id,
           seats: 1,
