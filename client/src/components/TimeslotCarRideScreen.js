@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios"
 import LoadingSpinner from "./LoadingSpinner"
 import $ from "jquery"
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 const Seat = (props) => {
   let card;
@@ -50,7 +51,7 @@ const OtherCar = (props) => {
   let car = props.car;
   return (<div>
     <h4 >
-    Autista: {props.names[car._id].name} {props.names[car._id].surname}
+    Autista: {props.names[car._id] && props.names[car._id].name} {props.names[car._id] && props.names[car._id].surname}
     </h4>
     <h4>
     Posti disponibili: {car.seats - car.passengers.length} su {car.seats}
@@ -220,6 +221,7 @@ export default class TimeslotCarRideScreen extends React.Component {
         </div>
 
         <div id="groupMainContainer" style={{ position: 'relative', top: '5.6rem' }}>
+        <PullToRefresh onRefresh={() => this.componentDidMount()} pullingContent={""}> 
           <div>
             {this.state.myCar !== undefined && this.state.myCar === null &&
             <div className="text-center">
@@ -246,7 +248,8 @@ export default class TimeslotCarRideScreen extends React.Component {
               })}
             </ul>
           </div>
-        </div>  
+        </PullToRefresh> 
+        </div> 
       </div>
     ) : (
       <LoadingSpinner />
