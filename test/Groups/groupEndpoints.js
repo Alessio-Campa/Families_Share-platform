@@ -99,7 +99,7 @@ describe('/Get/api/groups', () => {
         .end((err, res) => {
           res.should.have.status(200)
           res.body.should.be.a('array')
-          res.body.length.should.be.eql(3)
+          res.body.length.should.be.eql(4)
           done()
         })
     })
@@ -117,7 +117,7 @@ describe('/Get/api/groups', () => {
           .end((err, res) => {
             res.should.have.status(200)
             res.body.should.be.a('array')
-            res.body.length.should.be.eql(3)
+            res.body.length.should.be.eql(4)
             done()
           })
       })

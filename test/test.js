@@ -205,6 +205,71 @@ const initializeDB = async () => {
     image: '/images/profiles/child_default_photo.jpg'
   }
   await chai.request(server).post(`/api/users/${user.user_id}/children`).send(child).set('Authorization', user.token)
+
+  //New data
+  const myUser = {
+    given_name: 'My',
+    family_name: 'User',
+    number: '3245668975',
+    email: 'my_user@email.com',
+    password: '12345678',
+    visible: true,
+    language: 'en'
+  }
+  await chai.request(server).post('/api/users').send(myUser)
+  const myUserObj = await User.findOne({ email: myUser.email })
+  const myGroup = {
+    name: 'Gruppo',
+    description: 'Description',
+    visible: true,
+    location: 'Mestre',
+    owner_id: myUserObj.user_id,
+    invite_ids: [],
+    contact_type: 'email',
+    contact_info: 'my_info@email.com'
+  }
+  await chai.request(server).post('/api/groups').send(myGroup).set('Authorization', myUserObj.token)
+  const myGroupObj = await Group.findOne({ name: 'Gruppo' })
+  const myActivity = {
+    group_id: myGroupObj.group_id,
+    creator_id: myUserObj.user_id,
+    name: 'Attivita',
+    color: '#00838F',
+    description: 'Activity description',
+    location: 'Venezia',
+    repetition: true,
+    repetition_type: 'weekly',
+    different_timeslots: false
+  }
+  const myEvents = [
+    {
+      description: 'Test timeslot',
+      location: 'Venezia',
+      summary: 'Test timeslot',
+      start: {
+        dateTime: '2021-12-06T22:00:00.000Z',
+        date: null
+      },
+      end: {
+        dateTime: '2021-12-06T23:00:00.000Z',
+        date: null
+      },
+      extendedProperties: {
+        shared: {
+          requiredParents: 4,
+          requiredChildren: 10,
+          cost: 10,
+          parents: JSON.stringify([]),
+          children: JSON.stringify([]),
+          status: 'ongoing',
+          activityColor: '#00838F',
+          groupId: myGroupObj.group_id,
+          repetition: 'weekly'
+        }
+      }
+    }
+  ]
+  await chai.request(server).post(`/api/groups/${myGroupObj.group_id}/activities`).send({ myActivity, myEvents }).set('Authorization', user.token)
 }
 describe('Test', () => {
   before('Initializing DB', async () => {
