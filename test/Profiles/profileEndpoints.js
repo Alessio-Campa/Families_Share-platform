@@ -69,7 +69,7 @@ describe('/Get/api/profiles', () => {
 				.query({searchBy: 'visibility', visible:true})
 				.end((err, res) => {
 					res.should.have.status(200)
-					res.body.should.be.a('array').with.lengthOf(3);
+					res.body.should.be.a('array').with.lengthOf(4);
 					done();
 				})
 		});

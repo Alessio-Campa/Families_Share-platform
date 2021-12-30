@@ -27,6 +27,7 @@ const importTest = (name, path) => {
 }
 
 const initializeDB = async () => {
+  /*
   const user2 = {
     given_name: 'Test',
     family_name: 'User2',
@@ -205,7 +206,7 @@ const initializeDB = async () => {
     image: '/images/profiles/child_default_photo.jpg'
   }
   await chai.request(server).post(`/api/users/${user.user_id}/children`).send(child).set('Authorization', user.token)
-
+*/
   //New data
   const myUser = {
     given_name: 'My',
@@ -237,8 +238,8 @@ const initializeDB = async () => {
     color: '#00838F',
     description: 'Activity description',
     location: 'Venezia',
-    repetition: true,
-    repetition_type: 'weekly',
+    repetition: false,
+    repetition_type: 'none',
     different_timeslots: false
   }
   const myEvents = [
@@ -264,31 +265,31 @@ const initializeDB = async () => {
           status: 'ongoing',
           activityColor: '#00838F',
           groupId: myGroupObj.group_id,
-          repetition: 'weekly'
+          repetition: 'none'
         }
       }
     }
   ]
-  await chai.request(server).post(`/api/groups/${myGroupObj.group_id}/activities`).send({ myActivity, myEvents }).set('Authorization', user.token)
+  await chai.request(server).post(`/api/groups/${myGroupObj.group_id}/activities`).send({ myActivity, myEvents }).set('Authorization', myUserObj.token)
 }
 describe('Test', () => {
   before('Initializing DB', async () => {
     await initializeDB()
   })
 
-  importTest('User Endpoints Test', './Users/userEndpoints')
-  importTest('Group Endpoints Test', './Groups/groupEndpoints')
-  importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
-  importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
-  importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
-  importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
-  importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
-  importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
-  importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
-  importTest('User Various Endpoints Test', './Users/variousEndpoints')
-  importTest('Child Endpoints Test', './Children/childEndpoints')
-  importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
-  importTest('Community Endpoints Test', './Community/communityEndpoints')
+  // importTest('User Endpoints Test', './Users/userEndpoints')
+  // importTest('Group Endpoints Test', './Groups/groupEndpoints')
+  // importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
+  // importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
+  // importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
+  // importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
+  // importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
+  // importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
+  // importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
+  // importTest('User Various Endpoints Test', './Users/variousEndpoints')
+  // importTest('Child Endpoints Test', './Children/childEndpoints')
+  // importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
+  // importTest('Community Endpoints Test', './Community/communityEndpoints')
 
   after('Cleaning up', async () => {
     await User.deleteMany({})
