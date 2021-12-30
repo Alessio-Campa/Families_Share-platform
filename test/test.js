@@ -290,6 +290,7 @@ describe('Test', () => {
   // importTest('Child Endpoints Test', './Children/childEndpoints')
   // importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
   // importTest('Community Endpoints Test', './Community/communityEndpoints')
+  importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
 
   after('Cleaning up', async () => {
     await User.deleteMany({})
