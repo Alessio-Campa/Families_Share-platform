@@ -27,7 +27,6 @@ const importTest = (name, path) => {
 }
 
 const initializeDB = async () => {
-  /*
   const user2 = {
     given_name: 'Test',
     family_name: 'User2',
@@ -37,6 +36,8 @@ const initializeDB = async () => {
     visible: true,
     language: 'en'
   }
+  await chai.request(server).post('/api/users').send(user2)
+  /*
   const user3 = {
     given_name: 'Test',
     family_name: 'User3',
@@ -46,7 +47,6 @@ const initializeDB = async () => {
     visible: true,
     language: 'en'
   }
-  await chai.request(server).post('/api/users').send(user2)
   await chai.request(server).post('/api/users').send(user3)
   const user = await User.findOne({ email: 'test3@email.com' })
   const group2 = {
@@ -239,7 +239,7 @@ const initializeDB = async () => {
     description: 'Activity description',
     location: 'Venezia',
     repetition: false,
-    repetition_type: 'none',
+    repetition_type: '',
     different_timeslots: false
   }
   const myEvents = [
@@ -270,7 +270,7 @@ const initializeDB = async () => {
       }
     }
   ]
-  await chai.request(server).post(`/api/groups/${myGroupObj.group_id}/activities`).send({ myActivity, myEvents }).set('Authorization', myUserObj.token)
+  await chai.request(server).post(`/api/groups/${myGroupObj.group_id}/activities`).set('Authorization', myUserObj.token).send({ activity: myActivity, events: myEvents })
 }
 describe('Test', () => {
   before('Initializing DB', async () => {
@@ -291,6 +291,8 @@ describe('Test', () => {
   // importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
   // importTest('Community Endpoints Test', './Community/communityEndpoints')
   importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
+
+  importTest('Activity Announcement Test', './NewTests/activityChat')
 
   after('Cleaning up', async () => {
     await User.deleteMany({})
