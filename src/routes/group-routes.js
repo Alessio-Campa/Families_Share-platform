@@ -2225,7 +2225,7 @@ router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
     }
     let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
     if (!rides) {
-      return res.status(200).json([])
+      return res.status(200).json({'cars':[]})
     }
     return res.status(200).json(rides);
   } catch (error) {
