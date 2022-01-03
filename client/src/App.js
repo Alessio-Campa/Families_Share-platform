@@ -117,6 +117,10 @@ const CreatePlanScreen = Loadable({
   loader: () => import("./components/CreatePlanScreen"),
   loading: () => Loading,
 });
+const CreateSurveyScreen = Loadable({
+  loader: () => import("./components/CreateSurveyScreen"),
+  loading: () => Loading,
+});
 const ManagePlanScreen = Loadable({
   loader: () => import("./components/ManagePlanScreen"),
   loading: () => Loading,
@@ -329,6 +333,11 @@ class App extends React.Component {
                 exact
                 path="/groups/:groupId/plans/create"
                 component={CreatePlanScreen}
+              />
+              <PrivateRoute
+                exact
+                path="/groups/:groupId/survey/create"
+                component={CreateSurveyScreen}
               />
               <PrivateRoute
                 exact

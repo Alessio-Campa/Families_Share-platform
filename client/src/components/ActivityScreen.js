@@ -418,7 +418,7 @@ class ActivityScreen extends React.Component {
   handleExport = (format) => {
     const { match, enqueueSnackbar, language } = this.props;
     const texts = Texts[language].activityScreen;
-    const snackMessage = texts[`${format}Toaster`];
+    const snackMessage = texts[`format}Toaster`];
     const { activityId, groupId } = match.params;
     axios
       .post(`/api/groups/${groupId}/activities/${activityId}/export`, {

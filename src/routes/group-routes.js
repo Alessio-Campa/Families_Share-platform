@@ -105,6 +105,7 @@ const Community = require('../models/community')
 const User = require('../models/user')
 const TimeslotCarRides = require('../models/timeslotCarRides')
 const { now } = require('moment')
+const Survey = require('../models/survey')
 
 router.get('/', (req, res, next) => {
   if (!req.user_id) return res.status(401).send('Not authenticated')
@@ -1987,6 +1988,176 @@ router.post('/:groupId/activities/:activityId/valutation', (req, res, next) => {
     next(error)
   }
 })
+
+router.post('/:id/survey', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated');
+  }
+  const user_id = req.user_id;
+  const group_id = req.params.id;
+  try {
+    const { name, location, color, possibilities, multipleChoiceAllowed } = req.body;
+    const member = await Member.findOne({
+      group_id,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    if (!member.admin) {
+      return res.status(401).send('Unauthorized')
+    }
+    if (!(name || location || color || possibilities || multipleChoiceAllowed)) {
+      return res.status(400).send('Bad request')
+    }
+    possibilities.forEach((_possibility) => _possibility.possibility_id = objectid() )
+    await Survey.create({
+      survey_id: objectid(),
+      group_id,
+      creator_id: user_id,
+      name,
+      location,
+      color,
+      possibilities,
+      multipleChoiceAllowed,
+    })
+    res.status(200).send('Survey was created')
+    console.log(color);
+  } catch (err) {
+    console.log(err)
+    next(err)
+  }
+})
+
+router.get('/:groupId/surveys', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const userId = req.user_id
+  const { groupId } = req.params
+  try {
+    const member = await Member.findOne({
+      group_id: groupId,
+      user_id: userId,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const surveys = await Survey.find({ group_id: groupId })
+    if (surveys.length === 0) {
+      return res.status(404).send('Group has no ongoing surveys')
+    }
+    return res.json(surveys)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:groupId/surveys/:surveyId', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated');
+  }
+  const userId = req.user_id;
+  const { groupId, surveyId } = req.params;
+  try {
+    const member = await Member.findOne({
+      group_id: groupId,
+      user_id: userId,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized');
+    }
+    const survey = await Survey.findOne({ group_id: groupId, survey_id: surveyId });
+    if(!survey)
+      return res.status(500).send('survey does not exist'); 
+    return res.json(survey);
+  } catch (err) {
+    next(err);
+  }
+})
+
+router.patch('/:groupId/surveys/:surveyId/votes/:possibilityId', async (req, res, next) => {
+  if (!req.user_id) { return res.status(401).send('Unauthorized'); }
+  const { groupId, surveyId, possibilityId } = req.params;
+  const userId = req.user_id;
+  try {
+    const member = await Member.findOne({
+      group_id: groupId,
+      user_id: userId,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+    const survey = await Survey.findOne({ survey_id: surveyId });
+    if(!survey)
+      return res.status(500).send('survey does not exist'); 
+    const possibility = survey.possibilities.find((_possibility) => _possibility.possibility_id === possibilityId);
+    if(!possibility)
+      return res.status(500).send('possibility does not exist'); 
+    let deleted = false;
+    if(possibility.votes.includes(req.user_id)){
+      possibility.votes.splice(possibility.votes.indexOf(req.user_id),1);
+      deleted = true;
+    }
+    else{
+      if(!survey.multipleChoiceAllowed){
+        for(let _possibility of survey.possibilities){
+          _possibility.votes = _possibility.votes.filter(vote => vote !== req.user_id);
+        }
+      }
+      let newVote = { _id: req.user_id };
+      possibility.votes.push(newVote);
+    }
+    survey.save(err => {
+      if (err) { return res.status(500).send('error while saving'); }
+    })
+    if(deleted)
+        return res.status(200).send('vote deleted correctly');
+    else
+      return res.status(200).send('vote inserted correctly');
+  } catch (error) {
+    next(error);
+  }
+})
+
+router.delete('/:groupId/surveys/:surveyId', async (req, res, next) => {
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated');
+  }
+  const { groupId, surveyId } = req.params
+  const { user_id } = req
+  try {
+    const member = await Member.findOne({
+      group_id: groupId,
+      user_id,
+      group_accepted: true,
+      user_accepted: true
+    });
+    if (!member) {
+      return res.status(401).send('Unauthorized');
+    }
+    const survey = await Survey.findOne({ survey_id: surveyId });
+    if(!survey){
+      return res.status(500).send('survey does not exist');
+    } 
+    if(survey.creator_id !== user_id){
+      return res.status(401).send('Unauthorized');
+    }
+    await Survey.deleteOne({ survey_id: surveyId });
+    res.status(200).send('Survey was deleted successfully');
+  } catch (err) {
+    next(err)
+  }
+})
+
 
 router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
   let group;

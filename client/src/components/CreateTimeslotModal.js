@@ -63,7 +63,7 @@ class CreateTimeslotModal extends React.Component {
     const samePeriod =
       Math.floor(startTime.substr(0, startTime.indexOf(":")) / 12) ===
       Math.floor(endTime.substr(0, endTime.indexOf(":")) / 12);
-    const invalidTime = samePeriod && startTime >= endTime;
+    const invalidTime = !samePeriod && startTime >= endTime;
     if (this.formEl.checkValidity() === false || invalidTime) {
       for (let i = 0; i < formLength; i += 1) {
         const elem = this.formEl[i];

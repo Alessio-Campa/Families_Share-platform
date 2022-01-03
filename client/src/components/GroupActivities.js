@@ -10,6 +10,7 @@ import ActivityListItem from "./ActivityListItem";
 import PlanListItem from "./PlanListItem";
 import ConfirmDialog from "./ConfirmDialog";
 import Log from "./Log";
+import SurveyListItem from "./SurveyListItem";
 
 const styles = {
   add: {
@@ -70,6 +71,18 @@ const fetchPlans = (groupId) => {
     });
 };
 
+const fetchSurveys = (groupId) => {
+  return axios
+    .get(`/api/groups/${groupId}/surveys`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      Log.error(error);
+      return [];
+    });
+};
+
 class GroupActivities extends React.Component {
   constructor(props) {
     super(props);
@@ -87,6 +100,7 @@ class GroupActivities extends React.Component {
     const { group_id: groupId } = group;
     const activities = await fetchActivites(groupId);
     const plans = await fetchPlans(groupId);
+    const surveys = await fetchSurveys(groupId);
     const acceptedActivities = activities.filter(
       (activity) => activity.status === "accepted"
     );
@@ -97,6 +111,7 @@ class GroupActivities extends React.Component {
       activities: acceptedActivities,
       pendingActivities,
       plans,
+      surveys,
     });
   }
 
@@ -136,6 +151,20 @@ class GroupActivities extends React.Component {
         {plans.map((plan, index) => (
           <li key={index}>
             <PlanListItem plan={plan} groupId={groupId} />
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  renderSurveys = () => {
+    const { group, surveys } = this.state;
+    const { group_id: groupId } = group;
+    return (
+      <ul>
+        {surveys.map((survey, index) => (
+          <li key={index}>
+            <SurveyListItem survey={survey} groupId={groupId} />
           </li>
         ))}
       </ul>
@@ -192,6 +221,7 @@ class GroupActivities extends React.Component {
       showAddOptions,
       fetchedData,
       plans,
+      surveys,
     } = this.state;
     const { name } = group;
     const texts = Texts[language].groupActivities;
@@ -315,6 +345,26 @@ class GroupActivities extends React.Component {
               >
                 <i className="fas fa-calendar" />
               </Fab>
+            <div
+              className="row no-gutters"
+              style={{
+                bottom: "26rem",
+                zIndex: 100,
+                position: "fixed",
+                right: "7%",
+                alignItems: "center",
+              }}
+            >
+              <div className=" activitiesFabLabel">Nuovo sondaggio</div>
+                <Fab
+                  color="primary"
+                  aria-label="addPlan"
+                  className={classes.addPlan}
+                  onClick={() => this.add("survey")}
+                >
+                  <i className="fas fa-question" />
+                </Fab>
+              </div>
             </div>
           </React.Fragment>
         )}
@@ -329,6 +379,12 @@ class GroupActivities extends React.Component {
             <div id="groupActivitiesContainer" className="horizontalCenter">
               <h1 className="">{texts.plansHeader}</h1>
               {this.renderPlans()}
+            </div>
+          )}
+          {fetchedData && surveys.length > 0 && (
+            <div id="groupActivitiesContainer" className="horizontalCenter">
+              <h1 className="">Sondaggi del gruppo</h1>
+              {this.renderSurveys()}
             </div>
           )}
         </div>

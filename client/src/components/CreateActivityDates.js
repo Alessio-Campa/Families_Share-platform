@@ -220,7 +220,7 @@ class CreateActivityDates extends React.Component {
                 <Switch
                   checked={repetition}
                   color="primary"
-                  onChange={this.handleSwitch}
+                  onClick={this.handleSwitch}
                 />
               </MuiThemeProvider>
             </div>
