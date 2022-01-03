@@ -85,7 +85,7 @@ class ChildProfileInfo extends React.Component {
     } = this.props;
     const { profileId } = match.params;
     const { confirmDialogIsOpen, modalIsOpen } = this.state;
-    const isParent = JSON.parse(localStorage.getItem("user")).id === profileId;
+    const isParent = parents.filter(i => i.user_id === JSON.parse(localStorage.getItem("user")).id).length > 0;
     const texts = Texts[language].childProfileInfo;
     return (
       <React.Fragment>

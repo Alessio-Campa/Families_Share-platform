@@ -10,6 +10,7 @@ images/profiles/
 images/groups/
 !images/groups/group_default_photo.png
 coverage
+.idea
 
 MY_USER.pdf
 

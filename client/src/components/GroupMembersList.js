@@ -142,9 +142,9 @@ export default class GroupMembersList extends React.Component {
 
   render() {
     const { fetchedResources } = this.state;
-    const { members } = this.props;
+    const { members, hasShortTop} = this.props;
     return (
-      <div className="membersContainer">
+      <div className="membersContainer" style={{top: hasShortTop ? "0 rem" : "9.1rem"}}>
         {fetchedResources ? (
           <ul>{this.renderLetters()}</ul>
         ) : (
@@ -165,5 +165,6 @@ GroupMembersList.propTypes = {
   members: PropTypes.array,
   groupId: PropTypes.string,
   userIsAdmin: PropTypes.bool,
+  hasShortTop: PropTypes.bool,
   list: PropTypes.oneOf(["parents", "children"]),
 };

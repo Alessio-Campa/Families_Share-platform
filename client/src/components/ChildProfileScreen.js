@@ -50,7 +50,7 @@ class ChildProfileScreen extends React.Component {
     const userId = JSON.parse(localStorage.getItem("user")).id;
     const child = await getChild(profileId, childId);
     child.parents = await getParents(profileId, childId);
-    child.showAdditional = userId === profileId;
+    child.showAdditional = userId === profileId || profileId === "groupmember";
     this.setState({ child, fetchedChildData: true });
   }
 
