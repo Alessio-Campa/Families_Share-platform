@@ -558,6 +558,12 @@ function getNotificationDescription (notification, language) {
           return `${subject} ${description}`
         default: return ''
       }
+    case 'removedSeat':
+      switch (code) {
+        case 0:
+          return `${subject} ${description}`
+        default: return ''
+      }
     default:
       return ''
   }
@@ -603,7 +609,20 @@ async function newPositivityNotification(sender, receiver){
     }
     await Notification.create(notification)
   });
+}
 
+async function newRemovedSeatNotification(sender, receiver) {
+  let user = await Profile.findOne({user_id: sender});
+  const notification = {
+    owner_type: 'user',
+    owner_id: receiver,
+    type: 'removedSeat',
+    read: false,
+    code: 0,
+    subject: `${user.given_name} ${user.family_name}`,
+    object: sender
+  }
+  await Notification.create(notification)
 }
 
 module.exports = {
@@ -622,5 +641,6 @@ module.exports = {
   timeslotAdminChangesNotification,
   newRequestNotification,
   newReplyNotification,
-  newPositivityNotification
+  newPositivityNotification,
+  newRemovedSeatNotification
 }
