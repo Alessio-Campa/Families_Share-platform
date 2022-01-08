@@ -1956,27 +1956,35 @@ router.put('/:groupId/members/:memberId/report', async (req, res, next) => {
  * @apiBody {rate} rate between 1 and 5
  *
  */
-router.post('/:groupId/activities/:activityId/valutation', (req, res, next) => {
+router.post('/:groupId/activities/:activityId/valutation', async (req, res, next) => {
   if (!req.user_id) { return res.status(401).send('Unauthorized') }
+  const userId = req.user_id
+  const { groupId } = req.params
   try {
+    const member = await Member.findOne({
+      group_id: groupId,
+      user_id: userId,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+
     if (!req.body.rate || req.body.rate < 1 || req.body.rate > 5) { return res.status(400).send('Bad request') }
     Activity.findOne({ activity_id: req.params.activityId }, (_err, activity) => {
       if (!activity) { return res.status(500).send('Activity does not exist') }
-      let BreakException = {}
+      let alreadyInserted = false
       if (activity.valutations) {
-        try {
-          activity.valutations.forEach(valutation => {
-            if (valutation._id === req.user_id) {
-              valutation.rate = req.body.rate
-              throw BreakException
-            }
-          })
+        activity.valutations.forEach(valutation => {
+          if (valutation._id === req.user_id) {
+            valutation.rate = req.body.rate
+            alreadyInserted = true
+          }
+        })
+        if(!alreadyInserted) {
           let newValutation = { _id: req.user_id, rate: req.body.rate }
           activity.valutations.push(newValutation)
-        } catch (e) {
-          if (e !== BreakException) {
-            throw e
-          }
         }
       }
       activity.save(err => {

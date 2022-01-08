@@ -19,6 +19,12 @@ const Child = require('../src/models/child')
 const Activity = require('../src/models/activity')
 const Announcement = require('../src/models/announcement')
 const Reply = require('../src/models/reply')
+const Community = require('../src/models/community')
+const Family = require('../src/models/family')
+const Plan = require('../src/models/plan')
+const Survey = require('../src/models/survey')
+const Timeslot = require('../src/models/timeslot')
+const TimeslotCarRides = require('../src/models/timeslotCarRides')
 
 const importTest = (name, path) => {
   describe(name, () => {
@@ -290,9 +296,10 @@ describe('Test', () => {
   // importTest('Child Endpoints Test', './Children/childEndpoints')
   // importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
   // importTest('Community Endpoints Test', './Community/communityEndpoints')
-  importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
 
+  importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
   importTest('Activity Announcement Test', './NewTests/activityChat')
+  importTest('Rating Test', './NewTests/rating')
 
   after('Cleaning up', async () => {
     await User.deleteMany({})
@@ -311,5 +318,11 @@ describe('Test', () => {
     await Activity.deleteMany({})
     await Reply.deleteMany({})
     await Announcement.deleteMany({})
+    await Community.deleteMany({})
+    await Family.deleteMany({})
+    await Plan.deleteMany({})
+    await Survey.deleteMany({})
+    await Timeslot.deleteMany({})
+    await TimeslotCarRides.deleteMany({})
   })
 })
