@@ -2369,7 +2369,7 @@ router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
         })
       } else {
         lockRelease()
-        return res.status(200).json('wrong timeslot?')
+        return res.status(404).json('wrong timeslot?')
       }
     })
   } catch (error) {
@@ -2423,7 +2423,7 @@ router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', 
         })
       } else {
         lockRelease()
-        return res.status(200).json('wrong timeslot?')
+        return res.status(404).json('wrong timeslot?')
       }
     })
   } catch (error) {
@@ -2479,7 +2479,7 @@ router.delete('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides',
         })
       } else {
         lockRelease()
-        return res.status(200).json('wrong timeslot?')
+        return res.status(404).json('wrong timeslot?')
       }
     })
   } catch (error) {
