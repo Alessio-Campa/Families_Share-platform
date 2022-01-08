@@ -26,6 +26,7 @@ const ah = require('../helper-functions/activity-helpers')
 const ph = require('../helper-functions/plan-helpers')
 const uh = require('../helper-functions/user-helpers')
 const schedule = require('node-schedule')
+const AsyncLock = require('async-lock');
 
 if (process.env.NODE_APP_INSTANCE === 0) {
   schedule.scheduleJob(process.env.CRONJOB, () => {
@@ -1480,11 +1481,11 @@ router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId', async (re
     if (
       !(
         summary ||
-          description ||
-          location ||
-          start ||
-          end ||
-          extendedProperties
+        description ||
+        location ||
+        start ||
+        end ||
+        extendedProperties
       )
     ) {
       return res.status(400).send('Bad Request')
@@ -1531,9 +1532,9 @@ router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId', async (re
     }
     const externals = JSON.parse(extendedProperties.shared.externals || '[]')
     const volunteersReq =
-        (parents.length + externals.length) >= extendedProperties.shared.requiredParents
+      (parents.length + externals.length) >= extendedProperties.shared.requiredParents
     const childrenReq =
-        children.length >= extendedProperties.shared.requiredChildren
+      children.length >= extendedProperties.shared.requiredChildren
     if (event.data.extendedProperties.shared.status !== extendedProperties.shared.status) {
       nh.timeslotStatusChangeNotification(summary, extendedProperties.shared.status, oldParents, group_id, activity_id, timeslot_id)
     }
@@ -1597,11 +1598,11 @@ router.post('/:groupId/activities/:activityId/timeslots/add', async (req, res, n
     if (
       !(
         summary ||
-          description ||
-          location ||
-          start ||
-          end ||
-          extendedProperties
+        description ||
+        location ||
+        start ||
+        end ||
+        extendedProperties
       )
     ) {
       return res.status(400).send('Bad Request')
@@ -1905,11 +1906,11 @@ router.delete('/:groupId/activities/:activityId/announcements/:announcementId/re
 /**
  * @apiName report a user
  * @apiGroup Group
- * 
+ *
  * @apiParam {groupId} the id of the group
  * @apiParam {memberId} the id of the user want to report
  * @apiBody {message} the message of the report
- * 
+ *
  */
 router.put('/:groupId/members/:memberId/report', async (req, res, next) => {
   if (!req.user_id) {return res.status(401).send('Unauthorized')}
@@ -2075,7 +2076,7 @@ router.get('/:groupId/surveys/:surveyId', async (req, res, next) => {
     }
     const survey = await Survey.findOne({ group_id: groupId, survey_id: surveyId });
     if(!survey)
-      return res.status(500).send('survey does not exist'); 
+      return res.status(500).send('survey does not exist');
     return res.json(survey);
   } catch (err) {
     next(err);
@@ -2098,10 +2099,10 @@ router.patch('/:groupId/surveys/:surveyId/votes/:possibilityId', async (req, res
     }
     const survey = await Survey.findOne({ survey_id: surveyId });
     if(!survey)
-      return res.status(500).send('survey does not exist'); 
+      return res.status(500).send('survey does not exist');
     const possibility = survey.possibilities.find((_possibility) => _possibility.possibility_id === possibilityId);
     if(!possibility)
-      return res.status(500).send('possibility does not exist'); 
+      return res.status(500).send('possibility does not exist');
     let deleted = false;
     if(possibility.votes.includes(req.user_id)){
       possibility.votes.splice(possibility.votes.indexOf(req.user_id),1);
@@ -2120,7 +2121,7 @@ router.patch('/:groupId/surveys/:surveyId/votes/:possibilityId', async (req, res
       if (err) { return res.status(500).send('error while saving'); }
     })
     if(deleted)
-        return res.status(200).send('vote deleted correctly');
+      return res.status(200).send('vote deleted correctly');
     else
       return res.status(200).send('vote inserted correctly');
   } catch (error) {
@@ -2147,7 +2148,7 @@ router.delete('/:groupId/surveys/:surveyId', async (req, res, next) => {
     const survey = await Survey.findOne({ survey_id: surveyId });
     if(!survey){
       return res.status(500).send('survey does not exist');
-    } 
+    }
     if(survey.creator_id !== user_id){
       return res.status(401).send('Unauthorized');
     }
@@ -2204,7 +2205,7 @@ router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
 
 /**
  * get all cars status for a timeslot
- * 
+ *
  * @apiParam {groupId}
  * @apiParam {activityId}
  * @apiParam {timeslotId}
@@ -2233,9 +2234,11 @@ router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
   }
 })
 
+
+const carSharingLock = new AsyncLock();
 /**
  * give a seat on your car
- * 
+ *
  * @apiParam {groupId}
  * @apiParam {activityId}
  * @apiParam {timeslotId}
@@ -2254,49 +2257,59 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
     if (!member) {
       return res.status(401).send('Unauthorized')
     }
-    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
-    if (rides) {
-      let cars = rides.cars
-      let has_car = false;
-      let error = false;
-      cars.forEach(car => {
-        if (car.passengers.includes(user_id)) {
-          error = true;
-        }
-      })
-      if (error) {
-        return res.status(400).send('You cannot drive if you are already a passenger')
-      }
-      cars.forEach(car => {
-        if (car._id === user_id) {
-          car.seats++;
-          has_car = true;
-        }
-      })
-      if (!has_car) {
-        cars.push({
-          _id: user_id,
-          seats: 1,
-          passengers: []
+
+    carSharingLock.acquire('carSharingLock', async function (lockRelease) {
+      let rides = await TimeslotCarRides.findOne({ timeslot_id: timeslot_id })
+      if (rides) {
+        let cars = rides.cars
+        let has_car = false;
+        let error = false;
+        cars.forEach(car => {
+          if (car.passengers.includes(user_id)) {
+            error = true;
+          }
         })
+        if (error) {
+          lockRelease()
+          return res.status(400).send('You cannot drive if you are already a passenger')
+        }
+        cars.forEach(car => {
+          if (car._id === user_id) {
+            car.seats++;
+            has_car = true;
+          }
+        })
+        if (!has_car) {
+          cars.push({
+            _id: user_id,
+            seats: 1,
+            passengers: []
+          })
+        }
+        rides.save().then(() => {
+          lockRelease()
+          return res.status(200).json(rides)
+        }).catch((err) => {
+          lockRelease()
+          console.log(err)
+        })
+      } else {
+        const newRides = new TimeslotCarRides({
+          timeslot_id: timeslot_id,
+          cars: [{
+            _id: user_id,
+            seats: 1,
+            passengers: []
+          }]
+        })
+        await newRides.save(err => {
+          lockRelease()
+          if (err) return next(err)
+        })
+        lockRelease()
+        return res.status(200).json(newRides)
       }
-      rides.save().then(() => {
-        return res.status(200).json(rides)
-      }).catch(err => console.log(err))
-    } else {
-      const newRides = new TimeslotCarRides({
-        timeslot_id: timeslot_id,
-        cars: [{
-          _id: user_id,
-          seats: 1,
-          passengers: []
-        }]
-      })
-      await newRides.save(err => {
-        if (err) return next(err)
-      })
-      return res.status(200).json(newRides)
-    }
+    })
   } catch (error) {
     return next(error)
   }
@@ -2304,11 +2317,11 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
 
 /**
  * book a seat on a car
- * 
+ *
  * @apiParam {groupId}
  * @apiParam {activityId}
  * @apiParam {timeslotId}
- * 
+ *
  * @apiBody {driver_id}
  */
 router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
@@ -2326,31 +2339,39 @@ router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
     if (!member) {
       return res.status(401).send('Unauthorized')
     }
-    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
-    if (rides) {
-      let cars = rides.cars
-      let error = false;
-      cars.forEach(car => {
-        if (car._id === user_id) {
-          error = true;
-        }
-      })
-      if (error) {
-        return res.status(400).send('you cannot be a passenger if you already drive')
-      }
-      cars.forEach(car => {
-        if (car._id === driver_id) {
-          if (car.seats > car.passengers.length) {
-            car.passengers.push(user_id)
+    carSharingLock.acquire('carSharingLock', async function (lockRelease) {
+      let rides = await TimeslotCarRides.findOne({ timeslot_id: timeslot_id })
+      if (rides) {
+        let cars = rides.cars
+        let error = false;
+        cars.forEach(car => {
+          if (car._id === user_id) {
+            error = true;
           }
+        })
+        if (error) {
+          lockRelease()
+          return res.status(400).send('you cannot be a passenger if you already drive')
         }
-      })
-      rides.save().then(() => {
-        return res.status(200).json(rides)
-      }).catch(err => console.log(err))
-    } else {
-      return res.status(200).json('wrong timeslot?')
-    }
+        cars.forEach(car => {
+          if (car._id === driver_id) {
+            if (car.seats > car.passengers.length) {
+              car.passengers.push(user_id)
+            }
+          }
+        })
+        rides.save().then(() => {
+          lockRelease()
+          return res.status(200).json(rides)
+        }).catch((err) => {
+          lockRelease()
+          console.log(err)
+        })
+      } else {
+        lockRelease()
+        return res.status(200).json('wrong timeslot?')
+      }
+    })
   } catch (error) {
     return next(error)
   }
@@ -2358,11 +2379,11 @@ router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
 
 /**
  * release a seat previously booked
- * 
+ *
  * @apiParam {groupId}
  * @apiParam {activityId}
  * @apiParam {timeslotId}
- * 
+ *
  * @apiBody {driver_id}
  */
 router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
@@ -2380,23 +2401,31 @@ router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', 
     if (!member) {
       return res.status(401).send('Unauthorized')
     }
-    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
-    if (rides) {
-      let cars = rides.cars
-      cars.forEach(car => {
-        if (car._id === driver_id) {
-          let index = car.passengers.indexOf(user_id)
-          if (index > -1) {
-            car.passengers.splice(index,1);
+
+    carSharingLock.acquire('carSharingLock', async function (lockRelease) {
+      let rides = await TimeslotCarRides.findOne({ timeslot_id: timeslot_id })
+      if (rides) {
+        let cars = rides.cars
+        cars.forEach(car => {
+          if (car._id === driver_id) {
+            let index = car.passengers.indexOf(user_id)
+            if (index > -1) {
+              car.passengers.splice(index, 1);
+            }
           }
-        }
-      })
-      rides.save().then(() => {
-        return res.status(200).json(rides)
-      }).catch(err => console.log(err))
-    } else {
-      return res.status(200).json('wrong timeslot?')
-    }
+        })
+        rides.save().then(() => {
+          lockRelease()
+          return res.status(200).json(rides)
+        }).catch((err) => {
+          lockRelease()
+          console.log(err)
+        })
+      } else {
+        lockRelease()
+        return res.status(200).json('wrong timeslot?')
+      }
+    })
   } catch (error) {
     return next(error)
   }
@@ -2404,7 +2433,7 @@ router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', 
 
 /**
  * remove a seat on your car
- * 
+ *
  * @apiParam {groupId}
  * @apiParam {activityId}
  * @apiParam {timeslotId}
@@ -2423,29 +2452,36 @@ router.delete('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides',
     if (!member) {
       return res.status(401).send('Unauthorized')
     }
-    const group = await Group.findOne({ group_id })
-    let rides = await TimeslotCarRides.findOne({timeslot_id: timeslot_id})
-    if (rides) {
-      let cars = rides.cars
-      cars.forEach(car => {
-        if (car._id === user_id) {
-          car.seats--;
-          if (car.seats < car.passengers.length) {
-            let removedPassenger = car.passengers.pop();
-            nh.newRemovedSeatNotification(user_id, removedPassenger)
+
+    carSharingLock.acquire('carSharingLock', async function (lockRelease) {
+      let rides = await TimeslotCarRides.findOne({ timeslot_id: timeslot_id })
+      if (rides) {
+        let cars = rides.cars
+        cars.forEach(car => {
+          if (car._id === user_id) {
+            car.seats--;
+            if (car.seats < car.passengers.length) {
+              let removedPassenger = car.passengers.pop();
+              nh.newRemovedSeatNotification(user_id, removedPassenger)
+            }
+            if (car.seats === 0) {
+              let index = rides.cars.indexOf(car)
+              rides.cars.splice(index, 1)
+            }
           }
-          if (car.seats === 0){
-            let index = rides.cars.indexOf(car)
-            rides.cars.splice(index,1)
-          }
-        }
-      })
-      rides.save().then(() => {
-        return res.status(200).json(rides)
-      }).catch(err => console.log(err))
-    } else {
-      return res.status(200).json('wrong timeslot?')
-    }
+        })
+        rides.save().then(() => {
+          lockRelease()
+          return res.status(200).json(rides)
+        }).catch((err) => {
+          lockRelease()
+          console.log(err)
+        })
+      } else {
+        lockRelease()
+        return res.status(200).json('wrong timeslot?')
+      }
+    })
   } catch (error) {
     return next(error)
   }
