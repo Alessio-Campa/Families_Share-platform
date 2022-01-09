@@ -2218,7 +2218,7 @@ router.get('/:groupId/trace/:memberId', async (req, res, next)=>{
  * @apiParam {activityId}
  * @apiParam {timeslotId}
  */
-router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+router.get('/:groupId/activities/:activityId/timeslots/:timeslotId/rides', async (req, res, next) => {
   if (!req.user_id){ return res.status(401).send('Not authenticated') }
   const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
   const user_id = req.user_id
@@ -2251,7 +2251,7 @@ const carSharingLock = new AsyncLock();
  * @apiParam {activityId}
  * @apiParam {timeslotId}
  */
-router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/rides', async (req, res, next) => {
   if (!req.user_id){ return res.status(401).send('Not authenticated') }
   const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
   const user_id = req.user_id
@@ -2332,7 +2332,7 @@ router.post('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', a
  *
  * @apiBody {driver_id}
  */
-router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/rides', async (req, res, next) => {
   if (!req.user_id){ return res.status(401).send('Not authenticated') }
   const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
   const user_id = req.user_id
@@ -2394,7 +2394,7 @@ router.put('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', as
  *
  * @apiBody {driver_id}
  */
-router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/rides', async (req, res, next) => {
   if (!req.user_id){ return res.status(401).send('Not authenticated') }
   const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
   const user_id = req.user_id
@@ -2446,7 +2446,7 @@ router.patch('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', 
  * @apiParam {activityId}
  * @apiParam {timeslotId}
  */
-router.delete('/:groupId/activities/:activityId/timeslots/:timeslotId/carRides', async (req, res, next) => {
+router.delete('/:groupId/activities/:activityId/timeslots/:timeslotId/rides', async (req, res, next) => {
   if (!req.user_id){ return res.status(401).send('Not authenticated') }
   const { groupId: group_id, activityId: activity_id, timeslotId: timeslot_id } = req.params
   const user_id = req.user_id

@@ -255,7 +255,7 @@ class TimeslotScreen extends React.Component {
   handleCarRide = () => {
     const { history } = this.props;
     const { pathname } = history.location;
-    const route = `${pathname}/carRides`;
+    const route = `${pathname}/rides`;
     history.push(route);
   }
 

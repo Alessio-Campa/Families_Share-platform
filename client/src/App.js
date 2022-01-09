@@ -367,7 +367,7 @@ class App extends React.Component {
                 extraProps={{ action: "edit" }}
               />
               <PrivateRoute
-                path="/groups/:groupId/activities/:activityId/timeslots/:timeslotId/carRides"
+                path="/groups/:groupId/activities/:activityId/timeslots/:timeslotId/rides"
                 component={TimeslotCarRideScreen}
               />
               <PrivateRoute
