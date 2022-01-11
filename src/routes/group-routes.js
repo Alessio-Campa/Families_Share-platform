@@ -2018,7 +2018,7 @@ router.post('/:id/survey', async (req, res, next) => {
     if (!member.admin) {
       return res.status(401).send('Unauthorized')
     }
-    if (!(name || location || color || possibilities || multipleChoiceAllowed)) {
+    if (!(name.length > 0 && location.length > 0 && color.length > 0 && possibilities.length > 1)) {
       return res.status(400).send('Bad request')
     }
     possibilities.forEach((_possibility) => _possibility.possibility_id = objectid() )

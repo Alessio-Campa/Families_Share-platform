@@ -9,7 +9,7 @@ const Activity = require('../../src/models/activity')
 const Parent = require('../../src/models/parent')
 const Child = require('../../src/models/child')
 
-describe('/Post/api/groups/id/activities', () => {
+describe('/Post/api/groups/id/survey', () => {
   it('it should post a new activity when user is authenticated and group member', done => {
     User.findOne({ email: 'test@email.com' }, (error, user) => {
       Group.findOne({ name: 'Test Group Edit' }, (err, group) => {

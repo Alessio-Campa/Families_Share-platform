@@ -300,6 +300,7 @@ describe('Test', () => {
   importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
   importTest('Activity Announcement Test', './NewTests/activityChat')
   importTest('Rating Test', './NewTests/rating')
+  importTest('Survey Test', './NewTests/survey')
 
   after('Cleaning up', async () => {
     await User.deleteMany({})
