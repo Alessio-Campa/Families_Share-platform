@@ -223,8 +223,19 @@ const initializeDB = async () => {
     visible: true,
     language: 'en'
   }
+  const myUser2 = {
+    given_name: 'My',
+    family_name: 'User2',
+    number: '3245668975',
+    email: 'my_user2@email.com',
+    password: '12345678',
+    visible: true,
+    language: 'en'
+  }
   await chai.request(server).post('/api/users').send(myUser)
+  await chai.request(server).post('/api/users').send(myUser2)
   const myUserObj = await User.findOne({ email: myUser.email })
+  const myUser2Obj = await User.findOne({ email: myUser2.email })
   const myGroup = {
     name: 'Gruppo',
     description: 'Description',
@@ -237,6 +248,9 @@ const initializeDB = async () => {
   }
   await chai.request(server).post('/api/groups').send(myGroup).set('Authorization', myUserObj.token)
   const myGroupObj = await Group.findOne({ name: 'Gruppo' })
+  // invite and accept user2
+  await chai.request(server).post(`/api/groups/${myGroupObj.group_id}/members`).send({inviteIds: [myUser2Obj.user_id]}).set('Authorization', myUserObj.token)
+  await chai.request(server).patch(`/api/users/${myUser2Obj.user_id}/groups/${myGroupObj.group_id}`).set('Authorization', myUser2Obj.token)
   const myActivity = {
     group_id: myGroupObj.group_id,
     creator_id: myUserObj.user_id,
