@@ -1102,6 +1102,7 @@ router.post('/:userId/sendmenotification', async (req, res, next) => {
 })
 
 router.post('/:receiverId/positivityNotification/:senderId', async (req, res, next) => {
+  if (!req.user_id || req.user_id !== req.params.senderId) { return res.status(401).send('Not authorized') }
   await nh.newPositivityNotification(req.params.senderId, req.params.receiverId);
   return res.status(200).json("notification sent successfully")
 })

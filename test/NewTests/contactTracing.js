@@ -9,100 +9,35 @@ const Activity = require('../../src/models/activity')
 const Notification = require('../../src/models/notification')
 
 ///:receiverId/positivityNotification/:senderId
-// describe('/Post/api/users/receiverId/positivityNotification/senderId', () => {
-//   it('It should not add a new notification user not logged', async () => {
-//     const user = await User.findOne({ email: "test2@notInGroup.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .post(`/api/users/${user.user_id}/positivityNotification/${activity.activity_id}/valutation`)
-//       .set('Authorization', 'invalidtoken')
-//       .send({ rate: 2 })
-//     res.should.have.status(401);
-//   })
-// })
+describe('/Post/api/users/receiverId/positivityNotification/senderId', () => {
+  it('It should not add a new notification user not logged', async () => {
+    const sender = await User.findOne({ email: "my_user@email.com" });
+    const receiver = await User.findOne({ email: "test2@notInGroup.com" })
+    const res = await chai.request(server)
+      .post(`/api/users/${receiver.user_id}/positivityNotification/${sender.activity_id}`)
+      .set('Authorization', 'invalidtoken')
+    res.should.have.status(401);
+  })
+})
 
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should not add a new evaluation user not part of the group', async () => {
-//     const user = await User.findOne({ email: "test2@notInGroup.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .post(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/valutation`)
-//       .set('Authorization', user.token)
-//       .send({ rate: 2 })
-//     res.should.have.status(401);
-//   })
-// })
-//
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should not add a new evaluation (rate is less than 1)', async () => {
-//     const user = await User.findOne({ email: "my_user@email.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .post(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/valutation`)
-//       .set('Authorization', user.token)
-//       .send({ rate: 0 })
-//     res.should.have.status(400);
-//   })
-// })
-//
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should not add a new evaluation (rate is more than 5)', async () => {
-//     const user = await User.findOne({ email: "my_user@email.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .post(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/valutation`)
-//       .set('Authorization', user.token)
-//       .send({ rate: 6 })
-//     res.should.have.status(400);
-//   })
-// })
-//
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should add a new evaluation (user is part of the group)', async () => {
-//     const user = await User.findOne({ email: "my_user@email.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .post(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/valutation`)
-//       .set('Authorization', user.token)
-//       .send({ rate: 2 })
-//     res.should.have.status(200);
-//   })
-// })
-//
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should add a new evaluation (user is part of the group)', async () => {
-//     const user = await User.findOne({ email: "my_user@email.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}`)
-//       .set('Authorization', user.token)
-//     res.should.have.status(200);
-//     res.body.valutations.should.be.a('array').with.lengthOf(1);
-//     res.body.valutations[0].rate.should.be.eql(2);
-//   })
-// })
-//
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should update the evaluation (user is part of the group)', async () => {
-//     const user = await User.findOne({ email: "my_user@email.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .post(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/valutation`)
-//       .set('Authorization', user.token)
-//       .send({ rate: 5 })
-//     res.should.have.status(200);
-//   })
-// })
-//
-// describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
-//   it('It should add a new evaluation (user is part of the group)', async () => {
-//     const user = await User.findOne({ email: "my_user@email.com" });
-//     const activity = await Activity.findOne({ name: "Attivita"})
-//     const res = await chai.request(server)
-//       .get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}`)
-//       .set('Authorization', user.token)
-//     res.should.have.status(200);
-//     res.body.valutations.should.be.a('array').with.lengthOf(1);
-//     res.body.valutations[0].rate.should.be.eql(5);
-//   })
-// })
+describe('/Post/api/users/receiverId/positivityNotification/senderId', () => {
+  it('It should not add a new notification, user logged with another account', async () => {
+    const sender = await User.findOne({ email: "my_user@email.com" });
+    const receiver = await User.findOne({ email: "test2@notInGroup.com" })
+    const res = await chai.request(server)
+      .post(`/api/users/${receiver.user_id}/positivityNotification/${sender.activity_id}`)
+      .set('Authorization', receiver.token)
+    res.should.have.status(401);
+  })
+})
+
+describe('/Post/api/users/receiverId/positivityNotification/senderId', () => {
+  it('It should add a new notification', async () => {
+    const sender = await User.findOne({ email: "my_user@email.com" });
+    const receiver = await User.findOne({ email: "test2@notInGroup.com" })
+    const res = await chai.request(server)
+      .post(`/api/users/${receiver.user_id}/positivityNotification/${sender.activity_id}`)
+      .set('Authorization', sender.token)
+    res.should.have.status(401);
+  })
+})
