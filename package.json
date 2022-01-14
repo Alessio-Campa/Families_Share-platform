@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./src/index.js",
-    "test": "nyc --reporter=lcov --reporter=text-summary mocha --timeout 20000 --exit",
+    "test": "nyc --reporter=lcov --reporter=text-summary mocha --timeout 30000 --exit",
     "lint": "./node_modules/.bin/eslint src",
     "lint:fix": "./node_modules/.bin/eslint src --fix",
     "dev-server": "supervisor src/index.js",
