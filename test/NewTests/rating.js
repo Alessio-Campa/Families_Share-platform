@@ -91,7 +91,7 @@ describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
   })
 })
 
-describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
+describe('/Get/api/groups/groupId/activities/activityId', () => {
   it('It should add a new evaluation (user is part of the group)', async () => {
     const user = await User.findOne({ email: "my_user@email.com" });
     const activity = await Activity.findOne({ name: "Attivita"})

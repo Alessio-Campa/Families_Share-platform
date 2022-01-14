@@ -316,6 +316,7 @@ describe('Test', () => {
   importTest('Rating Test', './NewTests/rating')
   importTest('Rides Test', './NewTests/rides')
   importTest('Survey Test', './NewTests/survey')
+  importTest('User Reports Test', './NewTests/userReports')
 
   after('Cleaning up', async () => {
     await User.deleteMany({})
