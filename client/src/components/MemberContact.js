@@ -229,7 +229,7 @@ class MemberContact extends React.Component {
       .catch((error) => {
         Log.error(error);
         return [];
-    })
+      })
   }
 
   createDateString = (_date) => {
@@ -238,10 +238,10 @@ class MemberContact extends React.Component {
     const minutes = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
     return (
       date.getDate()+
-        "/"+(date.getMonth()+1)+
-        "/"+date.getFullYear()+
-        " "+hours+
-        ":"+minutes
+      "/"+(date.getMonth()+1)+
+      "/"+date.getFullYear()+
+      " "+hours+
+      ":"+minutes
     );
   }
 
@@ -256,35 +256,38 @@ class MemberContact extends React.Component {
     const texts = Texts[language].memberContact;
     const { contact_option: contact } = profile;
     const currentUser = JSON.parse(localStorage.getItem("user")).id;
-    const options = [
-      profile.admin
-        ? {
+    let options = []
+    if(userIsAdmin) {
+      options = [
+        profile.admin
+          ? {
             label: texts.removeAdmin,
             style: "optionsModalButton",
             handle: this.handleRemoveAdmin,
           }
-        : {
+          : {
             label: texts.addAdmin,
             style: "optionsModalButton",
             handle: this.handleAddAdmin,
           },
-      {
-        label: texts.removeUser,
-        style: "optionsModalButton",
-        handle: this.handleRemoveUser,
-      },
-      {
-        label: texts.trace,
-        style: "optionsModalButton",
-        handle: this.handleContactTracing,
-      },
-    ];
-    if(profile.user_id !== currentUser)
-      options.push({
-        label: "Seganala utente",
-        style: "optionsModalButton",
-        handle: this.handleSegnalation,
-      });
+        {
+          label: texts.removeUser,
+          style: "optionsModalButton",
+          handle: this.handleRemoveUser,
+        },
+        {
+          label: texts.trace,
+          style: "optionsModalButton",
+          handle: this.handleContactTracing,
+        },
+      ];
+    }
+    options.push({
+      label: "Segnala utente",
+      style: "optionsModalButton",
+      handle: this.handleSegnalation,
+      disabled: profile.user_id === currentUser
+    });
     return (
       <React.Fragment>
         <MemberOptionsModal
@@ -359,7 +362,7 @@ class MemberContact extends React.Component {
             )}
           </div>
           <div id="contactIconsContainer" className="col-1-10">
-            {userIsAdmin && !profile.suspended && (
+            {!profile.suspended && (
               <button
                 type="button"
                 className="transparentButton verticalCenter memberOptions"
@@ -372,13 +375,13 @@ class MemberContact extends React.Component {
         </div>
         {this.state.memberReports.length > 0 && userIsAdmin && profile.user_id !== currentUser && (
           <div className="row-no-gutters"
-            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Button onClick={() => this.setState({ segnalationListOpen: !this.state.segnalationListOpen })}>
-                <h5>
-                  SEGNALAZIONI
-                </h5>
-                <ArrowDropDownIcon style={{marginBottom: 7}}/>
-              </Button>
+               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Button onClick={() => this.setState({ segnalationListOpen: !this.state.segnalationListOpen })}>
+              <h5>
+                SEGNALAZIONI
+              </h5>
+              <ArrowDropDownIcon style={{marginBottom: 7}}/>
+            </Button>
           </div>
         )}
         {this.state.segnalationListOpen && (

@@ -431,13 +431,34 @@ router.get('/:id/settings', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id/members', (req, res, next) => {
+router.get('/:id/members', async (req, res, next) => {
   const { id } = req.params
-  Member.find({ group_id: id })
+  let projection = {}
+  const user = await Member.findOne({
+    group_id: id,
+    user_id: req.user_id,
+    group_accepted: true,
+    user_accepted: true
+  })
+  if(!req.user_id || !user || !user.admin)
+  {
+    //Information available only to admin
+    projection['reports'] = 0;
+  }
+
+  Member.find({ group_id: id }, projection)
     .then(members => {
       if (members.length === 0) {
         return res.status(404).send('Group has no members')
       }
+
+      //You cannot see reports against you
+      members = members.map(m => {
+        if(m.user_id === req.user_id)
+          m.reports = []
+        return m
+      })
+
       res.send(members)
     })
     .catch(next)
@@ -1917,31 +1938,43 @@ router.put('/:groupId/members/:memberId/report', async (req, res, next) => {
   try {
     const group_id = req.params.groupId
     const member_id = req.params.memberId
-    Member.findOne({
+    const reporter = await Member.findOne({
       group_id,
-      user_id: member_id
-    }).then(member => {
-      if (!member) {return res.status(404).send('Member does not exist')}
-      if (!req.body.message) {return res.status(400).send('Bad request')}
-      if (req.user_id === member_id) {return res.status(500).send('You cannot report yourself')}
-      let insertAllowed = true;
-      const one_day_ms = 1000*60*60*24;
-      member.reports.forEach(report => {
-        if (report._id === req.user_id) {
-          const report_date = new Date(report.createdAt);
-          if(now() - report_date.getTime() < one_day_ms)
-            insertAllowed = false;
-        }
-      });
-      if (!insertAllowed) {return res.status(400).send('Bad request')}
-      let newReport = {
-        _id: req.user_id,
-        message: req.body.message,
+      user_id: req.user_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!reporter) {
+      return res.status(401).send('Unauthorized')
+    }
+
+    const reported = await Member.findOne({
+      group_id,
+      user_id: member_id,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!reported) {return res.status(404).send('Member does not exist')}
+
+    if (!req.body.message) {return res.status(400).send('Bad request')}
+    if (req.user_id === member_id) {return res.status(400).send('You cannot report yourself')}
+    let insertAllowed = true;
+    const one_day_ms = 1000*60*60*24;
+    reported.reports.forEach(report => {
+      if (report._id === req.user_id) {
+        const report_date = new Date(report.createdAt);
+        if(now() - report_date.getTime() < one_day_ms)
+          insertAllowed = false;
       }
-      member.reports.push(newReport)
-      member.save().then((updatedMember) => {
-        return res.status(200).json(updatedMember)
-      })
+    });
+    if (!insertAllowed) {return res.status(400).send('Bad request')}
+    let newReport = {
+      _id: req.user_id,
+      message: req.body.message,
+    }
+    reported.reports.push(newReport)
+    reported.save().then((updatedMember) => {
+      return res.status(200).json(updatedMember)
     })
   } catch(err) {
     next(err)

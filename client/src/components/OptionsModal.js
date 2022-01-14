@@ -63,6 +63,7 @@ class OptionsModal extends React.Component {
                 type="button"
                 className="transparentButton"
                 onClick={option.handle}
+                disabled={option.disabled}
               >
                 {option.label}
               </button>
