@@ -20,9 +20,13 @@ function getUserChildren(userId){
   return axios.get(`/api/users/${userId}/children`).then( (children) => {
     let ids = [];
     children.data.forEach( c => ids.push(c.child_id));
-    return axios.get(`/api/children`, {params:{ ids }}).then( profiles => {
-      return profiles
-    })
+    if(ids.length > 0){
+      return axios.get(`/api/children`, {params:{ ids }}).then( profiles => {
+        return profiles
+      })
+    }
+    else return []
+
   })
 }
 
@@ -111,6 +115,8 @@ export default class CreateFamily extends React.Component{
     const {history} = this.props;
     axios.post('/api/family', {familyName: familyName, user_id: this.userId, role: creatorRole}).then(obj => {
       const familyId = obj.data.id;
+      if (addList.length === 0)
+        history.goBack();
       addList.forEach( (elem, index) => {
         axios.put(`/api/family/${familyId}`, {memberId: elem._id, role: elem.role}).then( res => {
           if (index === addList.length-1){

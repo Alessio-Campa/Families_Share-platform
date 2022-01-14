@@ -82,7 +82,7 @@ class Families extends React.Component {
                 ))}
               </ul>
             ) : (
-              <div className="addGroupsPrompt">{""}</div>
+              <h2 className="text-center"> Non hai ancora nessuna famiglia</h2>
             )}
             <Fab
             color="primary"

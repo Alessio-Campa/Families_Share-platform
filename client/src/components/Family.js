@@ -26,6 +26,10 @@ const getFamily = (familyId) => {
   })
 }
 
+const exitFamily = (familyId, userId) =>{
+  return axios.delete(`/api/family/${familyId}/member/${userId}`)
+}
+
 export default class Family extends React.Component {
   //gets family id and other info
   family;
@@ -77,6 +81,13 @@ export default class Family extends React.Component {
     history.push(`/family/${familyId}/edit`);
   }
 
+  handleExit = async () => {
+    const {history} =  this.props;
+    const {familyId, userId} = this.state;
+    await exitFamily(familyId, userId)
+    history.push('/families')
+  }
+
   render() {
     const { fetchedFamily, family, isModalOpen, top, right} = this.state;
     const { match, history } = this.props;
@@ -87,6 +98,11 @@ export default class Family extends React.Component {
         label: "Modifica membri",
         style: "optionsModalButton",
         handle: this.handleEdit,
+      },
+      {
+        label: "Esci dalla famiglia",
+        style: "optionsModalButton",
+        handle: this.handleExit,
       },
     ];
 

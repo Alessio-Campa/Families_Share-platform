@@ -20,9 +20,13 @@ function getUserChildren(userId){
   return axios.get(`/api/users/${userId}/children`).then( (children) => {
     let ids = [];
     children.data.forEach( c => ids.push(c.child_id));
-    return axios.get(`/api/children`, {params:{ ids }}).then( profiles => {
-      return profiles
-    })
+    console.log(ids)
+    if (ids.length > 0){
+      return axios.get(`/api/children`, {params:{ ids }}).then( profiles => {
+        return profiles
+      })
+    }
+    else return []
   })
 }
 

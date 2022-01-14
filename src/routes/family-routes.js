@@ -282,14 +282,17 @@ router.delete('/:familyId/member/:memberId', async (req, res, next) => {
   }).then(family => {
     if (!family) {return res.status(404).send('Family does not exist')}
     if (family.members.filter(element => element.role !== 'child').length === 1) {
-      Family.deleteOne({'_id': familyId})
-      return res.status(200).send('the entire family has been deleted')
+      Family.deleteOne({'_id': familyId}).then(() => {
+        return res.status(200).send('The entire family has been deleted')
+      })
     }
-    let newMembers = family.members.filter(element => element._id !== memberId)
-    family.members = newMembers
-    family.save().then(() => {
-      return res.status(200).send('Family updated correctly')
-    })
+    else{
+      family.members = family.members.filter(element => element._id !== memberId)
+      family.save().then(() => {
+        return res.status(200).send('Family updated correctly')
+      })
+    }
+
   }).catch(err => console.log(err))
   } catch (err) {
     next(err)
