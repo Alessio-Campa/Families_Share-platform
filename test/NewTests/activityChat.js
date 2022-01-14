@@ -47,7 +47,7 @@ describe('/Post/api/groups/groupId/activities/activityId/announcements', () => {
 });
 describe('/Post/api/groups/groupId/activities/activityId/announcements', () => {
 	it('it should not post a new activity announcement when user isnt group member', (done) => {
-		User.findOne({ email: "test2@email.com" }, (err, user) => {
+		User.findOne({ email: "test2@notInGroup.com" }, (err, user) => {
 			Activity.findOne({ name: "Attivita"}, (err, activity) => {
 				const announcement = {
 					message: "Test Announcement"
@@ -95,7 +95,7 @@ describe('/Delete/api/groups/groupId/activities/activityId/announcements/announc
 });
 describe('/Delete/api/groups/groupId/activities/activityId/announcements/announcementId', () => {
 	it('it should not delete an activity announcementt when user isnt group admin or creator', async () => {
-		const user = await User.findOne({ email: "test2@email.com" })
+		const user = await User.findOne({ email: "test2@notInGroup.com" })
 		const activity = await Activity.findOne({ name: "Attivita"})
 		const announcement = await Announcement.findOne({ activity_id: activity.activity_id });
 		const res = await chai.request(server)
@@ -145,7 +145,7 @@ describe('/Get/api/groups/groupId/activities/activityId/announcements', () => {
 });
 describe('/Get/api/groups/groupId/activities/activityId/announcements', () => {
 	it('it should not fetch an activity announcements when user isnt group member', (done) => {
-		User.findOne({ email: "test2@email.com" }, (err, user) => {
+		User.findOne({ email: "test2@notInGroup.com" }, (err, user) => {
 			Activity.findOne({ name: "Attivita"}, (err, activity) => {
 				chai.request(server)
 					.get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/announcements`)
@@ -208,7 +208,7 @@ describe('/Post/api/groups/groupId/activities/activityId/announcements/announcem
 });
 describe('/Post/api/groups/groupId/activities/activityId/announcements/announcementId/replies', async () => {
 	it('it should not post a new reply when user isnt group member', async () => {
-		const user = await User.findOne({ email: "test2@email.com" });
+		const user = await User.findOne({ email: "test2@notInGroup.com" });
 		const activity = await Activity.findOne({ name: "Attivita"})
 		const announcement = await Announcement.findOne({ activity_id: activity.activity_id })
 		const reply = {
@@ -261,7 +261,7 @@ describe('/Get/api/groups/groupId/activities/activityId/announcements/announceme
 });
 describe('/Get/api/groups/groupId/activities/activityId/announcements/announcementId/replies', () => {
 	it('it should not fetch an announcements replies when user isnt group member', async () => {
-		const user = await User.findOne({ email: "test2@email.com" });
+		const user = await User.findOne({ email: "test2@notInGroup.com" });
 		const activity = await Activity.findOne({ name: "Attivita"})
 		const announcement = await Announcement.findOne({ activity_id: activity.activity_id })
 		const res = await chai.request(server)
@@ -285,7 +285,7 @@ describe('/Delete/api/groups/groupId/activities/activityId/announcements/announc
 
 describe('/Delete/api/groups/groupId/activities/activityId/announcements/announcementId/replies/replyId', () => {
 	it('it should not delete an announcements reply when user isnt admin or creator ', async () => {
-		const user = await User.findOne({ email: "test2@email.com"});
+		const user = await User.findOne({ email: "test2@notInGroup.com"});
 		const activity = await Activity.findOne({ name: "Attivita"})
 		const announcement = await Announcement.findOne({ activity_id: activity.activity_id })
 		const reply = await Reply.findOne({ announcement_id: announcement.announcement_id});

@@ -45,7 +45,7 @@ describe("/Post/api/groups/id/survey", () => {
 
 describe("/Post/api/groups/id/survey", () => {
   it("it should not post a new survey when user is not group member", (done) => {
-    User.findOne({ email: "test2@email.com" }, (error, user) => {
+    User.findOne({ email: "test2@notInGroup.com" }, (error, user) => {
       Group.findOne({ name: "Gruppo" }, (err, group) => {
         const name = "Survey di test";
         const location = "Testing park";
@@ -177,7 +177,7 @@ describe("/Get/api/groups/groupId/survey/surveyId/", () => {
 
 describe("/Get/api/groups/groupId/survey/surveyId/", () => {
   it("it should not fetch a survey when user isnt group member", async () => {
-    const user = await User.findOne({ email: "test2@email.com" });
+    const user = await User.findOne({ email: "test2@notInGroup.com" });
     const survey = await Survey.findOne({ name: "Survey di test" });
     const res = await chai
       .request(server)
@@ -213,7 +213,7 @@ describe("/Get/api/groups/groupId/survey/surveyId/", () => {
 
 describe("/Get/api/groups/groupId/survey/surveyId/", () => {
   it("it should not fetch surveys when user isnt group member", async () => {
-    const user = await User.findOne({ email: "test2@email.com" });
+    const user = await User.findOne({ email: "test2@notInGroup.com" });
     const survey = await Survey.findOne({ name: "Survey di test" });
     const res = await chai
       .request(server)
@@ -238,7 +238,7 @@ describe("/Patch/api/groups/groupId/surveys/surveyId/", () => {
 
 describe("/Patch/api/groups/groupId/surveys/surveyId/", () => {
   it("it should not insert/delete a vote when user isnt group member", async () => {
-    const user = await User.findOne({ email: "test2@email.com" });
+    const user = await User.findOne({ email: "test2@notInGroup.com" });
     const survey = await Survey.findOne({ name: "Survey di test" });
     const res = await chai
       .request(server)
@@ -291,7 +291,7 @@ describe("/Delete/api/groups/groupId/surveys/surveyId/", () => {
 
 describe("/Delete/api/groups/groupId/surveys/surveyId/", () => {
   it("it should not delete a survey when user isnt creator or member", async () => {
-    const user = await User.findOne({ email: "test2@email.com" });
+    const user = await User.findOne({ email: "test2@notInGroup.com" });
     const survey = await Survey.findOne({ name: "Survey di test" });
     const res = await chai
       .request(server)

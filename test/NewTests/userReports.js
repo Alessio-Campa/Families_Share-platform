@@ -23,7 +23,7 @@ describe('/Put/api/groups/groupId/members/memberId/report', () => {
 describe('/Put/api/groups/groupId/members/memberId/report', () => {
   it('It should not add a new report, reporter not part of the group', async () => {
     const group = await Group.findOne({ name: "Gruppo" })
-    const reporter = await User.findOne({ email: "test2@email.com" });
+    const reporter = await User.findOne({ email: "test2@notInGroup.com" });
     const reported = await User.findOne({ email: "my_user2@email.com" })
     const res = await chai.request(server)
       .put(`/api/groups/${group.group_id}/members/${reported.user_id}/report`)
@@ -37,7 +37,7 @@ describe('/Put/api/groups/groupId/members/memberId/report', () => {
   it('It should not add a new report, reported not part of the group', async () => {
     const group = await Group.findOne({ name: "Gruppo" })
     const reporter = await User.findOne({ email: "my_user@email.com" });
-    const reported = await User.findOne({ email: "test2@email.com" })
+    const reported = await User.findOne({ email: "test2@notInGroup.com" })
     const res = await chai.request(server)
       .put(`/api/groups/${group.group_id}/members/${reported.user_id}/report`)
       .set('Authorization', reporter.token)

@@ -20,7 +20,7 @@ describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
 
 describe('/Post/api/groups/groupId/activities/activityId/valutation', () => {
   it('It should not add a new evaluation user not part of the group', async () => {
-    const user = await User.findOne({ email: "test2@email.com" });
+    const user = await User.findOne({ email: "test2@notInGroup.com" });
     const activity = await Activity.findOne({ name: "Attivita"})
     const res = await chai.request(server)
       .post(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/valutation`)

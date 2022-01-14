@@ -8,7 +8,7 @@ const Activity = require('../../src/models/activity')
 
 describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should not add a seat on his car (not authenticated)', async () => {
-    const user = await User.findOne({ email: "my_user2@email.com" });  
+    const user = await User.findOne({ email: "my_user2@email.com" });
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
       .get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/timeslots`)
@@ -23,7 +23,7 @@ describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rid
 
 describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should not add a seat on his car (not a member of the group)', async () => {
-    const user = await User.findOne({ email: "test2@email.com" });  
+    const user = await User.findOne({ email: "test2@notInGroup.com" });
     const userForTimeslot = await User.findOne({email: "my_user2@email.com"});
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
@@ -40,7 +40,7 @@ describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rid
 
 describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should add a seat on his own car', async () => {
-    const user = await User.findOne({ email: "my_user2@email.com" });  
+    const user = await User.findOne({ email: "my_user2@email.com" });
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
       .get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/timeslots`)
@@ -57,7 +57,7 @@ describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rid
 
 describe('/Put/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should book a seat on the previus add car', async () => {
-    const user = await User.findOne({ email: "my_user@email.com" });  
+    const user = await User.findOne({ email: "my_user@email.com" });
     const driver = await User.findOne({email: "my_user2@email.com"});
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
@@ -77,7 +77,7 @@ describe('/Put/api/group/groupId/activities/activityId/timeslots/timeslotId/ride
 
 describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should not add a seat on his own car because he is passenger on another car', async () => {
-    const user = await User.findOne({ email: "my_user@email.com" });  
+    const user = await User.findOne({ email: "my_user@email.com" });
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
       .get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/timeslots`)
@@ -93,7 +93,7 @@ describe('/Post/api/group/groupId/activities/activityId/timeslots/timeslotId/rid
 
 describe('/Get/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should get the status of the rides', async () => {
-    const user = await User.findOne({ email: "my_user@email.com" });  
+    const user = await User.findOne({ email: "my_user@email.com" });
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
       .get(`/api/groups/${activity.group_id}/activities/${activity.activity_id}/timeslots`)
@@ -110,7 +110,7 @@ describe('/Get/api/group/groupId/activities/activityId/timeslots/timeslotId/ride
 
 describe('/Patch/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should release the seat previously booked', async () => {
-    const user = await User.findOne({ email: "my_user@email.com" });  
+    const user = await User.findOne({ email: "my_user@email.com" });
     const driver = await User.findOne({email: "my_user2@email.com"});
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
@@ -128,7 +128,7 @@ describe('/Patch/api/group/groupId/activities/activityId/timeslots/timeslotId/ri
 
 describe('/Put/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should not book a seat because he is already driving', async () => {
-    const user = await User.findOne({ email: "my_user@email.com" });  
+    const user = await User.findOne({ email: "my_user@email.com" });
     const driver = await User.findOne({email: "my_user2@email.com"});
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)
@@ -148,7 +148,7 @@ describe('/Put/api/group/groupId/activities/activityId/timeslots/timeslotId/ride
 
 describe('/Delete/api/group/groupId/activities/activityId/timeslots/timeslotId/rides', () => {
   it('It should delete a seat on his car ', async () => {
-    const user = await User.findOne({ email: "my_user2@email.com" });  
+    const user = await User.findOne({ email: "my_user2@email.com" });
     const driver = await User.findOne({email: "my_user@email.com"});
     const activity = await Activity.findOne({ location: 'Venezia'})
     const timeslot = await chai.request(server)

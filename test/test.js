@@ -43,7 +43,7 @@ const initializeDB = async () => {
     language: 'en'
   }
   await chai.request(server).post('/api/users').send(user2)
-  /*
+
   const user3 = {
     given_name: 'Test',
     family_name: 'User3',
@@ -212,7 +212,7 @@ const initializeDB = async () => {
     image: '/images/profiles/child_default_photo.jpg'
   }
   await chai.request(server).post(`/api/users/${user.user_id}/children`).send(child).set('Authorization', user.token)
-*/
+
   //New data
   const myUser = {
     given_name: 'My',
@@ -232,8 +232,18 @@ const initializeDB = async () => {
     visible: true,
     language: 'en'
   }
+  const myUserNotInGroup = {
+    given_name: 'Test',
+    family_name: 'User2',
+    number: '0123546879',
+    email: 'test2@notInGroup.com',
+    password: 'password',
+    visible: true,
+    language: 'en'
+  }
   await chai.request(server).post('/api/users').send(myUser)
   await chai.request(server).post('/api/users').send(myUser2)
+  await chai.request(server).post('/api/users').send(myUserNotInGroup)
   const myUserObj = await User.findOne({ email: myUser.email })
   const myUser2Obj = await User.findOne({ email: myUser2.email })
   const myGroup = {
@@ -297,22 +307,23 @@ describe('Test', () => {
     await initializeDB()
   })
 
-  // importTest('User Endpoints Test', './Users/userEndpoints')
-  // importTest('Group Endpoints Test', './Groups/groupEndpoints')
-  // importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
-  // importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
-  // importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
-  // importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
-  // importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
-  // importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
-  // importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
-  // importTest('User Various Endpoints Test', './Users/variousEndpoints')
-  // importTest('Child Endpoints Test', './Children/childEndpoints')
-  // importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
-  // importTest('Community Endpoints Test', './Community/communityEndpoints')
+  importTest('User Endpoints Test', './Users/userEndpoints')
+  importTest('Group Endpoints Test', './Groups/groupEndpoints')
+  importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
+  importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
+  importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
+  importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
+  importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
+  importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
+  importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
+  importTest('User Various Endpoints Test', './Users/variousEndpoints')
+  importTest('Child Endpoints Test', './Children/childEndpoints')
+  importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
+  importTest('Community Endpoints Test', './Community/communityEndpoints')
 
-  importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
   importTest('Activity Announcement Test', './NewTests/activityChat')
+  importTest('Contact tracing Test', './NewTests/contactTracing')
+  importTest('Green Pass needed in activity', './NewTests/gpNeedActivity')
   importTest('Rating Test', './NewTests/rating')
   importTest('Rides Test', './NewTests/rides')
   importTest('Survey Test', './NewTests/survey')

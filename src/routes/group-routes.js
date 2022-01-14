@@ -1806,9 +1806,6 @@ function deleteAnnouncement (type) {
         owner_id: announcement_id
       })
       await Reply.deleteMany({ announcement_id })
-      fr('../images/announcements/', {
-        prefix: req.params.announcementId
-      })
       res.status(200).send('announcement was deleted')
     } catch (error) {
       next(error)
