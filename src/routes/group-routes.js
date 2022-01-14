@@ -455,7 +455,7 @@ router.get('/:id/members', async (req, res, next) => {
       //You cannot see reports against you
       members = members.map(m => {
         if(m.user_id === req.user_id)
-          m.reports = []
+          m.reports = undefined
         return m
       })
 
