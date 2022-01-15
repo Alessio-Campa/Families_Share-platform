@@ -116,31 +116,15 @@ class MemberContact extends React.Component {
     if(choice === "disagree")
       this.setState({ confirmDialogIsOpen: false, segnalationDialogIsOpen: true });
     else{
-      let insert_accepted = true;
-      const one_day_ms = 1000*60*60*24;
-      const current_user_id = JSON.parse(localStorage.getItem("user")).id;
-      this.state.memberReports.forEach(report => {
-        if (report._id === current_user_id) {
-          const report_date = new Date(report.createdAt);
-          if(now() - report_date.getTime() < one_day_ms)
-            insert_accepted = false;
-        }
-      });
-      if(insert_accepted){
-        axios
-          .put(`/api/groups/${groupId}/members/${userId}/report`, {user_id: currentUser, message: this.state.segnalationText})
-          .then((response) => {
-            Log.info(response);
-          })
-          .catch((error) => {
-            Log.error(error);
-          });
-        this.setState({ confirmDialogIsOpen: false });
-      }
-      else{
-        console.log("here we go")
-        this.setState({ errorDialogIsOpen: true, confirmDialogIsOpen: false });
-      }
+      axios
+        .put(`/api/groups/${groupId}/members/${userId}/report`, {user_id: currentUser, message: this.state.segnalationText})
+        .then((response) => {
+          Log.info(response);
+        })
+        .catch((error) => {
+          Log.error(error);
+        });
+      this.setState({ confirmDialogIsOpen: false });
     }
   };
 
