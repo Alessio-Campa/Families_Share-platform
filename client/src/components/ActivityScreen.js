@@ -208,7 +208,7 @@ class ActivityScreen extends React.Component {
     if(activity.valutations !== undefined) {
       const valutations = activity.valutations;
       let sum = 0;
-      valutations.forEach( (valutation) => {  
+      valutations.forEach( (valutation) => {
         sum += valutation.rate;
       });
       this.setState({ rating: Math.round(sum / valutations.length) });
@@ -436,14 +436,17 @@ class ActivityScreen extends React.Component {
   };
 
   handleRateUpdate = (value, isAnUpdate) => {
+    const userId = JSON.parse(localStorage.getItem("user")).id;
     const { activity } = this.state;
     const valutations = activity.valutations;
     let sum = 0;
-    valutations.forEach( (valutation) => {  
-      sum += valutation.rate;
+    valutations.forEach( (valutation) => {
+      if(valutation._id !== userId)
+        sum += valutation.rate;
     });
     sum += value;
-    this.setState({ rating: Math.round(sum / (valutations.length+1)) });
+    let length = isAnUpdate ? valutations.length : valutations.length+1;
+    this.setState({ rating: Math.round(sum / length) });
     if(isAnUpdate)
       this.setState({ popupMessage: "Hai aggiornato la tua valutazione!" });
     else
@@ -458,13 +461,13 @@ class ActivityScreen extends React.Component {
     const valutations = activity.valutations;
     const userId = JSON.parse(localStorage.getItem("user")).id;
     let isAnUpdate = false;
-    valutations.forEach( (valutation) => {  
+    valutations.forEach( (valutation) => {
       if(valutation._id === userId || this.state.ratingAlreadyUpdated)
         isAnUpdate = true;
     });
     axios
       .post(`/api/groups/${groupId}/activities/${activityId}/valutation`, {
-        _id: userId, 
+        _id: userId,
         rate: val,
       })
       .then((response) => {
@@ -646,7 +649,7 @@ class ActivityScreen extends React.Component {
                         <div className="row no-gutters" style={rowStyle}>
                           <div className="col-1-10">
                             <i
-                              className="fas fa-id-card"  
+                              className="fas fa-id-card"
                             />
                           </div>
                           <div className="col-9-10">
