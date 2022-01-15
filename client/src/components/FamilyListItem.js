@@ -54,13 +54,7 @@ class FamilyListItem extends React.Component {
         
         {family ? (
           <React.Fragment>
-            <div className="col-3-10">
-              <Avatar
-                // thumbnail={path(child, ["image", "path"])}
-                route={route}
-                className="center"
-              />
-            </div>
+            <div className="col-3-10"/>
             <div className="col-7-10">
               <div
                 role="button"
