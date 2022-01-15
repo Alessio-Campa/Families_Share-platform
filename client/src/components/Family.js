@@ -85,7 +85,7 @@ export default class Family extends React.Component {
     const {history} =  this.props;
     const {familyId, userId} = this.state;
     await exitFamily(familyId, userId)
-    history.push('/families')
+    history.push('/')
   }
 
   render() {
