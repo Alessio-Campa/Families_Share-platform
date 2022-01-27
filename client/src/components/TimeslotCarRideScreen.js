@@ -149,7 +149,7 @@ export default class TimeslotCarRideScreen extends React.Component {
       if (!this.state.isPassenger) {
         $('#carButtons').slideDown();
       }
-      this.setState({myCar, otherCars, guestCars, fetchedRides:true});
+      this.setState({myCar, otherCars, guestCars});
       this.getNames();
     }).catch(err => console.log(err))
   }
@@ -171,7 +171,7 @@ export default class TimeslotCarRideScreen extends React.Component {
           surname: element.family_name
         }
       })
-      this.setState({names})
+      this.setState({names, fetchedRides:true})
       }).catch(err => console.log(err))
   }
 
