@@ -128,8 +128,8 @@ export default class TimeslotCarRideScreen extends React.Component {
     }
   }
 
-  getAvailableSeats = async (pathname) => {
-    axios.get('/api' + pathname).then(response => {
+  getAvailableSeats = async () => {
+    axios.get('/api' + this.props.location.pathname).then(response => {
       let myCar = null;
       let otherCars = [];
       let guestCars = [];
@@ -149,7 +149,7 @@ export default class TimeslotCarRideScreen extends React.Component {
       if (!this.state.isPassenger) {
         $('#carButtons').slideDown();
       }
-      this.setState({myCar, otherCars, guestCars});
+      this.setState({myCar, otherCars, guestCars, fetchedRides: false});
       this.getNames();
     }).catch(err => console.log(err))
   }
@@ -176,30 +176,30 @@ export default class TimeslotCarRideScreen extends React.Component {
   }
 
   async componentDidMount(){
-    this.getAvailableSeats(this.props.location.pathname);
+    this.getAvailableSeats();
   }
 
   bookSeat = (driver_id) => {
     axios.put('/api' + this.props.location.pathname, {driver_id}).then(response => {
-      this.getAvailableSeats(this.props.location.pathname)
+      this.getAvailableSeats()
     }).catch(err => {console.log(err);})
   }
 
   releaseSeat = (driver_id) => {
     axios.patch('/api' + this.props.location.pathname, {driver_id}).then(response => {
-      this.getAvailableSeats(this.props.location.pathname)
+      this.getAvailableSeats()
     }).catch(err => {console.log(err);})
   }
 
   giveSeat = () => {
     axios.post('/api' + this.props.location.pathname).then(response => {
-      this.getAvailableSeats(this.props.location.pathname)
+      this.getAvailableSeats()
     }).catch(err => console.log(err))
   }
 
   deleteSeat = () => {
     axios.delete('/api' + this.props.location.pathname).then(response => {
-      this.getAvailableSeats(this.props.location.pathname)
+      this.getAvailableSeats()
     }).catch(err => console.log(err))
   }
 
@@ -221,7 +221,7 @@ export default class TimeslotCarRideScreen extends React.Component {
         </div>
 
         <div id="groupMainContainer" style={{ position: 'relative', top: '5.6rem' }}>
-        <PullToRefresh onRefresh={() => this.componentDidMount()} pullingContent={""}> 
+        <PullToRefresh onRefresh={() => this.getAvailableSeats()} pullingContent={""}> 
           <div>
             {this.state.myCar !== undefined && this.state.myCar === null &&
             <div className="text-center">
